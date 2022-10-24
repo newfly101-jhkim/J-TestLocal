@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "history": "^4.10.1",
-    "mobx": "^5.15.4",
+    "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
     "mobx-utils": "^5.5.5",
     "notistack": "^0.9.8",

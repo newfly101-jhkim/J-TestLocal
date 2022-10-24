@@ -1,5 +1,4 @@
 import {makeAutoObservable} from "mobx";
-import axios from "axios";
 
 export const State = {
     Authenticated: 'Authenticated',
@@ -29,6 +28,8 @@ const AuthState = {
     Authenticated: 'Authenticated',
     Error: 'Error',
 }
+
+// const LogPrefix = '[AuthStore] ';
 
 export default class AuthStore {
     constructor(props) {
@@ -71,7 +72,8 @@ export default class AuthStore {
 
         try {
             const param = this.login;
-            const response = yield axios.post('/api/v1/authentications/signin', param);
+            // const response = yield axios.post('/api/v1/authentications/signin', param);
+            const response = yield this.authRepository.signIn(param);
             const token = response.data.token;
             const user = response.data.user;
 
@@ -79,6 +81,7 @@ export default class AuthStore {
 
             console.log('doLogin');
             console.log(this);
+            callbacks.moveTo();
 
             this.loginState = State.Authenticated;
             this.loginToken = token;
@@ -88,14 +91,15 @@ export default class AuthStore {
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         }
-    };
+    }
 
     *checkLogin() {
         const token = localStorage.getItem(LocalStorageTokenKey);
 
         if(token) {
             try {
-                const response = yield axios.get('/api/v1/authentications/signcheck');
+                // const response = yield axios.get('/api/v1/authentications/signcheck');
+                const response = yield this.authRepository.signCheck();
                 const token = response.data.token;
                 const user = response.data.user;
 
@@ -108,13 +112,14 @@ export default class AuthStore {
                 this.loginUser = Object.assign({}, EmptyUser);
             }
         }
-    };
+    }
 
     *doLogout() {
         localStorage.removeItem(LocalStorageTokenKey);
 
         try {
-            yield axios.post('/api/v1/authentications/signout');
+            // yield axios.post('/api/v1/authentications/signout');
+            yield this.authRepository.signOut();
 
             console.log(this);
             this.login = Object.assign({}, EmptyLogin);
@@ -127,5 +132,5 @@ export default class AuthStore {
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         }
-    };
+    }
 }

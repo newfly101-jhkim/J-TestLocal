@@ -12,7 +12,7 @@ export default class AuthRepository extends Repository {
                 .then(data => {
                     const token = data.token;
                     // if(!data.user.requiredChangePassword) {
-                    //     this.setAuthTokenToStorage(token);
+                        this.setAuthTokenToStorage(token);
                     // }
                     resolve(data);
                 })

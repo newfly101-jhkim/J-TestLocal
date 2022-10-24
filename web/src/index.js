@@ -8,24 +8,28 @@ import {configure} from "mobx";
 import {Provider as MobxProvider} from "mobx-react";
 import {ThemeProvider} from "@material-ui/core/styles";
 import {SnackbarProvider} from "notistack";
-import {stores} from "./stores";
+import {stores} from "./AppStores";
 import configureTheme from "./configureTheme";
+import {BrowserRouter} from "react-router-dom";
+import {serverContextPath} from "./AppConstants";
 
 configure({enforceActions: "always"});
 
 const theme = configureTheme();
 
 ReactDOM.render(
-    <MobxProvider {...stores}>
-        <ThemeProvider theme={theme}>
-            <SnackbarProvider maxSnack={3} anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-            }}>
-                <App />
-            </SnackbarProvider>
-        </ThemeProvider>
-    </MobxProvider>
+    <BrowserRouter basename={serverContextPath}>
+        <MobxProvider {...stores}>
+            <ThemeProvider theme={theme}>
+                <SnackbarProvider maxSnack={3} anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}>
+                    <App />
+                </SnackbarProvider>
+            </ThemeProvider>
+        </MobxProvider>
+    </BrowserRouter>
     , document.getElementById('root')
 );
 
