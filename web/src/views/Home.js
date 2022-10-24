@@ -2,8 +2,8 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-
-import {Container, Toolbar, Typography} from "@material-ui/core";
+import {Box, Button, Toolbar, Typography} from "@material-ui/core";
+import {inject} from "mobx-react";
 
 
 const styles = theme => ({
@@ -25,16 +25,21 @@ const styles = theme => ({
 
 class Home extends React.Component {
     componentDidMount() {
-        this.props.enqueueSnackbar("Welcome", {
-            variant: 'info'
-        });
+        // this.props.enqueueSnackbar("Welcome", {
+        //     variant: 'info'
+        // });
+    }
+
+    handleCreateUser = () => {
+        const {authStore} = this.props;
+        authStore.handleCreateUser();
     }
 
     render() {
         const { classes } = this.props;
 
         return (
-            <Container component="main" className={classes.mainContainer}>
+            <div className={classes.mainContainer}>
                 <div className={classes.appBarSpacer} />
                 <div className={classes.mainContent}>
                     <Toolbar className={classes.toolbar}>
@@ -42,10 +47,23 @@ class Home extends React.Component {
                             Home
                         </Typography>
                     </Toolbar>
+                    <Box display='flex' alignItems='center' style={{width:'100%', justifyContent:'flex'}}>
+                        <Typography> Jkim의 이것 저것</Typography>
+                        <Typography> 뭐가 있지</Typography>
+                    </Box>
+                    <Box>
+                        <Button onClick={() => this.handleCreateUser}>
+                            유저 만들기
+                        </Button>
+                    </Box>
                 </div>
-            </Container>
+            </div>
         );
     }
-};
+}
 
-export default withSnackbar(withRouter(withStyles(styles) (Home)));
+export default withSnackbar(withRouter(withStyles(styles) (
+        inject('authStore')
+        (Home)
+    )
+));
