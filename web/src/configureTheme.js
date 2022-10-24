@@ -1,7 +1,7 @@
-import {createMuiTheme} from "@material-ui/core";
+import {createTheme} from "@material-ui/core/styles";
 
 export default function configureTheme() {
-    return createMuiTheme({
+    return createTheme({
         drawerWidth: 240,
     });
 };
