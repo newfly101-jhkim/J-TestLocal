@@ -48,12 +48,16 @@ class SignIn extends React.Component {
 
     handleKeyUpPassword = (e) => {
         if(e.keyCode === 13) {
-            this.props.authStore.doLogin();
+            this.props.authStore.doLogin({
+                moveTo: () => this.props.history.replace('/')
+            });
         }
     }
 
     handleSubmitForm = (e) => {
-        this.props.authStore.doLogin();
+        this.props.authStore.doLogin({
+            moveTo: () => this.props.history.replace('/')
+        });
     }
 
     render() {

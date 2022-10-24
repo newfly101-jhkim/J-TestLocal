@@ -1,4 +1,4 @@
-import {action, flow, observable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import axios from "axios";
 
 export const State = {
@@ -23,28 +23,50 @@ const EmptyUser = {
     updatedDatetime: '',
 };
 
-export default class AuthStore {
-    @observable login = Object.assign({}, EmptyLogin);
-    @observable loginState = State.NotAuthenticated;
-    @observable loginToken = '';
-    @observable loginUser = Object.assign({}, EmptyUser);
+const AuthState = {
+    None: 'None',
+    Authenticating: 'Authenticating',
+    Authenticated: 'Authenticated',
+    Error: 'Error',
+}
 
-    @action changeLoginId = (id) => {
+export default class AuthStore {
+    constructor(props) {
+        this.authRepository = props.authRepository;
+
+        this.authState = AuthState.None;
+
+        makeAutoObservable(this);
+    }
+
+
+    login = Object.assign({}, EmptyLogin);
+    loginState = State.NotAuthenticated;
+    loginToken = '';
+    loginUser = Object.assign({}, EmptyUser);
+
+
+
+    changeLoginId = (id) => {
         this.login.id = id;
     };
 
-    @action changeLoginPassword = (password) => {
+    changeLoginPassword = (password) => {
         this.login.password = password;
     };
 
-    @action invalidateLogin = () => {
+    invalidateLogin = () => {
         this.login = Object.assign({}, EmptyLogin);
         this.loginState = State.NotAuthenticated;
         this.loginToken = '';
         this.loginUser = Object.assign({}, EmptyUser);
     };
 
-    doLogin = flow(function* doLogin() {
+    handleCreateUser = () => {
+        console.log("user생성 버튼 클릭");
+    }
+
+    *doLogin(callbacks) {
         this.loginState = State.Pending;
 
         try {
@@ -66,9 +88,9 @@ export default class AuthStore {
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         }
-    });
+    };
 
-    checkLogin = flow(function* checkLogin() {
+    *checkLogin() {
         const token = localStorage.getItem(LocalStorageTokenKey);
 
         if(token) {
@@ -86,9 +108,9 @@ export default class AuthStore {
                 this.loginUser = Object.assign({}, EmptyUser);
             }
         }
-    });
+    };
 
-    doLogout = flow(function* doLogout() {
+    *doLogout() {
         localStorage.removeItem(LocalStorageTokenKey);
 
         try {
@@ -105,9 +127,5 @@ export default class AuthStore {
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         }
-    });
-
-    handleCreateUser = () => {
-        console.log("user생성 버튼 클릭");
-    }
+    };
 }
