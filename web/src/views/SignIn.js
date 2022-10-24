@@ -4,13 +4,13 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
 
-import {Avatar, Button, CircularProgress, Container, TextField, Typography} from "@material-ui/core";
+import {Avatar, Button, CircularProgress, TextField, Typography} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import * as store from "../stores/AuthStore";
 
 
-const style = theme => ({
+const styles = theme => ({
     appBarSpacer: theme.mixins.toolbar,
     paper: {
         marginTop: theme.spacing(8),
@@ -61,46 +61,50 @@ class SignIn extends React.Component {
         const { loginState, login } = this.props.authStore;
 
         return (
-            <Container component="main" maxWidth="xs">
+            <div className={classes.mainContainer}>
                 <div className={classes.appBarSpacer} />
-                    <div className={classes.paper}>
-                        <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
-                        <Typography component="h1" variant="h5">
-                            {loginState === store.State.Failed ? 'Sign in failed.' : 'Please sign in.'}
-                        </Typography>
-                        <div className={classes.form}>
-                            <TextField id="id"
-                                       name="id"
-                                       label="ID"
-                                       variant="outlined"
-                                       margin="normal"
-                                       value={login.id}
-                                       onChange={this.handleChangeId}
-                                       required fullWidth />
-                            <TextField id="password"
-                                       name="password"
-                                       label="Password"
-                                       type="password"
-                                       variant="outlined"
-                                       margin="normal"
-                                       value={login.password}
-                                       onChange={this.handleChangePassword}
-                                       onKeyUp={this.handleKeyUpPassword}
-                                       required fullWidth />
-                            <Button type="submit"
-                                    className={classes.submit}
-                                    color="primary"
-                                    variant="contained"
-                                    disabled={loginState === store.State.Pending}
-                                    onClick={this.handleSubmitForm}
-                                    fullWidth >
-                                {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
-                            </Button>
-                        </div>
+                <div className={classes.paper}>
+                    <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
+                    <Typography component="h1" variant="h5">
+                        {loginState === store.State.Failed ? 'Sign in failed.' : 'Please sign in.'}
+                    </Typography>
+                    <div className={classes.form}>
+                        <TextField id="id"
+                                   name="id"
+                                   label="ID"
+                                   variant="outlined"
+                                   margin="normal"
+                                   value={login.id}
+                                   onChange={this.handleChangeId}
+                                   required fullWidth />
+                        <TextField id="password"
+                                   name="password"
+                                   label="Password"
+                                   type="password"
+                                   variant="outlined"
+                                   margin="normal"
+                                   value={login.password}
+                                   onChange={this.handleChangePassword}
+                                   onKeyUp={this.handleKeyUpPassword}
+                                   required fullWidth />
+                        <Button type="submit"
+                                className={classes.submit}
+                                color="primary"
+                                variant="contained"
+                                disabled={loginState === store.State.Pending}
+                                onClick={this.handleSubmitForm}
+                                fullWidth >
+                            {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
+                        </Button>
                     </div>
-            </Container>
+                </div>
+            </div>
         );
     }
-};
+}
 
-export default withSnackbar(withRouter(withStyles(style) (SignIn)));
+export default withSnackbar(withRouter(withStyles(styles) (
+    inject('authStore')(
+        observer(SignIn)
+    )
+)));
