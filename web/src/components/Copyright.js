@@ -6,8 +6,8 @@ export default function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="http://www.aetherit.io">
-                Aether IT
+            <Link color="inherit" href="http://www.onthelive.kr">
+                Onthelive
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}

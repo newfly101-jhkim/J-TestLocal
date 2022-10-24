@@ -70,6 +70,13 @@ export default function SideMenu(props) {
                         <ListItemText primary="홈"></ListItemText>
                     </ListItem>
                 </Link>
+
+                <Link to="/lottoCreate" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="로또 생성기"></ListItemText>
+                    </ListItem>
+                </Link>
             </List>
 
             <Divider />
@@ -93,7 +100,7 @@ export default function SideMenu(props) {
                 >
                     <Toolbar className={classes.toolbar}>
                         <Link to='/' className={classes.link}>
-                            <img src="/images/aether_white.png" alt="AetherIT" className={classes.logo}/>
+                            <img src="/images/logo_onthelive.png" alt="onthelive" className={classes.logo}/>
                         </Link>
                     </Toolbar>
                     {isLoggedIn ? (
@@ -113,7 +120,7 @@ export default function SideMenu(props) {
                 >
                     <Toolbar className={classes.toolbar}>
                         <Link to='/' className={classes.link}>
-                            <img src="/images/aether_white.png" alt="AetherIT" className={classes.logo}/>
+                            <img src="/images/logo_onthelive.png" alt="onthelive" className={classes.logo}/>
                         </Link>
                     </Toolbar>
                     {isLoggedIn ? (

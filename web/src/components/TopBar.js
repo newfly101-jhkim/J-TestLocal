@@ -54,7 +54,7 @@ export default function TopBar(props) {
                 </IconButton>
                 <Typography variant="h6" noWrap className={classes.title}>
                     <Link to='/' className={classes.link}>
-                        Project Base
+                        Onthelive Self Test
                     </Link>
                 </Typography>
 
