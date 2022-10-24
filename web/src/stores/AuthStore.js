@@ -106,4 +106,8 @@ export default class AuthStore {
             this.loginUser = Object.assign({}, EmptyUser);
         }
     });
+
+    handleCreateUser = () => {
+        console.log("user생성 버튼 클릭");
+    }
 }
