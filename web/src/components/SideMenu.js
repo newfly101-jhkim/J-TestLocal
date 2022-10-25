@@ -67,14 +67,20 @@ export default function SideMenu(props) {
                 <Link to="/home" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="홈"></ListItemText>
+                        <ListItemText primary="홈" />
                     </ListItem>
                 </Link>
 
                 <Link to="/lottoCreate" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="로또 생성기"></ListItemText>
+                        <ListItemText primary="로또 생성기" />
+                    </ListItem>
+                </Link>
+                <Link to="/myPage" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="마이페이지" />
                     </ListItem>
                 </Link>
             </List>
