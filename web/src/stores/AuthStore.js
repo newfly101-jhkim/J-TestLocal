@@ -68,12 +68,7 @@ export default class AuthStore {
     invalidateLogin = () => {
         this.login = Object.assign({}, EmptyLogin);
         this.loginState = State.NotAuthenticated;
-        this.loginToken = '';
         this.loginUser = Object.assign({}, EmptyUser);
-    };
-
-    handleCreateUser = () => {
-        console.log("user생성 버튼 클릭");
     };
 
     handleIsCheckedUserId = (check) => {
@@ -88,23 +83,20 @@ export default class AuthStore {
             const response = yield this.authRepository.signIn(param);
             const token = response.token;
             const user = response.user;
-            console.log("loginData:",response);
 
             if(this.isCheckedUserId) {
                 localStorage.setItem(LocalStorageUserId, this.login.id);
             } else {
                 localStorage.removeItem(LocalStorageUserId);
             }
-
-            console.log('doLogin');
             callbacks.moveTo();
 
             this.loginState = State.Authenticated;
             this.loginToken = token;
             this.loginUser = user;
         } catch (e) {
+            console.log(e.response);
             let errorCode = e.response.data.errorCode;
-            // 사용의 편의로 비밀번호와 등록되지 않은 아이디로 구분을 했으나, 필요에 따라서 한개의 항목을 없앨 필요가 있다.
             if (errorCode === LoginState.AuthenticationEnabledError) {
                 this.loginUserState = "사용 불가능한 계정입니다.";
             } else if (errorCode === LoginState.AuthenticationUserIdError) {
@@ -112,24 +104,23 @@ export default class AuthStore {
             } else if (errorCode === LoginState.AuthenticationPasswordError) {
                 this.loginUserState = "계정정보가 일치하지 않습니다.";
             }
-            this.loginState = State.Failed;
-            this.loginToken = '';
+            this.login.id = localStorage.getItem(LocalStorageUserId);
+            this.login.password = '';
+            this.loginState = State.NotAuthenticated;
             this.loginUser = Object.assign({}, EmptyUser);
         }
     }
 
     *checkLogin() {
         const token = sessionStorage.getItem(AuthTokenStorageKey);
-        console.log("*checkLogin() : ", token);
 
         if(token) {
             try {
                 const user = yield this.authRepository.signCheck();
-
                 this.loginState = State.Authenticated;
                 this.loginUser = user;
             } catch(e) {
-                console.log(e);
+                this.login = Object.assign({}, EmptyLogin);
                 this.loginState = State.NotAuthenticated;
                 this.loginUser = Object.assign({}, EmptyUser);
             }
@@ -141,16 +132,12 @@ export default class AuthStore {
 
         try {
             yield this.authRepository.signOut();
-
-            console.log(this);
             this.login = Object.assign({}, EmptyLogin);
             this.loginState = State.NotAuthenticated;
-            this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         } catch(e) {
             this.login = Object.assign({}, EmptyLogin);
             this.loginState = State.NotAuthenticated;
-            this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
         }
     }

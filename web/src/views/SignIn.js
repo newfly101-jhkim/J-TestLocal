@@ -50,8 +50,14 @@ class SignIn extends React.Component {
         const checkedUserId = localStorage.getItem(LocalStorageUserId);
         if(checkedUserId) {
             this.props.authStore.changeLoginId(checkedUserId);
+            this.props.authStore.handleIsCheckedUserId(true);
+        } else {
+            this.props.authStore.handleIsCheckedUserId(false);
+            this.props.authStore.invalidateLogin();
         }
     }
+
+
     handleChangeId = (e) => {
         this.props.authStore.changeLoginId(e.target.value);
     }
@@ -76,7 +82,7 @@ class SignIn extends React.Component {
 
     render() {
         const { classes, authStore } = this.props;
-        const { loginState, login, loginUserState } = this.props.authStore;
+        const { loginState, login } = this.props.authStore;
 
         return (
             <Box className={classes.mainContainer}>
@@ -84,7 +90,7 @@ class SignIn extends React.Component {
                 <Box className={classes.paper}>
                     <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
                     <Typography component="h1" variant="h5">
-                        {loginState === store.State.Failed ? loginUserState : 'Please sign in.'}
+                        {loginState === store.State.Failed ? authStore.loginUserState : '로그인'}
                     </Typography>
                     <Box className={classes.form}>
                         <TextField id="id"
