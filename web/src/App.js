@@ -21,9 +21,6 @@ const styles = () => ({
     }
 });
 
-
-@inject('authStore')
-@observer
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -37,40 +34,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        // const axiosRequestInterceptors = (config) => {
-        //     const token = localStorage.getItem(stores.LocalStorageTokenKey);
-        //
-        //     if(token) {
-        //         config.headers['X-Auth-Token'] = token;
-        //     }
-        //
-        //     return config;
-        // };
-        //
-        // const axiosRequestErrorHandler = (error) => {
-        //     return Promise.reject(error);
-        // };
-        //
-        // const axiosResponseInterceptor = (response) => {
-        //     if(response.status === 403) {
-        //         this.props.authStore.invalidateLogin();
-        //     }
-        //
-        //     return response;
-        // };
-        //
-        // const axiosResponseErrorHandler = (error) => {
-        //     if((error.response) && (error.response.status === 403)) {
-        //         this.props.authStore.invalidateLogin();
-        //     }
-        //
-        //     return Promise.reject(error);
-        // };
-        //
-        // console.log("========== RGate App componentDidMount ==========");
-        // axios.interceptors.request.use(axiosRequestInterceptors, axiosRequestErrorHandler);
-        // axios.interceptors.response.use(axiosResponseInterceptor, axiosResponseErrorHandler);
-
         this.props.authStore.checkLogin();
     }
 

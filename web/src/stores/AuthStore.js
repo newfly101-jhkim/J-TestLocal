@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {AuthTokenStorageKey} from "../repositories/Repository";
 
 export const State = {
     Authenticated: 'Authenticated',
@@ -8,6 +9,7 @@ export const State = {
 };
 
 export const LocalStorageTokenKey = '_BASKITOP_AUTHENTICATION_TOKEN_';
+export const LocalStorageUserId = '_BASKITOP_AUTHENTICATION_USERID_';
 
 const EmptyLogin = {
     id: '',
@@ -28,6 +30,12 @@ const AuthState = {
     Authenticated: 'Authenticated',
     Error: 'Error',
 }
+const LoginState = {
+    AuthenticationFailed : 'AuthenticationFailed',
+    AuthenticationEnabledError : 'AuthenticationEnabledError',
+    AuthenticationPasswordError : 'AuthenticationPasswordError',
+    AuthenticationUserIdError : 'AuthenticationUserIdError',
+}
 
 // const LogPrefix = '[AuthStore] ';
 
@@ -45,7 +53,8 @@ export default class AuthStore {
     loginState = State.NotAuthenticated;
     loginToken = '';
     loginUser = Object.assign({}, EmptyUser);
-
+    loginUserState = '';
+    isCheckedUserId = false;
 
 
     changeLoginId = (id) => {
@@ -65,28 +74,44 @@ export default class AuthStore {
 
     handleCreateUser = () => {
         console.log("user생성 버튼 클릭");
-    }
+    };
+
+    handleIsCheckedUserId = (check) => {
+        this.isCheckedUserId = check;
+    };
 
     *doLogin(callbacks) {
         this.loginState = State.Pending;
 
         try {
             const param = this.login;
-            // const response = yield axios.post('/api/v1/authentications/signin', param);
             const response = yield this.authRepository.signIn(param);
-            const token = response.data.token;
-            const user = response.data.user;
+            const token = response.token;
+            const user = response.user;
+            console.log("loginData:",response);
 
-            localStorage.setItem(LocalStorageTokenKey, token);
+            if(this.isCheckedUserId) {
+                localStorage.setItem(LocalStorageUserId, this.login.id);
+            } else {
+                localStorage.removeItem(LocalStorageUserId);
+            }
 
             console.log('doLogin');
-            console.log(this);
             callbacks.moveTo();
 
             this.loginState = State.Authenticated;
             this.loginToken = token;
             this.loginUser = user;
         } catch (e) {
+            let errorCode = e.response.data.errorCode;
+            // 사용의 편의로 비밀번호와 등록되지 않은 아이디로 구분을 했으나, 필요에 따라서 한개의 항목을 없앨 필요가 있다.
+            if (errorCode === LoginState.AuthenticationEnabledError) {
+                this.loginUserState = "사용 불가능한 계정입니다.";
+            } else if (errorCode === LoginState.AuthenticationUserIdError) {
+                this.loginUserState = "등록되지 않은 계정입니다.";
+            } else if (errorCode === LoginState.AuthenticationPasswordError) {
+                this.loginUserState = "계정정보가 일치하지 않습니다.";
+            }
             this.loginState = State.Failed;
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
@@ -94,31 +119,27 @@ export default class AuthStore {
     }
 
     *checkLogin() {
-        const token = localStorage.getItem(LocalStorageTokenKey);
+        const token = sessionStorage.getItem(AuthTokenStorageKey);
+        console.log("*checkLogin() : ", token);
 
         if(token) {
             try {
-                // const response = yield axios.get('/api/v1/authentications/signcheck');
-                const response = yield this.authRepository.signCheck();
-                const token = response.data.token;
-                const user = response.data.user;
+                const user = yield this.authRepository.signCheck();
 
                 this.loginState = State.Authenticated;
-                this.loginToken = token;
                 this.loginUser = user;
             } catch(e) {
+                console.log(e);
                 this.loginState = State.NotAuthenticated;
-                this.loginToken = '';
                 this.loginUser = Object.assign({}, EmptyUser);
             }
         }
     }
 
     *doLogout() {
-        localStorage.removeItem(LocalStorageTokenKey);
+        sessionStorage.removeItem(AuthTokenStorageKey);
 
         try {
-            // yield axios.post('/api/v1/authentications/signout');
             yield this.authRepository.signOut();
 
             console.log(this);

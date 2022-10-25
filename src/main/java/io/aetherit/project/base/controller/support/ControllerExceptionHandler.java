@@ -33,7 +33,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(HttpServletRequest httpRequest, AuthenticationException ex) {
         final HttpStatus status = HttpStatus.UNAUTHORIZED;
-        final ErrorResponse response = getErrorResponse(ex, ErrorCode.AuthenticationFail, httpRequest, status, false);
+        final ErrorResponse response = getErrorResponse(ex, ErrorCode.AuthenticationFailed, httpRequest, status, false);
 
         return new ResponseEntity<>(response, status);
     }

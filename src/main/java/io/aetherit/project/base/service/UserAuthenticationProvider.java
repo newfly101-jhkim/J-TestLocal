@@ -1,5 +1,7 @@
 package io.aetherit.project.base.service;
 
+import io.aetherit.project.base.exception.BaseException;
+import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.BaseSimpleUser;
 import io.aetherit.project.base.model.BaseUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +36,17 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication request) throws AuthenticationException {
         Assert.isInstanceOf(UsernamePasswordAuthenticationToken.class, request, "Only UsernamePasswordAuthenticationToken is supported");
 
-        UsernamePasswordAuthenticationToken result = null;
+        UsernamePasswordAuthenticationToken result; // null
         final String userId = (String) request.getPrincipal();
         final String password = (String) request.getCredentials();
 
         final BaseUser user = userService.getUser(userId);
         if(user == null) {
-            throw new UsernameNotFoundException("Username not found : " + userId);
+            throw new BaseException(ErrorCode.AuthenticationUserIdError, "Username not found : " + userId);
         }
 
         if(!user.isEnabled()) {
-            throw new DisabledException("User is not enabled : " + userId);
+            throw new BaseException(ErrorCode.AuthenticationEnabledError, "User is not enabled : " + userId);
         }
 
         if ((password != null) && (password.length() > 0) && (passwordEncoder.matches(password, user.getPassword()))) {
@@ -54,7 +56,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             result = new UsernamePasswordAuthenticationToken(userId, password, authorities);
             result.setDetails(getSimpleUser(user));
         } else {
-            throw new BadCredentialsException("Bad credentials");
+            throw new BaseException(ErrorCode.AuthenticationPasswordError, "Bad credentials");
         }
 
         return result;

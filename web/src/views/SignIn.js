@@ -4,13 +4,20 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
 
-import {Avatar, Button, CircularProgress, TextField, Typography} from "@material-ui/core";
+import {Avatar, Box, Button, CircularProgress, TextField, Typography} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Checkbox from '@material-ui/core/Checkbox';
 
 import * as store from "../stores/AuthStore";
+import {LocalStorageUserId} from "../stores/AuthStore";
 
 
 const styles = theme => ({
+    mainContainer: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        height: '100%',
+    },
     appBarSpacer: theme.mixins.toolbar,
     paper: {
         marginTop: theme.spacing(8),
@@ -27,7 +34,8 @@ const styles = theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%',
+        width: '440px',
+        alignItems: 'center',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -35,8 +43,6 @@ const styles = theme => ({
     },
 });
 
-@inject('authStore')
-@observer
 class SignIn extends React.Component {
     handleChangeId = (e) => {
         this.props.authStore.changeLoginId(e.target.value);
@@ -54,31 +60,31 @@ class SignIn extends React.Component {
         }
     }
 
-    handleSubmitForm = (e) => {
+    handleSubmitForm = () => {
         this.props.authStore.doLogin({
             moveTo: () => this.props.history.replace('/')
         });
     }
 
     render() {
-        const { classes } = this.props;
-        const { loginState, login } = this.props.authStore;
+        const { classes, authStore } = this.props;
+        const { loginState, login, loginUserState } = this.props.authStore;
 
         return (
-            <div className={classes.mainContainer}>
-                <div className={classes.appBarSpacer} />
-                <div className={classes.paper}>
+            <Box className={classes.mainContainer}>
+                <Box className={classes.appBarSpacer} />
+                <Box className={classes.paper}>
                     <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
                     <Typography component="h1" variant="h5">
-                        {loginState === store.State.Failed ? 'Sign in failed.' : 'Please sign in.'}
+                        {loginState === store.State.Failed ? loginUserState : 'Please sign in.'}
                     </Typography>
-                    <div className={classes.form}>
+                    <Box className={classes.form}>
                         <TextField id="id"
                                    name="id"
                                    label="ID"
                                    variant="outlined"
                                    margin="normal"
-                                   value={login.id}
+                                   value={localStorage.getItem(LocalStorageUserId) ? localStorage.getItem(LocalStorageUserId) : login.id}
                                    onChange={this.handleChangeId}
                                    required fullWidth />
                         <TextField id="password"
@@ -91,6 +97,13 @@ class SignIn extends React.Component {
                                    onChange={this.handleChangePassword}
                                    onKeyUp={this.handleKeyUpPassword}
                                    required fullWidth />
+                        <Checkbox
+                            checked={authStore.isCheckedUserId}
+                            onChange={(e) =>authStore.handleIsCheckedUserId(e.target.checked)}
+                            name="UserIdChecked"
+                            color="primary"
+                        />
+                        <label>아이디 기억하기</label>
                         <Button type="submit"
                                 className={classes.submit}
                                 color="primary"
@@ -100,9 +113,10 @@ class SignIn extends React.Component {
                                 fullWidth >
                             {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
                         </Button>
-                    </div>
-                </div>
-            </div>
+                    </Box>
+
+                </Box>
+            </Box>
         );
     }
 }

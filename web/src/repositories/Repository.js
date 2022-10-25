@@ -4,7 +4,7 @@ export const AuthTokenStorageKey = '__OTL_Authentication_Token__';
 export const EmailSaveStorageKey = '__ONANDON_STATION_SAVE_EMAIL__';
 
 
-// const LogPrefix = '[Repository]';
+const LogPrefix = '[Repository]';
 export class Repository {
     getRequestPromise = (method, url, data, contentType) => {
         const token = sessionStorage.getItem(AuthTokenStorageKey);
@@ -18,7 +18,7 @@ export class Repository {
                 data: data,
             };
 
-            // console.log(LogPrefix, 'HTTP requesting :', config);
+            console.log(LogPrefix, 'HTTP requesting :', config);
             axios.request(config)
                 .then(response => {
                     resolve(response.data);
