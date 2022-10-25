@@ -44,19 +44,18 @@ const styles = theme => ({
 });
 
 class SignIn extends React.Component {
-    constructor(props) {
-        super(props);
 
+    componentDidMount() {
+    const {authStore} = this.props;
         const checkedUserId = localStorage.getItem(LocalStorageUserId);
         if(checkedUserId) {
-            this.props.authStore.changeLoginId(checkedUserId);
-            this.props.authStore.handleIsCheckedUserId(true);
+            authStore.changeLoginId(checkedUserId);
+            authStore.handleIsCheckedUserId(true);
         } else {
-            this.props.authStore.handleIsCheckedUserId(false);
-            this.props.authStore.invalidateLogin();
+            authStore.handleIsCheckedUserId(false);
+            authStore.invalidateLogin();
         }
     }
-
 
     handleChangeId = (e) => {
         this.props.authStore.changeLoginId(e.target.value);
@@ -82,7 +81,6 @@ class SignIn extends React.Component {
 
     render() {
         const { classes, authStore } = this.props;
-        const { loginState, login } = this.props.authStore;
 
         return (
             <Box className={classes.mainContainer}>
@@ -90,7 +88,7 @@ class SignIn extends React.Component {
                 <Box className={classes.paper}>
                     <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
                     <Typography component="h1" variant="h5">
-                        {loginState === store.State.Failed ? authStore.loginUserState : '로그인'}
+                        {authStore.loginState === store.State.NotAuthenticated ? authStore.loginUserState : '로그인'}
                     </Typography>
                     <Box className={classes.form}>
                         <TextField id="id"
@@ -98,7 +96,7 @@ class SignIn extends React.Component {
                                    label="ID"
                                    variant="outlined"
                                    margin="normal"
-                                   value={login.id}
+                                   value={authStore.login.id}
                                    onChange={this.handleChangeId}
                                    required fullWidth />
                         <TextField id="password"
@@ -107,7 +105,7 @@ class SignIn extends React.Component {
                                    type="password"
                                    variant="outlined"
                                    margin="normal"
-                                   value={login.password}
+                                   value={authStore.login.password}
                                    onChange={this.handleChangePassword}
                                    onKeyUp={this.handleKeyUpPassword}
                                    required fullWidth />
@@ -122,10 +120,10 @@ class SignIn extends React.Component {
                                 className={classes.submit}
                                 color="primary"
                                 variant="contained"
-                                disabled={loginState === store.State.Pending}
+                                disabled={authStore.loginState === store.State.Pending}
                                 onClick={this.handleSubmitForm}
                                 fullWidth >
-                            {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
+                            {authStore.loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
                         </Button>
                     </Box>
 
