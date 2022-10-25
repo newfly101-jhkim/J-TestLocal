@@ -7,7 +7,6 @@ export default class AuthRepository extends Repository {
         this.requestPrefix = props.serverContextPath + "/api/v1/authentications";
     }
     signIn = (param) => {
-        console.log("signIn:",param);
         return new Promise((resolve, reject) => {
             this.getRequestPromise('post', this.requestPrefix + '/signin', param)
                 .then(data => {

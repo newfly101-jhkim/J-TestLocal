@@ -44,6 +44,14 @@ const styles = theme => ({
 });
 
 class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const checkedUserId = localStorage.getItem(LocalStorageUserId);
+        if(checkedUserId) {
+            this.props.authStore.changeLoginId(checkedUserId);
+        }
+    }
     handleChangeId = (e) => {
         this.props.authStore.changeLoginId(e.target.value);
     }
@@ -84,7 +92,7 @@ class SignIn extends React.Component {
                                    label="ID"
                                    variant="outlined"
                                    margin="normal"
-                                   value={localStorage.getItem(LocalStorageUserId) ? localStorage.getItem(LocalStorageUserId) : login.id}
+                                   value={login.id}
                                    onChange={this.handleChangeId}
                                    required fullWidth />
                         <TextField id="password"
