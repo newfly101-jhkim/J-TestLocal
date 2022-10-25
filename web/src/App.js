@@ -26,6 +26,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        require('cors');
+
         this.state = {
             mobileOpen: false,
             menuOpen: true,

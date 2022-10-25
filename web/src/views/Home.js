@@ -30,13 +30,8 @@ class Home extends React.Component {
         // });
     }
 
-    handleCreateUser = () => {
-        const {authStore} = this.props;
-        authStore.handleCreateUser();
-    }
-
     render() {
-        const { classes } = this.props;
+        const { classes , lottoStore} = this.props;
 
         return (
             <div className={classes.mainContainer}>
@@ -52,7 +47,7 @@ class Home extends React.Component {
                         <Typography> 뭐가 있지</Typography>
                     </Box>
                     <Box>
-                        <Button onClick={() => this.handleCreateUser}>
+                        <Button onClick={() => lottoStore.getLottoList()}>
                             유저 만들기
                         </Button>
                     </Box>
@@ -63,7 +58,7 @@ class Home extends React.Component {
 }
 
 export default withSnackbar(withRouter(withStyles(styles) (
-        inject('authStore')
+        inject('authStore', 'lottoStore')
         (Home)
     )
 ));
