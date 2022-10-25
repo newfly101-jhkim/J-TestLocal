@@ -53,7 +53,7 @@ export default class AuthStore {
     loginState = State.NotAuthenticated;
     loginToken = '';
     loginUser = Object.assign({}, EmptyUser);
-    loginUserState = '';
+    loginUserState = null;
     isCheckedUserId = false;
 
 
@@ -69,6 +69,7 @@ export default class AuthStore {
         this.login = Object.assign({}, EmptyLogin);
         this.loginState = State.NotAuthenticated;
         this.loginUser = Object.assign({}, EmptyUser);
+        this.loginUserState = null;
     };
 
     handleIsCheckedUserId = (check) => {
@@ -92,6 +93,7 @@ export default class AuthStore {
             callbacks.moveTo();
 
             this.loginState = State.Authenticated;
+            this.loginUserState = null;
             this.loginToken = token;
             this.loginUser = user;
         } catch (e) {

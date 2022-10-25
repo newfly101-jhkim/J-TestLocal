@@ -88,7 +88,7 @@ class SignIn extends React.Component {
                 <Box className={classes.paper}>
                     <Avatar className={classes.lockOutAvatar}><LockOutlinedIcon/></Avatar>
                     <Typography component="h1" variant="h5">
-                        {authStore.loginState === store.State.NotAuthenticated ? authStore.loginUserState : '로그인'}
+                        {authStore.loginState === store.State.NotAuthenticated && authStore.loginUserState ? authStore.loginUserState : '로그인'}
                     </Typography>
                     <Box className={classes.form}>
                         <TextField id="id"

@@ -13,6 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
 import * as stores from "./stores/AuthStore";
+import MyPage from "./views/setting/MyPage";
 
 
 const styles = () => ({
@@ -68,6 +69,7 @@ class App extends React.Component {
                               <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/home" component={Home} />
+                                <Route exact path="/myPage" component={MyPage} />
                               </Switch>
                             </React.Fragment>
                         ) : (
