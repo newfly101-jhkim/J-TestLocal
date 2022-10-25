@@ -8,13 +8,13 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="kr.onthelive.project.base.model.BaseUser" alias="BaseUser" />
+        <typeAlias type="io.aetherit.project.base.model.BaseUser" alias="BaseUser" />
 
-        <typeAlias type="kr.onthelive.project.base.model.support.BaseUserType" alias="BaseUserType" />
+        <typeAlias type="io.aetherit.project.base.model.support.BaseUserType" alias="BaseUserType" />
     </typeAliases>
 
     <typeHandlers>
-        <typeHandler handler="kr.onthelive.project.base.repository.typehandler.BooleanYnTypeHandler" javaType="Boolean" />
+        <typeHandler handler="io.aetherit.project.base.repository.typehandler.BooleanYnTypeHandler" javaType="Boolean" />
     </typeHandlers>
 
     <mappers>

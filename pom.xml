@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kr.onthelive</groupId>
-    <artifactId>jhkim.localtest</artifactId>
+    <groupId>io.aetherit</groupId>
+    <artifactId>project.base</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
@@ -33,7 +33,7 @@
             <properties>
                 <build.number>0</build.number>
                 <docker.file>Dockerfile</docker.file>
-                <docker.userRepository>onthelive/${project.name}</docker.userRepository>
+                <docker.userRepository>aetherit/${project.name}</docker.userRepository>
                 <docker.tag>${project.version}</docker.tag>
             </properties>
         </profile>
@@ -47,7 +47,7 @@
             <properties>
                 <build.number>0</build.number>
                 <docker.file>Dockerfile</docker.file>
-                <docker.userRepository>onthelive/${project.name}</docker.userRepository>
+                <docker.userRepository>aetherit/${project.name}</docker.userRepository>
                 <docker.tag>development</docker.tag>
             </properties>
         </profile>
