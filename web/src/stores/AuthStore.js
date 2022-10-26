@@ -76,6 +76,13 @@ export default class AuthStore {
         this.isCheckedUserId = check;
     };
 
+    handleChangeUserName = (name) => {
+        this.loginUser.name = name;
+    }
+    handleChangeUserIsEnabled = (enable) => {
+        this.loginUser.isEnabled = enable;
+    }
+
     *doLogin(callbacks) {
         this.loginState = State.Pending;
 
@@ -91,6 +98,7 @@ export default class AuthStore {
                 localStorage.removeItem(LocalStorageUserId);
             }
             callbacks.moveTo();
+            console.log(this);
 
             this.loginState = State.Authenticated;
             this.loginUserState = null;

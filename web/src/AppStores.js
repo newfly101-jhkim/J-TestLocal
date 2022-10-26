@@ -4,6 +4,7 @@ import UserRepository from "./repositories/UserRepository";
 import LottoRepository from "./repositories/LottoRepository";
 
 import AuthStore from "./stores/AuthStore";
+import UserStore from "./stores/UserStore";
 import LottoStore from "./stores/LottoStore";
 
 const repositoryProps = {
