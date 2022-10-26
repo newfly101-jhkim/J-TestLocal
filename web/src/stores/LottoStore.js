@@ -9,9 +9,9 @@ export default class lottoStore {
 
     lottoList = {};
 
-    *getLottoList() {
+    *getLottoList(week) {
         try{
-        const response = yield this.lottoRepository.getLottoList(1003);
+        const response = yield this.lottoRepository.getLottoList(week);
 
         this.lottoList = response.data;
         console.log("this.lottoList : ",this.lottoList);

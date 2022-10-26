@@ -47,7 +47,7 @@ class Home extends React.Component {
                         <Typography> 뭐가 있지</Typography>
                     </Box>
                     <Box>
-                        <Button onClick={() => lottoStore.getLottoList()}>
+                        <Button onClick={() => lottoStore.getLottoList(103)}>
                             유저 만들기
                         </Button>
                     </Box>
