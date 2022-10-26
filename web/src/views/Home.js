@@ -55,9 +55,10 @@ class Home extends React.Component {
                     </Box>
                     <Box>
                         <Button onClick={() => this.handleClickLotto()}>
-                            {this.props.lottoStore.lottoState === LottoState.Waiting ? '유저 만들기' :
-                                this.props.lottoStore.lottoState === LottoState.Pending &&
+                            { this.props.lottoStore.lottoState === LottoState.Pending ?
                                 <CircularProgress size={22}/>
+                            :
+                                '유저 만들기'
                             }
                         </Button>
                     </Box>

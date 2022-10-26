@@ -40,49 +40,49 @@ export default class lottoStore {
     }
 
     handleGetLottoList = (week) => {
-        try{
-            this.lottoArrayList = [];
-            this.lottoState = LottoState.Pending;
-            for (let i = 1; i<=week; i++) {
-                this.getLottoList(i);
-            }
-            this.lottoState = LottoState.Success;
-            this.hanldeConsolelogLotto();
-            this.lottoState = LottoState.Waiting;
-            return false;
+        try {
+            this.getLottoList(week);
         } catch (e) {
-            console.log("get lotto List error : ",e);
-            this.lottoState = LottoState.Failed;
+            console.log(e);
         }
-
+        if ( this.lottoState === LottoState.Success) {
+            this.lottoState = LottoState.Waiting;
+            this.hanldeConsolelogLotto();
+        }
     }
 
     *getLottoList(week) {
-        try {
-        const response = yield this.lottoRepository.getLottoList(week);
+        this.lottoArrayList = [];
 
-        // this.lottoList = Object.assign({}, response.data);
-        this.lottoList = {
-            lottoNo7Bonus: response.data.bnusNo,
-            drawNo: response.data.drwNo,
-            drawNoDate: response.data.drwNoDate,
-            lottoNo1: response.data.drwtNo1,
-            lottoNo2: response.data.drwtNo2,
-            lottoNo3: response.data.drwtNo3,
-            lottoNo4: response.data.drwtNo4,
-            lottoNo5: response.data.drwtNo5,
-            lottoNo6: response.data.drwtNo6,
-            firstPrise: response.data.firstAccumamnt,
-            firstPriseMember: response.data.firstPrzwnerCo,
-            firstPriseMoney: response.data.firstWinamnt,
-            result: response.data.returnValue,
-            totalSellAmount: response.data.totSellamnt,
-        }
-        console.log("async data : ",this.lottoList);
+        try {
+            this.lottoState = LottoState.Pending;
+            for (let i =1; i<= week; i++) {
+                const response = yield this.lottoRepository.getLottoList(i);
+
+                // this.lottoList = Object.assign({}, response.data);
+                this.lottoList = {
+                    lottoNo7Bonus: response.data.bnusNo,
+                    drawNo: response.data.drwNo,
+                    drawNoDate: response.data.drwNoDate,
+                    lottoNo1: response.data.drwtNo1,
+                    lottoNo2: response.data.drwtNo2,
+                    lottoNo3: response.data.drwtNo3,
+                    lottoNo4: response.data.drwtNo4,
+                    lottoNo5: response.data.drwtNo5,
+                    lottoNo6: response.data.drwtNo6,
+                    firstPrise: response.data.firstAccumamnt,
+                    firstPriseMember: response.data.firstPrzwnerCo,
+                    firstPriseMoney: response.data.firstWinamnt,
+                    result: response.data.returnValue,
+                    totalSellAmount: response.data.totSellamnt,
+                }
+                console.log(`async data [${i}] : `,this.lottoList);
+                this.lottoArrayList.push(toJS(this.lottoList));
+            }
         } catch(e) {
             console.log(e);
         } finally {
-            this.lottoArrayList.push(toJS(this.lottoList));
+            this.lottoState = LottoState.Success;
         }
     }
 }
