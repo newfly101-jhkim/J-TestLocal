@@ -2,8 +2,9 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Box, Button, Toolbar, Typography} from "@material-ui/core";
-import {inject} from "mobx-react";
+import {Box, Button, CircularProgress, Toolbar, Typography} from "@material-ui/core";
+import {inject, observer} from "mobx-react";
+import {LottoState} from "../stores/LottoStore";
 
 
 const styles = theme => ({
@@ -24,14 +25,20 @@ const styles = theme => ({
 });
 
 class Home extends React.Component {
+
     componentDidMount() {
         // this.props.enqueueSnackbar("Welcome", {
         //     variant: 'info'
         // });
+        // this.props.lottoStore.handleGetLottoList(103);
+    }
+
+    handleClickLotto = () => {
+        this.props.lottoStore.handleGetLottoList(100);
     }
 
     render() {
-        const { classes , lottoStore} = this.props;
+        const { classes } = this.props;
 
         return (
             <div className={classes.mainContainer}>
@@ -47,8 +54,11 @@ class Home extends React.Component {
                         <Typography> 뭐가 있지</Typography>
                     </Box>
                     <Box>
-                        <Button onClick={() => lottoStore.getLottoList(103)}>
-                            유저 만들기
+                        <Button onClick={() => this.handleClickLotto()}>
+                            {this.props.lottoStore.lottoState === LottoState.Waiting ? '유저 만들기' :
+                                this.props.lottoStore.lottoState === LottoState.Pending &&
+                                <CircularProgress size={22}/>
+                            }
                         </Button>
                     </Box>
                 </div>
@@ -58,7 +68,7 @@ class Home extends React.Component {
 }
 
 export default withSnackbar(withRouter(withStyles(styles) (
-        inject('authStore', 'lottoStore')
-        (Home)
+        inject('authStore', 'lottoStore') (
+            observer(Home)
     )
-));
+)));
