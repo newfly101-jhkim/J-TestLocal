@@ -15,6 +15,7 @@ import SignIn from "./views/SignIn";
 import LottoCreate from "./views/LottoCreate";
 import * as stores from "./stores/AuthStore";
 import MyPage from "./views/setting/MyPage";
+import LottoCollect from "./views/lotto/LottoCollect";
 
 
 const styles = () => ({
@@ -74,6 +75,7 @@ class App extends React.Component {
                                 <Route exact path="/home" component={Home} />
                                 <Route exact path="/lottoCreate" component={LottoCreate} />
                                 <Route exact path="/myPage" component={MyPage} />
+                                <Route exact path="/lottoCreate" component={LottoCollect} />
                               </Switch>
                             </React.Fragment>
                         ) : (

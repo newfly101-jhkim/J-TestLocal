@@ -54,7 +54,7 @@ class Home extends React.Component {
                         <Typography> 뭐가 있지</Typography>
                     </Box>
                     <Box>
-                        <Button onClick={() => this.handleClickLotto()}>
+                        <Button onClick={() => this.handleClickLotto()} disabled={this.props.lottoStore.lottoState === LottoState.Pending}>
                             { this.props.lottoStore.lottoState === LottoState.Pending ?
                                 <CircularProgress size={22}/>
                             :
@@ -62,6 +62,19 @@ class Home extends React.Component {
                             }
                         </Button>
                     </Box>
+                    {this.props.lottoStore.lottoList &&
+                    <Box>
+                        <Typography> {this.props.lottoStore.lottoList.drawNo}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.drawNoDate}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo1}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo2}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo3}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo4}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo5}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo6}</Typography>
+                        <Typography> {this.props.lottoStore.lottoList.lottoNo7Bonus}</Typography>
+                    </Box>
+                    }
                 </div>
             </div>
         );
