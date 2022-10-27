@@ -88,7 +88,7 @@ class App extends React.Component {
 }
 
 export default withRouter(withStyles(styles) (
-        inject('authStore') (
+        inject('authStore', 'lottoStore', 'userStore') (
             observer(App)
         )
     )
