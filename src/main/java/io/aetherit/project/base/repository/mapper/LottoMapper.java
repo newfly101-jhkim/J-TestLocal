@@ -5,6 +5,9 @@ package io.aetherit.project.base.repository.mapper;
 //
 //import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface LottoMapper {
 //    BaseUser selectUser(String id);
 //    List<BaseUser> selectUsersWhereType(BaseUserType type);
