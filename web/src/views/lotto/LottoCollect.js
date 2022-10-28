@@ -3,8 +3,8 @@ import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
-import {Box, Button, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
-import {LottoTabIndex} from "../../stores/LottoStore";
+import {Box, Button, CircularProgress, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {LottoState, LottoTabIndex} from "../../stores/LottoStore";
 
 const styles = theme => ({
     mainContainer: {
@@ -123,7 +123,15 @@ class LottoCollect extends React.Component {
                                         type="search"
                                         onChange={(e) => lottoStore.handleChangeLottoValue(e.target.value)}
                                     />
-                                    <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleFindLotto()}>검색</Button>
+                                        <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleFindLotto()}
+                                                disabled={(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending)}
+                                        >
+                                            {(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending) ?
+                                                <CircularProgress style={{color: '#ffffff'}} size={22}/>
+                                                :
+                                                '검색'
+                                            }
+                                        </Button>
                                 </Box>
                             </Box>
                             <Box className={classes.lineText}>
