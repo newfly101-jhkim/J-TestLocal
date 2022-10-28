@@ -5,11 +5,14 @@ export default class LottoRepository extends Repository {
     constructor(props) {
         super();
 
-        this.requestPrefix = props.serverContextPath;
+        this.requestPrefix = props.serverContextPath + "/api/v1/lotto";
     }
 
     getCheckLotto = (week) => {
-        return this.getRequestPromise('post', this.requestPrefix + `/${week}`);
+        return this.getRequestPromise('post', this.requestPrefix + `/${week}`, week);
+    }
+    createLottoData = (lotto) => {
+        return this.getRequestPromise('put', this.requestPrefix +'/create', lotto);
     }
 
     getLottoList = (week) => {

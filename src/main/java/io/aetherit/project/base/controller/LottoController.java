@@ -1,5 +1,7 @@
 package io.aetherit.project.base.controller;
 
+import io.aetherit.project.base.exception.BaseException;
+import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.LottoData;
 import io.aetherit.project.base.service.LottoService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +24,20 @@ public class LottoController {
         this.lottoService = lottoService;
     }
 
-    @PostMapping("/{lottoId}")
-    public ResponseEntity<LottoData> getLottoData(HttpServletRequest httpRequest, HttpSession session, @RequestBody LottoData lotto) {
-        final LottoData lottoData = lottoService.getLotto(lotto.getDrawId());
+    @PostMapping("{lottoId}")
+    public LottoData getLottoData(HttpServletRequest httpRequest, HttpSession session, @PathVariable String lottoId) {
+        final LottoData lottoData = lottoService.getLotto(lottoId);
         log.debug("lottoData={}",lottoData);
-
-        return new ResponseEntity<>(lottoData, HttpStatus.OK);
+        if (lottoData == null ) {
+            throw new BaseException(ErrorCode.NoLottoData, "No lotto Data is in DataBase");
+        } else {
+            return lottoData;
+        }
     }
 
-    @PutMapping("")
-    public LottoData insertLottoData(HttpServletRequest httpRequest, @RequestBody LottoData lottoData) {
-        return lottoService.createNewLotto(lottoData);
+    @PutMapping("/create")
+    public LottoData insertLottoData(HttpServletRequest httpRequest, @RequestBody LottoData lotto) {
+        log.debug("get lotto Data={}",lotto);
+        return lottoService.createNewLotto(lotto);
     }
 }

@@ -32,7 +32,8 @@
                lotto_no7_bonus,
                total_sell_amount,
                created_datetime
-            WHERE draw_id = #{value}
+        FROM lotto_data
+        WHERE draw_id = #{id}
     </select>
 
     <insert id="insertLotto" parameterType="LottoData">

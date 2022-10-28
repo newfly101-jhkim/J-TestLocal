@@ -77,9 +77,14 @@ class LottoCollect extends React.Component {
     handleFindLotto = () => {
         const { lottoStore } = this.props;
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-            lottoStore.getSingleLotto(lottoStore.searchLottoValue);
+            lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
         }
-
+    }
+    handleAddLotto = () => {
+        const { lottoStore } = this.props;
+        if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
+            lottoStore.createSingleLotto(lottoStore.searchLottoValue);
+        }
     }
 
     render() {
@@ -131,6 +136,7 @@ class LottoCollect extends React.Component {
                                         onChange={(e) => lottoStore.handleChangeLottoValue(e.target.value)}
                                     />
                                     <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleFindLotto()}>검색</Button>
+                                    <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleAddLotto()}>추가</Button>
                                 </Box>
                             </Box>
                             <Box className={classes.lineText}>
