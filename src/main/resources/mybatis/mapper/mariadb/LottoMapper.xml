@@ -13,21 +13,60 @@
         <result property="lottoNo5"      column="lotto_no5" />
         <result property="lottoNo6"      column="lotto_no6" />
         <result property="lottoNo7Bonus"      column="lotto_no7_bonus" />
-        <result property="result"      column="result" />
         <result property="totalSellAmount"      column="total_sell_amount" />
+        <result property="createdDatetime"      column="created_datetime" />
     </resultMap>
 
-<!--    <select id="selectUser" parameterType="String" resultMap="BaseUserResultMap">-->
-<!--        SELECT id,-->
-<!--        password,-->
-<!--        name,-->
-<!--        type,-->
-<!--        is_enabled,-->
-<!--        created_datetime,-->
-<!--        updated_datetime-->
-<!--        FROM base_users-->
-<!--        WHERE id = #{value}-->
-<!--    </select>-->
+    <select id="selectId" parameterType="String" resultMap="LottoDataResultMap">
+        SELECT draw_id,
+               draw_datetime,
+               first_prise_money,
+               first_prise_member,
+               first_prise_per_money,
+               lotto_no1,
+               lotto_no2,
+               lotto_no3,
+               lotto_no4,
+               lotto_no5,
+               lotto_no6,
+               lotto_no7_bonus,
+               total_sell_amount,
+               created_datetime
+        WHERE draw_id = #{value}
+    </select>
 
+    <insert id="insertLotto" parameterType="LottoData">
+        INSERT INTO lotto_data (
+                draw_id,
+                draw_datetime,
+                first_prise_money,
+                first_prise_member,
+                first_prise_per_money,
+                lotto_no1,
+                lotto_no2,
+                lotto_no3,
+                lotto_no4,
+                lotto_no5,
+                lotto_no6,
+                lotto_no7_bonus,
+                total_sell_amount,
+                created_datetime
+        ) values (
+                 #{drawId},
+                 #{drawDatetime},
+                 #{firstPriseMoney},
+                 #{firstPriseMember},
+                 #{firstPrisePerMoney},
+                 #{lottoNo1},
+                 #{lottoNo2},
+                 #{lottoNo3},
+                 #{lottoNo4},
+                 #{lottoNo5},
+                 #{lottoNo6},
+                 #{lottoNo7Bonus},
+                 #{totalSellAmount},
+                 NOW()
+        )
+    </insert>
 
 </mapper>

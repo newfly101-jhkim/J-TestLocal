@@ -5,11 +5,12 @@ package io.aetherit.project.base.repository.mapper;
 //
 //import java.util.List;
 
+import io.aetherit.project.base.model.LottoData;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface LottoMapper {
-//    BaseUser selectUser(String id);
-//    List<BaseUser> selectUsersWhereType(BaseUserType type);
-//    int insertUser(BaseUser account);
+    LottoData selectId(String id);
+
+    int insertLotto(LottoData lotto);
 }

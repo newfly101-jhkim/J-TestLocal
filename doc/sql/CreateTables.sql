@@ -44,3 +44,22 @@ CREATE TABLE base_users (
 
     CONSTRAINT users_pk                      PRIMARY KEY (id)
 ) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+CREATE TABLE lotto_data (
+    draw_id                  NVARCHAR(64)        NOT NULL,
+    draw_datetime            DATETIME            NOT NULL,
+    first_prise_money         NVARCHAR(32)        NOT NULL,
+    first_prise_member        NVARCHAR(32)        NOT NULL,
+    first_prise_per_money      NVARCHAR(32)        NOT NULL,
+    lotto_no1                NVARCHAR(2)         NOT NULL,
+    lotto_no2                NVARCHAR(2)         NOT NULL,
+    lotto_no3                NVARCHAR(2)         NOT NULL,
+    lotto_no4                NVARCHAR(2)         NOT NULL,
+    lotto_no5                NVARCHAR(2)         NOT NULL,
+    lotto_no6                NVARCHAR(2)         NOT NULL,
+    lotto_no7_bonus           NVARCHAR(2)         NOT NULL,
+    total_sell_amount         NVARCHAR(32)        NOT NULL,
+    created_datetime         DATETIME            NOT NULL,
+
+    CONSTRAINT lotto_pk                     PRIMARY KEY (draw_id)
+) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
