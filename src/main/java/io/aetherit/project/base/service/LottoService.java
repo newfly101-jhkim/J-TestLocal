@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
-
 @Service
 public class LottoService {
     private static final Logger logger = LoggerFactory.getLogger(LottoService.class);

@@ -72,25 +72,27 @@ export default class LottoStore {
     *getSingleLotto(week) {
         try {
             this.lottoState = LottoState.Pending;
-            const response = yield this.lottoRepository.getLottoList(week);
+            const response = yield this.lottoRepository.getCheckLotto(week);
+            console.log(response);
+            // const response = yield this.lottoRepository.getLottoList(week);
 
-            this.lottoList = {
-                lottoNo7Bonus: response.data.bnusNo,
-                drawNo: response.data.drwNo,
-                drawNoDate: response.data.drwNoDate,
-                lottoNo1: response.data.drwtNo1,
-                lottoNo2: response.data.drwtNo2,
-                lottoNo3: response.data.drwtNo3,
-                lottoNo4: response.data.drwtNo4,
-                lottoNo5: response.data.drwtNo5,
-                lottoNo6: response.data.drwtNo6,
-                firstPrise: response.data.firstAccumamnt,
-                firstPriseMember: response.data.firstPrzwnerCo,
-                firstPriseMoney: response.data.firstWinamnt,
-                result: response.data.returnValue,
-                totalSellAmount: response.data.totSellamnt,
-            }
-            this.lottoArrayList.push(toJS(this.lottoList));
+            // this.lottoList = {
+            //     lottoNo7Bonus: response.data.bnusNo,
+            //     drawNo: response.data.drwNo,
+            //     drawNoDate: response.data.drwNoDate,
+            //     lottoNo1: response.data.drwtNo1,
+            //     lottoNo2: response.data.drwtNo2,
+            //     lottoNo3: response.data.drwtNo3,
+            //     lottoNo4: response.data.drwtNo4,
+            //     lottoNo5: response.data.drwtNo5,
+            //     lottoNo6: response.data.drwtNo6,
+            //     firstPrise: response.data.firstAccumamnt,
+            //     firstPriseMember: response.data.firstPrzwnerCo,
+            //     firstPriseMoney: response.data.firstWinamnt,
+            //     result: response.data.returnValue,
+            //     totalSellAmount: response.data.totSellamnt,
+            // }
+            // this.lottoArrayList.push(toJS(this.lottoList));
         } catch(e) {
             console.log(e);
             this.lottoState = LottoState.Failed;

@@ -22,9 +22,10 @@ public class LottoController {
         this.lottoService = lottoService;
     }
 
-    @PostMapping
+    @PostMapping("/{lottoId}")
     public ResponseEntity<LottoData> getLottoData(HttpServletRequest httpRequest, HttpSession session, @RequestBody LottoData lotto) {
         final LottoData lottoData = lottoService.getLotto(lotto.getDrawId());
+        log.debug("lottoData={}",lottoData);
 
         return new ResponseEntity<>(lottoData, HttpStatus.OK);
     }
