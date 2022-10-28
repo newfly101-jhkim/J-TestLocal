@@ -36,6 +36,12 @@ public class LottoController {
     @PutMapping("/create")
     public LottoData insertLottoData(HttpServletRequest httpRequest, @RequestBody LottoData lotto) {
         log.debug("[LottoService] insertLottoData() @RequestBody => lottoData={}",lotto);
-        return lottoService.createNewLotto(lotto);
+        if (lotto == null) {
+            log.warn("[LottoService] Getting lotto Data is NULL");
+            throw new BaseException(ErrorCode.NullData, "@RequestBody is NULL");
+        } else {
+            return lottoService.createNewLotto(lotto);
+        }
+
     }
 }

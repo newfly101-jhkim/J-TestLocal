@@ -67,14 +67,13 @@ class LottoCollect extends React.Component {
     handleChangeLottoManagementTab = (event, tabIndex) => {
         this.props.lottoStore.lottoManagementTabIndex = tabIndex;
     }
-    handleClickLatestLotto = () => {
-        this.props.lottoStore.handleGetSingleLotto(1038);
-    }
     handleFindLotto = () => {
         const { lottoStore } = this.props;
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-            lottoStore.checkSingleLotto();
+            lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
         }
+        // 검색하면 다음거 입력하기 좋게 searchBox를 삭제해준다.
+        lottoStore.searchLottoValue = '';
     }
 
     render() {
@@ -116,7 +115,6 @@ class LottoCollect extends React.Component {
                                 </Tabs>
                             </Box>
                             <Box display='flex' alignItems='center' justifyContent='flex-end'>
-                                <Button style={{backgroundColor:'#c7fff4'}} onClick={() => this.handleClickLatestLotto()}>최신</Button>
                                 <Box>
                                     <input
                                         name="lottoSearch"
