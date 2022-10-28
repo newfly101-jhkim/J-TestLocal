@@ -46,6 +46,7 @@ export default class LottoStore {
     lottoManagementTabIndex = LottoTabIndex.Lotto;
     searchLottoValue = '';
     lottoDataBaseCode = '';
+    getAxiosLottoData = false;
 
     hanldeConsolelogLotto = () => {
         console.log("모든 회차 lottoArrayList",this.lottoArrayList);
@@ -74,37 +75,27 @@ export default class LottoStore {
         }
     }
 
-    *checkSingleLotto(week) {
+    // DB에서 lotto 차수로 검색하면 그 결과 값을 lottoList에 담아줌
+    *checkSingleLotto() {
         try{
             this.lottoState = LottoState.Pending;
-            const response = yield this.lottoRepository.getCheckLotto(week);
-            console.log(response);
-        } catch (error) {
-            const errCode = error.response.data.errorCode;
-            if (errCode === DataBaseErrorCode.NoLottoData){
-                this.lottoDataBaseCode = errCode;
-            }
-            this.lottoState = LottoState.Failed;
-        } finally {
+            this.lottoList = yield this.lottoRepository.getCheckLotto(this.searchLottoValue);
+            this.lottoArrayList.push(toJS(this.lottoList));
+            console.log("****checkSingleLotto() : ",this.lottoList);
             this.lottoState = LottoState.Success;
+        } catch (error) {
+            // DB에 데이터가 없는 경우 ErrorCode를 던짐 => axios로 data받아옴
+            this.lottoDataBaseCode = error.response.data.errorCode;
+            this.getAxiosLotto(this.searchLottoValue);
+            this.lottoState = LottoState.Failed;
         }
     }
-
-    *createSingleLotto(week) {
-        this.getSingleLotto(week);
-        console.log(`axios lotto Data[${week}] : `,this.lottoList);
+    // DB에 없는 경우 axios로 api 호출해서 받아옴
+    *getAxiosLotto(week) {
         try {
-            const response = yield this.lottoRepository.createLottoData(this.lottoList);
-            console.log("@@@@@@@insert lotto data : ",response);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    *getSingleLotto(week) {
-        try {
-            this.lottoState = LottoState.Pending;
+            this.getAxiosLottoData = LottoState.Pending;
             const response = yield this.lottoRepository.getLottoList(week);
+            console.log("getSingleLotto : =>>>>>>>",response.data);
 
             this.lottoList = {
                 drawId: response.data.drwNo,
@@ -122,13 +113,46 @@ export default class LottoStore {
                 totalSellAmount: response.data.totSellamnt
             }
             // this.lottoArrayList.push(toJS(this.lottoList));
+            this.getAxiosLottoData = LottoState.Success;
+            this.createSingleLotto(this.lottoList);
         } catch(e) {
-            console.log(e);
-            this.lottoState = LottoState.Failed;
-        } finally {
-            this.lottoState = LottoState.Success;
+            console.log("axios ERROR: ",e);
+            this.getAxiosLottoData = LottoState.Failed;
         }
     }
+    // axios해서 성공하면 데이터를 DB에 넣어줌
+    *createSingleLotto() {
+        try {
+            this.lottoState = LottoState.Pending;
+
+            const response = yield this.lottoRepository.createLottoData(this.lottoList);
+            console.log("createSingleLotto() : ",response);
+            this.lottoList = {
+                drawId: response.drawId,
+                drawDatetime: response.drawDatetime,
+                firstPrisePerMoney: response.firstPrisePerMoney,
+                firstPriseMoney: response.firstPriseMoney,
+                firstPriseMember: response.firstPriseMember,
+                lottoNo1: response.lottoNo1,
+                lottoNo2: response.lottoNo2,
+                lottoNo3: response.lottoNo3,
+                lottoNo4: response.lottoNo4,
+                lottoNo5: response.lottoNo5,
+                lottoNo6: response.lottoNo6,
+                lottoNo7Bonus: response.lottoNo7Bonus,
+                totalSellAmount: response.totalSellAmount
+            };
+            // console.log("@@@@@@@inserted lotto data : ",this.lottoList);
+            // view 부분에 출력해줌
+            this.lottoArrayList.push(toJS(this.lottoList));
+            this.lottoState = LottoState.Success;
+        } catch (e) {
+            console.log("CREATE DATA : ",e);
+            this.lottoState = LottoState.Failed;
+        }
+    }
+
+
 
     *getLottoList(week) {
         this.lottoArrayList = [];

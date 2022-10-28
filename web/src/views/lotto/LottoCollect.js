@@ -51,10 +51,6 @@ const styles = theme => ({
 });
 
 class LottoCollect extends React.Component {
-    constructor(props) {
-        super();
-
-    }
     componentDidMount() {
 
         this.setState({
@@ -77,13 +73,7 @@ class LottoCollect extends React.Component {
     handleFindLotto = () => {
         const { lottoStore } = this.props;
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-            lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
-        }
-    }
-    handleAddLotto = () => {
-        const { lottoStore } = this.props;
-        if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-            lottoStore.createSingleLotto(lottoStore.searchLottoValue);
+            lottoStore.checkSingleLotto();
         }
     }
 
@@ -136,7 +126,6 @@ class LottoCollect extends React.Component {
                                         onChange={(e) => lottoStore.handleChangeLottoValue(e.target.value)}
                                     />
                                     <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleFindLotto()}>검색</Button>
-                                    <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleAddLotto()}>추가</Button>
                                 </Box>
                             </Box>
                             <Box className={classes.lineText}>
@@ -154,8 +143,8 @@ class LottoCollect extends React.Component {
                                 lottoStore.lottoArrayList && lottoStore.lottoArrayList.map((row, index) => {
                                     return (
                                         <Box key={`lotto-${index}`} className={classes.lineText}>
-                                            <Typography className={classes.labelText}> {row.drawNo} </Typography>
-                                            <Typography className={classes.labelText}> {row.drawNoDate} </Typography>
+                                            <Typography className={classes.labelText}> {row.drawId} </Typography>
+                                            <Typography className={classes.labelText}> {row.drawDatetime} </Typography>
                                             <Typography className={classes.labelText}> {row.lottoNo1} </Typography>
                                             <Typography className={classes.labelText}> {row.lottoNo2} </Typography>
                                             <Typography className={classes.labelText}> {row.lottoNo3} </Typography>
