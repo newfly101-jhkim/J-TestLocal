@@ -32,41 +32,41 @@
                lotto_no7_bonus,
                total_sell_amount,
                created_datetime
-        WHERE draw_id = #{value}
+            WHERE draw_id = #{value}
     </select>
 
     <insert id="insertLotto" parameterType="LottoData">
         INSERT INTO lotto_data (
-                draw_id,
-                draw_datetime,
-                first_prise_money,
-                first_prise_member,
-                first_prise_per_money,
-                lotto_no1,
-                lotto_no2,
-                lotto_no3,
-                lotto_no4,
-                lotto_no5,
-                lotto_no6,
-                lotto_no7_bonus,
-                total_sell_amount,
-                created_datetime
+            draw_id,
+            draw_datetime,
+            first_prise_money,
+            first_prise_member,
+            first_prise_per_money,
+            lotto_no1,
+            lotto_no2,
+            lotto_no3,
+            lotto_no4,
+            lotto_no5,
+            lotto_no6,
+            lotto_no7_bonus,
+            total_sell_amount,
+            created_datetime
         ) values (
-                 #{drawId},
-                 #{drawDatetime},
-                 #{firstPriseMoney},
-                 #{firstPriseMember},
-                 #{firstPrisePerMoney},
-                 #{lottoNo1},
-                 #{lottoNo2},
-                 #{lottoNo3},
-                 #{lottoNo4},
-                 #{lottoNo5},
-                 #{lottoNo6},
-                 #{lottoNo7Bonus},
-                 #{totalSellAmount},
-                 NOW()
-        )
+                     #{drawId},
+                     #{drawDatetime},
+                     #{firstPriseMoney},
+                     #{firstPriseMember},
+                     #{firstPrisePerMoney},
+                     #{lottoNo1},
+                     #{lottoNo2},
+                     #{lottoNo3},
+                     #{lottoNo4},
+                     #{lottoNo5},
+                     #{lottoNo6},
+                     #{lottoNo7Bonus},
+                     #{totalSellAmount},
+                     NOW()
+                 )
     </insert>
 
 </mapper>

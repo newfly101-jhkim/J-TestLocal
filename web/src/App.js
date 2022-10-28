@@ -73,7 +73,7 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/home" component={Home} />
                                 <Route exact path="/myPage" component={MyPage} />
-                                <Route exact path="/lottoCreate" component={LottoCollect} />
+                                <Route exact path="/lotto" component={LottoCollect} />
                               </Switch>
                             </React.Fragment>
                         ) : (

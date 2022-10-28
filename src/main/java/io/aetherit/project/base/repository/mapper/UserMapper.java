@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 
-@Mapper
 public interface UserMapper {
     BaseUser selectUser(String id);
     List<BaseUser> selectUsersWhereType(BaseUserType type);

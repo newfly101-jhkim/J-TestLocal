@@ -71,7 +71,7 @@ export default function SideMenu(props) {
                     </ListItem>
                 </Link>
 
-                <Link to="/lottoCreate" className={classes.link}>
+                <Link to="/lotto" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="로또 생성기" />
