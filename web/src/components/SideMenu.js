@@ -53,7 +53,11 @@ const useStyles = makeStyles((theme) => ({
 export default function SideMenu(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const { mobileOpen, setMobileOpen, isLoggedIn } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, initLottoList } = props;
+
+    const handleListItemClick = () => {
+        initLottoList();
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -65,20 +69,20 @@ export default function SideMenu(props) {
                 <ListSubheader inset>관리</ListSubheader>
 
                 <Link to="/home" className={classes.link}>
-                    <ListItem button>
+                    <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="홈" />
                     </ListItem>
                 </Link>
 
                 <Link to="/lotto" className={classes.link}>
-                    <ListItem button>
+                    <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="로또 생성기" />
                     </ListItem>
                 </Link>
                 <Link to="/myPage" className={classes.link}>
-                    <ListItem button>
+                    <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="마이페이지" />
                     </ListItem>
