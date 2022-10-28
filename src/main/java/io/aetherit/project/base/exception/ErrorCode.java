@@ -5,6 +5,7 @@ public enum ErrorCode {
     AuthenticationEnabledError,
     AuthenticationPasswordError,
     AuthenticationUserIdError,
+    NoLottoData,
     NotAcceptableId,
     CanNotFoundUser,
 

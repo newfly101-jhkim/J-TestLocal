@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LottoData {
     private String drawId;
-    private LocalDateTime drawDatetime;
+    private String drawDatetime;
     private String firstPriseMoney;
     private String firstPriseMember;
     private String firstPrisePerMoney;
