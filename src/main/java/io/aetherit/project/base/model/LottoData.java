@@ -25,8 +25,8 @@ public class LottoData {
     private String lottoNo5;
     private String lottoNo6;
     private String lottoNo7Bonus;
-    private String result;
     private String totalSellAmount;
+    private LocalDateTime createdDatetime;
 }
 
 //    drawNo:        1010
