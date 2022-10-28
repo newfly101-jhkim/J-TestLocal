@@ -29,7 +29,7 @@ export const LottoTabIndex = {
     MyLotto : 'MyLotto'
 }
 
-export default class lottoStore {
+export default class LottoStore {
     constructor(props) {
         this.lottoRepository = props.lottoRepository;
 
