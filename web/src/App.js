@@ -12,6 +12,7 @@ import SideMenu from "./components/SideMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
+import LottoCreate from "./views/LottoCreate";
 import * as stores from "./stores/AuthStore";
 import MyPage from "./views/setting/MyPage";
 
@@ -71,6 +72,7 @@ class App extends React.Component {
                               <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/home" component={Home} />
+                                <Route exact path="/lottoCreate" component={LottoCreate} />
                                 <Route exact path="/myPage" component={MyPage} />
                               </Switch>
                             </React.Fragment>

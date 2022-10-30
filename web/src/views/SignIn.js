@@ -101,7 +101,7 @@ class SignIn extends React.Component {
                                    required fullWidth />
                         <TextField id="password"
                                    name="password"
-                                   label="Password"
+                                   label="password"
                                    type="password"
                                    variant="outlined"
                                    margin="normal"
