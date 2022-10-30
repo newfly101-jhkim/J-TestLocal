@@ -65,6 +65,7 @@ class App extends React.Component {
                                 doLogout={() => this.props.authStore.doLogout()} />
                         <SideMenu mobileOpen={this.state.mobileOpen}
                                   setMobileOpen={this.setMobileOpen}
+                                  initLottoList={() => this.props.lottoStore.initLottoList()}
                                   isLoggedIn={loginState === stores.State.Authenticated} />
 
                         {loginState === stores.State.Authenticated ? (
