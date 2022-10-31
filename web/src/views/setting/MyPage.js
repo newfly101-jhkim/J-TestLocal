@@ -53,7 +53,7 @@ const styles = theme => ({
 class MyPage extends React.Component {
 
     render() {
-        const { classes, userStore, authStore } = this.props;
+        const { classes, authStore } = this.props;
 
         return (
             <div className={classes.mainContainer}>
@@ -87,7 +87,7 @@ class MyPage extends React.Component {
 }
 
 export default withSnackbar(withRouter((withStyles(styles) (
-    inject('userStore', 'authStore')(
+    inject('authStore')(
         observer(MyPage)
     )
 ))));

@@ -3,7 +3,6 @@ import {inject, observer} from "mobx-react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Box, Typography} from "@material-ui/core";
 
 const styles = theme => ({
 
