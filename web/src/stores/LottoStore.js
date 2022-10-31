@@ -47,6 +47,11 @@ export default class LottoStore {
     lottoManagementTabIndex = LottoTabIndex.Lotto;
     searchLottoValue = '';
     lottoDataBaseCode = '';
+    lottoPage = 0;
+    lottoRowsPerPage = 5;
+    lottoSearch = '';
+    // search = false;
+
 
 
     initLottoList = () => {
