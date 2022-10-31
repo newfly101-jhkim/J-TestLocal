@@ -15,6 +15,7 @@ import SignIn from "./views/SignIn";
 import * as stores from "./stores/AuthStore";
 import MyPage from "./views/setting/MyPage";
 import LottoCollect from "./views/lotto/LottoCollect";
+import UserManagement from "./views/setting/UserManagement";
 
 
 const styles = () => ({
@@ -75,6 +76,7 @@ class App extends React.Component {
                                 <Route exact path="/home" component={Home} />
                                 <Route exact path="/myPage" component={MyPage} />
                                 <Route exact path="/lotto" component={LottoCollect} />
+                                <Route exact path="/userSetting" component={UserManagement} />
                               </Switch>
                             </React.Fragment>
                         ) : (

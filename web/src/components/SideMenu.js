@@ -66,7 +66,7 @@ export default function SideMenu(props) {
     const drawer = (
         <div className={classes.menu}>
             <List>
-                <ListSubheader inset>관리</ListSubheader>
+                {/*<ListSubheader inset>관리</ListSubheader>*/}
 
                 <Link to="/home" className={classes.link}>
                     <ListItem button disableRipple onClick={() => handleListItemClick()}>
@@ -85,6 +85,13 @@ export default function SideMenu(props) {
                     <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="마이페이지" />
+                    </ListItem>
+                </Link>
+
+                <Link to="/userSetting" className={classes.link}>
+                    <ListItem button disableRipple onClick={() => handleListItemClick()}>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="사용자 관리" />
                     </ListItem>
                 </Link>
             </List>
