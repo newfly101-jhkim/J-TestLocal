@@ -16,7 +16,7 @@ import {LottoState, LottoTabIndex} from "../../stores/LottoStore";
 import {
     Table,
     TableBody,
-    TableCell,
+    TableCell, TableFooter,
     TableHead, TablePagination,
     TableRow
 } from "@mui/material";
@@ -85,8 +85,12 @@ class LottoCollect extends React.Component {
     handleChangeLottoManagementTab = (event, tabIndex) => {
         this.props.lottoStore.lottoManagementTabIndex = tabIndex;
     }
-    handleFindLotto = () => {
+
+    handleFindLotto = (e) => {
         const { lottoStore } = this.props;
+        // if(e.keyCode === 13) {
+        //     lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
+        // }
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
             lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
         }
@@ -105,28 +109,6 @@ class LottoCollect extends React.Component {
         console.log("lottoRowsPerPage : ",event.target.value);
         lottoStore.lottoRowsPerPage = parseInt(event.target.value, 10);
     }
-
-    // handleChangePage = (event, newPage) => {
-    //     this.setState({
-    //         newPage : newPage,
-    //     });
-    // }
-    //
-    // handleChangeRowsPerPage = (event) => {
-    //     this.setState({
-    //         rowsPerPage : parseInt(event.target.value, 10),
-    //         page : 0
-    //     });
-    // }
-    // handleMoveButtonClick = (event, count) => {
-    //     this.setState({
-    //         page: this.page + count
-    //     });
-    // }
-    // handleLastPageButtonClick = (event) => {
-    //     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-    // }
-
 
 
     render() {
@@ -192,7 +174,7 @@ class LottoCollect extends React.Component {
 
                             <Table>
                                 <TableHead>
-                                    <TableBody key="lotto-table-header">
+                                    {/*<TableBody key="lotto-table-header">*/}
                                         <TableRow >
                                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">회차</TableCell>
                                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">날짜</TableCell>
@@ -204,48 +186,44 @@ class LottoCollect extends React.Component {
                                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호6</TableCell>
                                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호7</TableCell>
                                         </TableRow>
-                                    </TableBody>
+                                    {/*</TableBody>*/}
                                 </TableHead>
+                                <TableBody>
+                                {lottoManagementTabIndex === LottoTabIndex.Lotto ?
+                                    lottoStore.lottoArrayList && lottoStore.lottoArrayList.map((row, index) => {
+                                        return (
+                                            <TableRow key={`lotto-${index}`}>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawDatetime}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo1}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo2}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo3}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo4}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo5}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo6}</TableCell>
+                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo7Bonus}</TableCell>
+                                            </TableRow>
+                                            )
+                                        })
+                                    :
+                                    ''
+                                }
+                                </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            style={{width: '100%'}}
+                                            // component="div"
+                                            count={lottoStore.lottoArrayList.length}
+                                            page={lottoPage}
+                                            onPageChange={(e) => this.handleChangePage(e, 1)}
+                                            rowsPerPage={lottoRowsPerPage}
+                                            rowsPerPageOptions={[5,10,25]}
+                                            onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
                             </Table>
-
-                            <Box>
-                                <Table aria-label="custom pagination table">
-                                    {lottoManagementTabIndex === LottoTabIndex.Lotto ?
-                                        lottoStore.lottoArrayList && lottoStore.lottoArrayList.map((row, index) => {
-                                            return (
-                                                <TableBody>
-                                                    <TableRow key={`lotto-${index}`}>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawDatetime}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo1}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo2}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo3}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo4}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo5}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo6}</TableCell>
-                                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo7Bonus}</TableCell>
-                                                    </TableRow>
-                                                </TableBody>
-                                                )
-                                            })
-                                        :
-                                        ''
-                                    }
-                                        <TableRow>
-                                            <TablePagination
-                                                style={{width: '100%'}}
-                                                // component="div"
-                                                count={lottoStore.lottoArrayList.length}
-                                                page={lottoPage}
-                                                onPageChange={(e) => this.handleChangePage(e, 1)}
-                                                rowsPerPage={lottoRowsPerPage}
-                                                rowsPerPageOptions={[5,10,25]}
-                                                onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
-                                            />
-                                        </TableRow>
-
-                                </Table>
-                            </Box>
                         </Box>
                     </Box>
                 </div>
