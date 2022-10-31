@@ -20,6 +20,8 @@ import {
     TableHead, TablePagination,
     TableRow
 } from "@mui/material";
+import TablePaginationActions from "../../common/TablePaginationActions";
+
 
 const styles = theme => ({
     mainContainer: {
@@ -86,11 +88,19 @@ class LottoCollect extends React.Component {
         this.props.lottoStore.lottoManagementTabIndex = tabIndex;
     }
 
+    handleKeyUpPassword = (e) => {
+        const { lottoStore } = this.props;
+        if(e.keyCode === 13) {
+            if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
+                lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
+            }
+            lottoStore.searchLottoValue = '';
+        }
+
+    }
+
     handleFindLotto = (e) => {
         const { lottoStore } = this.props;
-        // if(e.keyCode === 13) {
-        //     lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
-        // }
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
             lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
         }
@@ -101,7 +111,7 @@ class LottoCollect extends React.Component {
     handleChangePage = (event, newPage) => {
         const {lottoStore} = this.props;
         console.log("lottoPage : ",event.target.value);
-        lottoStore.lottoPage = lottoStore.lottoPage + newPage;
+        lottoStore.lottoPage = newPage;
     }
     handleChangeRowsPerPage = (event) => {
         const {lottoStore} = this.props;
@@ -150,44 +160,45 @@ class LottoCollect extends React.Component {
                                 </Tabs>
                             </Box>
                             <Box display='flex' alignItems='center' justifyContent='flex-end'>
-                                <Box>
+                                <Box pr={2}>
                                     <input
                                         name="lottoSearch"
+                                        style={{height:30}}
                                         id="lottoSearch"
                                         value={lottoStore.searchLottoValue}
                                         type="search"
                                         onChange={(e) => lottoStore.handleChangeLottoValue(e.target.value)}
+                                        onKeyUp={this.handleKeyUpPassword}
                                     />
-                                        <Button style={{backgroundColor:'#005ba9', color:'#ffffff'}} onClick={() => this.handleFindLotto()}
-                                                disabled={(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending)}
-                                        >
-                                            {(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending) ?
-                                                <CircularProgress style={{color: '#ffffff'}} size={22}/>
-                                                :
-                                                '검색'
-                                            }
-                                        </Button>
+                                </Box>
+                                <Box>
+                                    <Button style={{paddingLeft:5, backgroundColor:'#005ba9', color:'#ffffff', height:30}} onClick={() => this.handleFindLotto()}
+                                            disabled={(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending)}
+                                    >
+                                        {(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending) ?
+                                            <CircularProgress style={{color: '#ffffff'}} size={22}/>
+                                            :
+                                            '검색'
+                                        }
+                                    </Button>
                                 </Box>
                             </Box>
 
-
-
                             <Table>
                                 <TableHead>
-                                    {/*<TableBody key="lotto-table-header">*/}
-                                        <TableRow >
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">회차</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">날짜</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호1</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호2</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호3</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호4</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호5</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호6</TableCell>
-                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호7</TableCell>
-                                        </TableRow>
-                                    {/*</TableBody>*/}
+                                    <TableRow>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">회차</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">날짜</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호1</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호2</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호3</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호4</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호5</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호6</TableCell>
+                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호7</TableCell>
+                                    </TableRow>
                                 </TableHead>
+
                                 <TableBody>
                                 {lottoManagementTabIndex === LottoTabIndex.Lotto ?
                                     lottoStore.lottoArrayList && lottoStore.lottoArrayList.map((row, index) => {
@@ -209,17 +220,19 @@ class LottoCollect extends React.Component {
                                     ''
                                 }
                                 </TableBody>
+
                                 <TableFooter>
                                     <TableRow>
                                         <TablePagination
                                             style={{width: '100%'}}
-                                            // component="div"
                                             count={lottoStore.lottoArrayList.length}
                                             page={lottoPage}
-                                            onPageChange={(e) => this.handleChangePage(e, 1)}
+                                            onPageChange={this.handleChangePage}
+                                            SelectProps={{renderValue: (value) => value}}
                                             rowsPerPage={lottoRowsPerPage}
                                             rowsPerPageOptions={[5,10,25]}
-                                            onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
+                                            onRowsPerPageChange={this.handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
                                         />
                                     </TableRow>
                                 </TableFooter>
