@@ -75,6 +75,15 @@ export default class LottoStore {
     setLottoRowsPerPage = (rowsPerPage) => {
         this.lottoRowsPerPage = rowsPerPage;
     }
+    setLottoManagementTabIndex = (tabIndex) => {
+        this.lottoManagementTabIndex = tabIndex;
+    }
+
+    setFilterLottoViewList = () => {
+        this.lottoViewList = this.lottoArrayList.filter(list =>
+            list.drawId === this.searchLottoValue
+        );
+    }
 
     setLottoViewList = () => {
         this.lottoViewList = this.lottoArrayList.sort(function compare(a, b) {

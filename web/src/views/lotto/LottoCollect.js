@@ -85,18 +85,26 @@ class LottoCollect extends React.Component {
     }
 
     handleChangeLottoManagementTab = (event, tabIndex) => {
-        this.props.lottoStore.lottoManagementTabIndex = tabIndex;
+        this.props.lottoStore.setLottoManagementTabIndex(tabIndex);
     }
 
-    handleKeyUpPassword = (e) => {
+    // DB랑 통신하지 않고, 처음에 rendering할때 불러온 값에서 검색하는 기능
+    handleAutoFindLotto = (value) => {
         const { lottoStore } = this.props;
-        if(e.keyCode === 13) {
-            if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-                lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
-            }
-            lottoStore.searchLottoValue = '';
-        }
+        lottoStore.setLottoPage(0);
+        lottoStore.handleChangeLottoValue(value);
+        lottoStore.setFilterLottoViewList();
 
+        if (lottoStore.searchLottoValue === null || lottoStore.searchLottoValue === undefined || lottoStore.searchLottoValue === '') {
+            lottoStore.setLottoViewList();
+        }
+    }
+
+    // Enter키 입력 시 자동 검색 버튼 눌림
+    handleKeyUpPassword = (e) => {
+        if(e.keyCode === 13) {
+            this.handleFindLotto();
+        }
     }
 
     handleFindLotto = () => {
@@ -110,7 +118,7 @@ class LottoCollect extends React.Component {
             lottoStore.getLottoList();
         }
         // 검색하면 다음거 입력하기 좋게 searchBox를 삭제해준다.
-        lottoStore.searchLottoValue = '';
+        lottoStore.handleChangeLottoValue('');
     }
 
     handleChangePage = (event, newPage) => {
@@ -170,7 +178,7 @@ class LottoCollect extends React.Component {
                                         id="lottoSearch"
                                         value={lottoStore.searchLottoValue}
                                         type="search"
-                                        onChange={(e) => lottoStore.handleChangeLottoValue(e.target.value)}
+                                        onChange={(e) => this.handleAutoFindLotto(e.target.value)}
                                         onKeyUp={this.handleKeyUpPassword}
                                     />
                                 </Box>
@@ -220,7 +228,10 @@ class LottoCollect extends React.Component {
                                             )
                                         })
                                     :
-                                    ''
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={9} style={{font:'0.927rem', width: '72%', alignItems:'center' }}>검색 결과가 없습니다.</TableCell>
+                                    </TableRow>
+
                                 }
                                 </TableBody>
 
@@ -240,6 +251,7 @@ class LottoCollect extends React.Component {
                                     </TableRow>
                                 </TableFooter>
                             </Table>
+
                         </Box>
                     </Box>
                 </div>
