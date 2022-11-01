@@ -1,7 +1,6 @@
 package io.aetherit.project.base.service;
 
 import io.aetherit.project.base.model.LottoData;
-import io.aetherit.project.base.model.LottoDataList;
 import io.aetherit.project.base.repository.LottoRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

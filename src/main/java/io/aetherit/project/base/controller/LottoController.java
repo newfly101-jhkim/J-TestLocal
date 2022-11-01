@@ -3,7 +3,6 @@ package io.aetherit.project.base.controller;
 import io.aetherit.project.base.exception.BaseException;
 import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.LottoData;
-import io.aetherit.project.base.model.LottoDataList;
 import io.aetherit.project.base.service.LottoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

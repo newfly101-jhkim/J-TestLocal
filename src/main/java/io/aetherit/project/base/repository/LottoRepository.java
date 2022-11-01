@@ -1,7 +1,6 @@
 package io.aetherit.project.base.repository;
 
 import io.aetherit.project.base.model.LottoData;
-import io.aetherit.project.base.model.LottoDataList;
 import io.aetherit.project.base.repository.mapper.LottoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
