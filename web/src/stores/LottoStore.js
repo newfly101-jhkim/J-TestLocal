@@ -54,6 +54,7 @@ export default class LottoStore {
     lottoRowsPerPage = 5;
     lottoSearch = '';
     // search = false;
+    userLottoList = [];
 
 
 
@@ -86,11 +87,27 @@ export default class LottoStore {
     }
 
     setLottoViewList = () => {
-        // console.log("@@@@@@@@@@@@@@@@@@@@",this.lottoArrayList);
         this.lottoViewList = this.lottoArrayList.sort(function compare(a, b) {
             return a.drawId - b.drawId;
         });
     }
+
+    // <MyLotto />
+    setUserRandomLottoList = () => {
+        let list = [];
+        for (let i = 0; i < 6; i++) {
+            const number = Math.random()*(45-1) + 1;
+            if (!list.includes(Math.floor(number))) {
+                list.push(Math.floor(number));
+            } else {
+                i--;
+            }
+        }
+        list = list.sort(function compare(a,b){ return a - b});
+        this.userLottoList.push(list);
+        // console.log("@@@@@@user list : ",this.userLottoList);
+    }
+
 
     *getLottoList() {
         this.isLoading = true;
