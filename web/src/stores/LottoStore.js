@@ -56,8 +56,6 @@ export default class LottoStore {
 
 
     initLottoList = () => {
-        this.lottoArrayList = [];
-        this.lottoViewList = [];
         this.lottoList = {};
         this.lottoState = LottoState.Waiting;
         this.getAxiosLottoData = LottoState.Waiting;
@@ -86,6 +84,7 @@ export default class LottoStore {
     }
 
     setLottoViewList = () => {
+        console.log("@@@@@@@@@@@@@@@@@@@@",this.lottoArrayList);
         this.lottoViewList = this.lottoArrayList.sort(function compare(a, b) {
             return a.drawId - b.drawId;
         });
