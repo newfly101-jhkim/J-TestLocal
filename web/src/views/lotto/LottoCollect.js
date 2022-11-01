@@ -14,6 +14,8 @@ import {
 } from "@material-ui/core";
 import {LottoState, LottoTabIndex} from "../../stores/LottoStore";
 import {
+    Backdrop,
+    IconButton,
     Table,
     TableBody,
     TableCell, TableFooter,
@@ -21,6 +23,7 @@ import {
     TableRow
 } from "@mui/material";
 import TablePaginationActions from "../../common/TablePaginationActions";
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 
 const styles = theme => ({
@@ -137,125 +140,139 @@ class LottoCollect extends React.Component {
         const { lottoManagementTabIndex, lottoPage, lottoRowsPerPage  } = lottoStore;
 
         return (
-            <div className={classes.mainContainer}>
-                <div className={classes.appBarSpacer}/>
-                <div className={classes.mainContent}>
-                    <Toolbar className={classes.toolbar}>
-                        <Typography variant="h4" component="h2">
-                            동행 복권 (Lottery)
-                        </Typography>
-                    </Toolbar>
-                    <Box className={classes.contentBox}>
-                        <Box className={classes.contentPadding}>
-                            <Box>
-                                <Tabs
-                                    value={lottoManagementTabIndex}
-                                    onChange={this.handleChangeLottoManagementTab}
-                                    variant="scrollable"
-                                    scrollButtons="auto"
-                                >
-                                    <Tab
-                                        key={"presentation-tab"}
-                                        value={LottoTabIndex.Lotto}
-                                        // className={clsx(classes.colorTabStyle, classes.colorTab)}
-                                        disableRipple
-                                        label="동행 복권 로또"
-                                    />
-                                    <Tab
-                                        key={"waiting-tab"}
-                                        // className={clsx(classes.colorTabStyle, classes.colorTab)}
-                                        value={LottoTabIndex.MyLotto}
-                                        disableRipple
-                                        label='나의 로또'
-                                    />
-                                </Tabs>
-                            </Box>
-                            <Box display='flex' alignItems='center' justifyContent='flex-end'>
-                                <Box pr={2}>
-                                    <input
-                                        name="lottoSearch"
-                                        style={{height:30}}
-                                        id="lottoSearch"
-                                        value={lottoStore.searchLottoValue}
-                                        type="search"
-                                        onChange={(e) => this.handleAutoFindLotto(e.target.value)}
-                                        onKeyUp={this.handleKeyUpPassword}
-                                    />
-                                </Box>
+            <>
+                {lottoStore.isLoading ?
+                <Backdrop style={{color:'#fff', backgroundColor:'#949494' ,zIndex: (theme) => theme.zIndex.drawer + 1}} open={lottoStore.isLoading}>
+                    <CircularProgress color="inherit"/>
+                </Backdrop>
+            :
+                <div className={classes.mainContainer}>
+                    <div className={classes.appBarSpacer}/>
+                    <div className={classes.mainContent}>
+                        <Toolbar className={classes.toolbar}>
+                            <Typography variant="h4" component="h2">
+                                동행 복권 (Lottery)
+                            </Typography>
+                        </Toolbar>
+                        <Box className={classes.contentBox}>
+                            <Box className={classes.contentPadding}>
                                 <Box>
-                                    <Button style={{paddingLeft:5, backgroundColor:'#005ba9', color:'#ffffff', height:30}} onClick={() => this.handleFindLotto()}
-                                            disabled={(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending)}
+                                    <Tabs
+                                        value={lottoManagementTabIndex}
+                                        onChange={this.handleChangeLottoManagementTab}
+                                        variant="scrollable"
+                                        scrollButtons="auto"
                                     >
-                                        {(lottoStore.lottoState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending) ?
-                                            <CircularProgress style={{color: '#ffffff'}} size={22}/>
-                                            :
-                                            '검색'
-                                        }
-                                    </Button>
-                                </Box>
-                            </Box>
-
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">회차</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">날짜</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호1</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호2</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호3</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호4</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호5</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호6</TableCell>
-                                        <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호7</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                {lottoManagementTabIndex === LottoTabIndex.Lotto ?
-                                    lottoStore.lottoViewList && lottoStore.lottoViewList.slice(lottoPage * lottoRowsPerPage, lottoPage * lottoRowsPerPage + lottoRowsPerPage).map((row, index) => {
-                                        return (
-                                            <TableRow key={`lotto-${index}`}>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawDatetime}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo1}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo2}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo3}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo4}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo5}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo6}</TableCell>
-                                                <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo7Bonus}</TableCell>
-                                            </TableRow>
-                                            )
-                                        })
-                                    :
-                                    <TableRow>
-                                        <TableCell align="center" colSpan={9} style={{font:'0.927rem', width: '72%', alignItems:'center' }}>검색 결과가 없습니다.</TableCell>
-                                    </TableRow>
-
-                                }
-                                </TableBody>
-
-                                <TableFooter>
-                                    <TableRow>
-                                        <TablePagination
-                                            style={{width: '100%'}}
-                                            count={lottoStore.lottoViewList.length}
-                                            page={lottoPage}
-                                            onPageChange={this.handleChangePage}
-                                            SelectProps={{renderValue: (value) => value}}
-                                            rowsPerPage={lottoRowsPerPage}
-                                            rowsPerPageOptions={[5,10,25]}
-                                            onRowsPerPageChange={this.handleChangeRowsPerPage}
-                                            ActionsComponent={TablePaginationActions}
+                                        <Tab
+                                            key={"presentation-tab"}
+                                            value={LottoTabIndex.Lotto}
+                                            // className={clsx(classes.colorTabStyle, classes.colorTab)}
+                                            disableRipple
+                                            label="동행 복권 로또"
                                         />
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
+                                        <Tab
+                                            key={"waiting-tab"}
+                                            // className={clsx(classes.colorTabStyle, classes.colorTab)}
+                                            value={LottoTabIndex.MyLotto}
+                                            disableRipple
+                                            label='나의 로또'
+                                        />
+                                    </Tabs>
+                                </Box>
+                                <Box display='flex' alignItems='center' justifyContent='flex-end'>
+                                    <Box pr={2}>
+                                        <IconButton onClick={() => lottoStore.getLottoList()}>
+                                            <RefreshIcon/>
+                                        </IconButton>
+                                    </Box>
+                                    <Box pr={2}>
+                                        <input
+                                            name="lottoSearch"
+                                            style={{height:30}}
+                                            id="lottoSearch"
+                                            value={lottoStore.searchLottoValue}
+                                            type="search"
+                                            onChange={(e) => this.handleAutoFindLotto(e.target.value)}
+                                            onKeyUp={this.handleKeyUpPassword}
+                                        />
+                                    </Box>
+                                    <Box>
 
+                                        <Button style={{paddingLeft:5, backgroundColor:'#005ba9', color:'#ffffff', height:30}} onClick={() => this.handleFindLotto()}
+                                                disabled={(lottoStore.searchState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending)}
+                                        >
+                                            {(lottoStore.searchState === LottoState.Pending || lottoStore.getAxiosLottoData === LottoState.Pending) ?
+                                                <CircularProgress style={{color: '#ffffff'}} size={22}/>
+                                                :
+                                                '검색'
+                                            }
+                                        </Button>
+                                    </Box>
+                                </Box>
+
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">회차</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">날짜</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호1</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호2</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호3</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호4</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호5</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호6</TableCell>
+                                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">번호7</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+
+                                    <TableBody>
+                                    {lottoManagementTabIndex === LottoTabIndex.Lotto ?
+                                        lottoStore.lottoViewList && lottoStore.lottoViewList.slice(lottoPage * lottoRowsPerPage, lottoPage * lottoRowsPerPage + lottoRowsPerPage).map((row, index) => {
+                                            return (
+                                                <TableRow key={`lotto-${index}`}>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawDatetime}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo1}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo2}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo3}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo4}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo5}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo6}</TableCell>
+                                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.lottoNo7Bonus}</TableCell>
+                                                </TableRow>
+                                                )
+                                            })
+                                        :
+                                        <TableRow>
+                                            <TableCell align="center" colSpan={9} style={{font:'0.927rem', width: '72%', alignItems:'center' }}>검색 결과가 없습니다.</TableCell>
+                                        </TableRow>
+
+                                    }
+                                    </TableBody>
+
+                                    <TableFooter>
+                                        <TableRow>
+                                            <TablePagination
+                                                style={{width: '100%'}}
+                                                count={lottoStore.lottoViewList.length}
+                                                page={lottoPage}
+                                                onPageChange={this.handleChangePage}
+                                                SelectProps={{renderValue: (value) => value}}
+                                                rowsPerPage={lottoRowsPerPage}
+                                                rowsPerPageOptions={[5,10,25]}
+                                                onRowsPerPageChange={this.handleChangeRowsPerPage}
+                                                ActionsComponent={TablePaginationActions}
+                                            />
+                                        </TableRow>
+                                    </TableFooter>
+                                </Table>
+
+                            </Box>
                         </Box>
-                    </Box>
+                    </div>
                 </div>
-            </div>
+            }
+            </>
         );
     }
 }

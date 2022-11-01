@@ -44,7 +44,9 @@ export default class LottoStore {
     lottoViewList = [];
     lottoList = {};
     lottoState = LottoState.Waiting;
+    searchState = LottoState.Waiting;
     getAxiosLottoData = LottoState.Waiting;
+    isLoading = false;
     lottoManagementTabIndex = LottoTabIndex.Lotto;
     searchLottoValue = '';
     lottoDataBaseCode = '';
@@ -84,13 +86,14 @@ export default class LottoStore {
     }
 
     setLottoViewList = () => {
-        console.log("@@@@@@@@@@@@@@@@@@@@",this.lottoArrayList);
+        // console.log("@@@@@@@@@@@@@@@@@@@@",this.lottoArrayList);
         this.lottoViewList = this.lottoArrayList.sort(function compare(a, b) {
             return a.drawId - b.drawId;
         });
     }
 
     *getLottoList() {
+        this.isLoading = true;
         try{
             this.lottoState = LottoState.Pending;
             this.lottoArrayList = yield this.lottoRepository.getLottoDataList();
@@ -98,9 +101,11 @@ export default class LottoStore {
             this.setLottoViewList();
 
             this.lottoState = LottoState.Success;
+            this.isLoading = false;
         } catch (e) {
             console.log("get LottoList Failed");
             this.lottoState = LottoState.Failed;
+            this.isLoading = false;
         }
     }
 
@@ -108,16 +113,16 @@ export default class LottoStore {
     *checkSingleLotto(week) {
         this.lottoViewList = [];
         try{
-            this.lottoState = LottoState.Pending;
+            this.searchState = LottoState.Pending;
             this.lottoList = yield this.lottoRepository.getCheckLotto(week);
             this.lottoViewList.push(toJS(this.lottoList));
             console.log("****checkSingleLotto() : ",this.lottoList);
-            this.lottoState = LottoState.Success;
+            this.searchState = LottoState.Success;
         } catch (error) {
             // DB에 데이터가 없는 경우 ErrorCode를 던짐 => axios로 data받아옴
             this.lottoDataBaseCode = error.response.data.errorCode;
             this.getAxiosLotto(week);
-            this.lottoState = LottoState.Failed;
+            this.searchState = LottoState.Failed;
         }
     }
     // DB에 없는 경우 axios로 api 호출해서 받아옴
@@ -154,7 +159,7 @@ export default class LottoStore {
     *createSingleLotto() {
         this.lottoViewList = [];
         try {
-            this.lottoState = LottoState.Pending;
+            this.searchState = LottoState.Pending;
 
             const response = yield this.lottoRepository.createLottoData(this.lottoList);
             console.log("createSingleLotto() : ",response);
@@ -173,13 +178,15 @@ export default class LottoStore {
                 lottoNo7Bonus: response.lottoNo7Bonus,
                 totalSellAmount: response.totalSellAmount
             };
-            // view 부분에 출력해줌
+            // view 부분에 출력해줌 + DB에 추가해 주었기 때문에 viewList 뿐만 아니라 ArrayList에 추가하게 되면, re-rendering 할 이유가 없다.
+            // 처음에 한번만 불러오는 거 외에 웹 반응 속도를 위해서 두개의 list에 추가해준다.
+            this.lottoArrayList.push(toJS(this.lottoList));
             this.lottoViewList.push(toJS(this.lottoList));
-            this.lottoState = LottoState.Success;
+            this.searchState = LottoState.Success;
         } catch (error) {
             // insert할 데이터가 null인 경우 예외처리
             this.lottoDataBaseCode = error.response.data.errorCode;
-            this.lottoState = LottoState.Failed;
+            this.searchState = LottoState.Failed;
         }
     }
 }
