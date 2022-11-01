@@ -1,20 +1,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.aetherit.project.base.repository.mapper.LottoMapper">
     <resultMap id="LottoDataResultMap" type="LottoData">
-        <id property="drawId"                       column="draw_id" />
-        <result property="drawDatetime"      column="draw_datetime" />
-        <result property="firstPriseMoney"             column="first_prise_money" />
-        <result property="firstPriseMember"                 column="first_prise_member" />
-        <result property="firstPrisePerMoney"                 column="first_prise_per_money" />
-        <result property="lottoNo1"            column="lotto_no1" />
-        <result property="lottoNo2"      column="lotto_no2" />
-        <result property="lottoNo3"      column="lotto_no3" />
-        <result property="lottoNo4"      column="lotto_no4" />
-        <result property="lottoNo5"      column="lotto_no5" />
-        <result property="lottoNo6"      column="lotto_no6" />
-        <result property="lottoNo7Bonus"      column="lotto_no7_bonus" />
-        <result property="totalSellAmount"      column="total_sell_amount" />
-        <result property="createdDatetime"      column="created_datetime" />
+        <id property="drawId"                           column="draw_id" />
+        <result property="drawDatetime"                 column="draw_datetime" />
+        <result property="firstPriseMoney"              column="first_prise_money" />
+        <result property="firstPriseMember"             column="first_prise_member" />
+        <result property="firstPrisePerMoney"           column="first_prise_per_money" />
+        <result property="lottoNo1"                     column="lotto_no1" />
+        <result property="lottoNo2"                     column="lotto_no2" />
+        <result property="lottoNo3"                     column="lotto_no3" />
+        <result property="lottoNo4"                     column="lotto_no4" />
+        <result property="lottoNo5"                     column="lotto_no5" />
+        <result property="lottoNo6"                     column="lotto_no6" />
+        <result property="lottoNo7Bonus"                column="lotto_no7_bonus" />
+        <result property="totalSellAmount"              column="total_sell_amount" />
+        <result property="createdDatetime"              column="created_datetime" />
     </resultMap>
 
     <select id="selectId" parameterType="String" resultMap="LottoDataResultMap">
@@ -34,6 +34,24 @@
                created_datetime
         FROM lotto_data
         WHERE draw_id = #{id}
+    </select>
+
+    <select id="selectLottoList" resultMap="LottoDataResultMap">
+        SELECT draw_id,
+               draw_datetime,
+               first_prise_money,
+               first_prise_member,
+               first_prise_per_money,
+               lotto_no1,
+               lotto_no2,
+               lotto_no3,
+               lotto_no4,
+               lotto_no5,
+               lotto_no6,
+               lotto_no7_bonus,
+               total_sell_amount,
+               created_datetime
+        FROM lotto_data
     </select>
 
     <insert id="insertLotto" parameterType="LottoData">
@@ -69,5 +87,7 @@
                      NOW()
                  )
     </insert>
+
+
 
 </mapper>

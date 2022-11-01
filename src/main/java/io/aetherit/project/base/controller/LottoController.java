@@ -3,16 +3,18 @@ package io.aetherit.project.base.controller;
 import io.aetherit.project.base.exception.BaseException;
 import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.LottoData;
+import io.aetherit.project.base.model.LottoDataList;
 import io.aetherit.project.base.service.LottoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/v1/lotto/")
+@RequestMapping("/api/v1/lotto")
 public class LottoController {
     private LottoService lottoService;
 
@@ -21,7 +23,7 @@ public class LottoController {
         this.lottoService = lottoService;
     }
 
-    @PostMapping("{lottoId}")
+    @PostMapping("/{lottoId}")
     public LottoData getLottoData(HttpServletRequest httpRequest, @PathVariable String lottoId) {
         final LottoData lottoData = lottoService.getLotto(lottoId);
         log.debug("[LottoService] getLottoData() @PathVariable => lottoData={}",lottoData);
@@ -42,6 +44,13 @@ public class LottoController {
         } else {
             return lottoService.createNewLotto(lotto);
         }
+    }
 
+    @GetMapping("")
+    public List<LottoData> getLottoList(HttpServletRequest httpRequest) {
+        final List<LottoData> lotto = lottoService.getLottoList();
+        log.debug("[LottoService] select LottoDataList=>{}",lotto);
+
+        return lotto;
     }
 }

@@ -1,6 +1,7 @@
 package io.aetherit.project.base.service;
 
 import io.aetherit.project.base.model.LottoData;
+import io.aetherit.project.base.model.LottoDataList;
 import io.aetherit.project.base.repository.LottoRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class LottoService {
@@ -29,6 +30,9 @@ public class LottoService {
         repository.insertLotto(lotto);
 
         return lotto;
+    }
+    public List<LottoData> getLottoList() {
+        return repository.selectLottoList();
     }
 
 
