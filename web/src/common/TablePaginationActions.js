@@ -6,10 +6,6 @@ import {useTheme} from "@emotion/react";
 
 class TablePaginationActions extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     handleFirstPageButtonClick = (event) => {
         this.props.onPageChange(event, 0);
     };
