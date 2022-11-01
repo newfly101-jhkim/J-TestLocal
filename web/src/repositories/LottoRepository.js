@@ -7,6 +7,9 @@ export default class LottoRepository extends Repository {
 
         this.requestPrefix = props.serverContextPath + "/api/v1/lotto";
     }
+    getLottoDataList = () => {
+        return this.getRequestPromise('get', this.requestPrefix);
+    }
 
     getCheckLotto = (week) => {
         return this.getRequestPromise('post', this.requestPrefix + `/${week}`, week);

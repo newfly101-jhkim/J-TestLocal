@@ -76,6 +76,7 @@ class LottoCollect extends React.Component {
             rowsPerPage : 5,
         })
         // const emptyRows = this.state.page > 0 ? Math.max(0, (1 + this.state.page) * this.state.rowsPerPage - this.state.rows.length) : 0;
+        this.props.lottoStore.getLottoList();
     }
 
     handleChangeTab = (tab) => {
@@ -99,7 +100,7 @@ class LottoCollect extends React.Component {
 
     }
 
-    handleFindLotto = (e) => {
+    handleFindLotto = () => {
         const { lottoStore } = this.props;
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
             lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
@@ -110,14 +111,12 @@ class LottoCollect extends React.Component {
 
     handleChangePage = (event, newPage) => {
         const {lottoStore} = this.props;
-        console.log("lottoPage : ",event.target.value);
-        lottoStore.lottoPage = newPage;
+        lottoStore.setLottoPage(newPage);
     }
     handleChangeRowsPerPage = (event) => {
         const {lottoStore} = this.props;
-        lottoStore.lottoPage = 0;
-        console.log("lottoRowsPerPage : ",event.target.value);
-        lottoStore.lottoRowsPerPage = parseInt(event.target.value, 10);
+        lottoStore.setLottoPage(0);
+        lottoStore.setLottoRowsPerPage(parseInt(event.target.value, 10));
     }
 
 
@@ -201,7 +200,7 @@ class LottoCollect extends React.Component {
 
                                 <TableBody>
                                 {lottoManagementTabIndex === LottoTabIndex.Lotto ?
-                                    lottoStore.lottoArrayList && lottoStore.lottoArrayList.map((row, index) => {
+                                    lottoStore.lottoArrayList && lottoStore.lottoArrayList.slice(lottoPage * lottoRowsPerPage, lottoPage * lottoRowsPerPage + lottoRowsPerPage).map((row, index) => {
                                         return (
                                             <TableRow key={`lotto-${index}`}>
                                                 <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>

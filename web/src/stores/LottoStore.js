@@ -67,6 +67,27 @@ export default class LottoStore {
         this.searchLottoValue = value;
     }
 
+    setLottoPage = (page) => {
+        this.lottoPage = page;
+    }
+    setLottoRowsPerPage = (rowsPerPage) => {
+        this.lottoRowsPerPage = rowsPerPage;
+    }
+
+    *getLottoList() {
+        try{
+            this.lottoState = LottoState.Pending;
+            this.lottoArrayList = yield this.lottoRepository.getLottoDataList();
+
+            console.log("DB에서 LottoDataList 받아옴 => ",this.lottoArrayList);
+
+            this.lottoState = LottoState.Success;
+        } catch (e) {
+            console.log("get LottoList Failed");
+            this.lottoState = LottoState.Failed;
+        }
+    }
+
     // DB에서 lotto 차수로 검색하면 그 결과 값을 lottoList에 담아줌
     *checkSingleLotto(week) {
         try{
