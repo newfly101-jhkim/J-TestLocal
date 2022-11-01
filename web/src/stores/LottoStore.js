@@ -41,6 +41,7 @@ export default class LottoStore {
     }
 
     lottoArrayList = [];
+    lottoViewList = [];
     lottoList = {};
     lottoState = LottoState.Waiting;
     getAxiosLottoData = LottoState.Waiting;
@@ -56,6 +57,7 @@ export default class LottoStore {
 
     initLottoList = () => {
         this.lottoArrayList = [];
+        this.lottoViewList = [];
         this.lottoList = {};
         this.lottoState = LottoState.Waiting;
         this.getAxiosLottoData = LottoState.Waiting;
@@ -74,12 +76,18 @@ export default class LottoStore {
         this.lottoRowsPerPage = rowsPerPage;
     }
 
+    setLottoViewList = () => {
+        this.lottoViewList = this.lottoArrayList.sort(function compare(a, b) {
+            return a.drawId - b.drawId;
+        });
+    }
+
     *getLottoList() {
         try{
             this.lottoState = LottoState.Pending;
             this.lottoArrayList = yield this.lottoRepository.getLottoDataList();
-
-            console.log("DB에서 LottoDataList 받아옴 => ",this.lottoArrayList);
+            // console.log("DB에서 LottoDataList 받아옴 => ",this.lottoArrayList);
+            this.setLottoViewList();
 
             this.lottoState = LottoState.Success;
         } catch (e) {
@@ -90,10 +98,11 @@ export default class LottoStore {
 
     // DB에서 lotto 차수로 검색하면 그 결과 값을 lottoList에 담아줌
     *checkSingleLotto(week) {
+        this.lottoViewList = [];
         try{
             this.lottoState = LottoState.Pending;
             this.lottoList = yield this.lottoRepository.getCheckLotto(week);
-            this.lottoArrayList.push(toJS(this.lottoList));
+            this.lottoViewList.push(toJS(this.lottoList));
             console.log("****checkSingleLotto() : ",this.lottoList);
             this.lottoState = LottoState.Success;
         } catch (error) {
@@ -135,6 +144,7 @@ export default class LottoStore {
     }
     // axios해서 성공하면 데이터를 DB에 넣어줌
     *createSingleLotto() {
+        this.lottoViewList = [];
         try {
             this.lottoState = LottoState.Pending;
 
@@ -156,7 +166,7 @@ export default class LottoStore {
                 totalSellAmount: response.totalSellAmount
             };
             // view 부분에 출력해줌
-            this.lottoArrayList.push(toJS(this.lottoList));
+            this.lottoViewList.push(toJS(this.lottoList));
             this.lottoState = LottoState.Success;
         } catch (error) {
             // insert할 데이터가 null인 경우 예외처리

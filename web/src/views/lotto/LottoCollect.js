@@ -75,7 +75,6 @@ class LottoCollect extends React.Component {
             page: 0,
             rowsPerPage : 5,
         })
-        // const emptyRows = this.state.page > 0 ? Math.max(0, (1 + this.state.page) * this.state.rowsPerPage - this.state.rows.length) : 0;
         this.props.lottoStore.getLottoList();
     }
 
@@ -102,8 +101,13 @@ class LottoCollect extends React.Component {
 
     handleFindLotto = () => {
         const { lottoStore } = this.props;
+        lottoStore.setLottoPage(0);
         if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
+            // 특정 검색한 로또만 화면에 표출
             lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
+        } else {
+            // 아니면 전체 List를 불러온다.
+            lottoStore.getLottoList();
         }
         // 검색하면 다음거 입력하기 좋게 searchBox를 삭제해준다.
         lottoStore.searchLottoValue = '';
@@ -200,7 +204,7 @@ class LottoCollect extends React.Component {
 
                                 <TableBody>
                                 {lottoManagementTabIndex === LottoTabIndex.Lotto ?
-                                    lottoStore.lottoArrayList && lottoStore.lottoArrayList.slice(lottoPage * lottoRowsPerPage, lottoPage * lottoRowsPerPage + lottoRowsPerPage).map((row, index) => {
+                                    lottoStore.lottoViewList && lottoStore.lottoViewList.slice(lottoPage * lottoRowsPerPage, lottoPage * lottoRowsPerPage + lottoRowsPerPage).map((row, index) => {
                                         return (
                                             <TableRow key={`lotto-${index}`}>
                                                 <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{row.drawId}</TableCell>
@@ -224,7 +228,7 @@ class LottoCollect extends React.Component {
                                     <TableRow>
                                         <TablePagination
                                             style={{width: '100%'}}
-                                            count={lottoStore.lottoArrayList.length}
+                                            count={lottoStore.lottoViewList.length}
                                             page={lottoPage}
                                             onPageChange={this.handleChangePage}
                                             SelectProps={{renderValue: (value) => value}}
