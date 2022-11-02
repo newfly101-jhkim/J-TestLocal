@@ -7,6 +7,7 @@ import {Box, Toolbar, Typography} from "@material-ui/core";
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import dayjs from 'dayjs';
+import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 const styles = theme => ({
     mainContainer : {
@@ -26,7 +27,7 @@ const styles = theme => ({
     contentBox:{
         width: '100%',
         background: 'white',
-        marginTop: 40,
+        marginTop: 20,
         paddingTop: 10,
         paddingBottom: 40,
         boxSizing: 'border-box',
@@ -50,20 +51,48 @@ const styles = theme => ({
         paddingTop: 3,
         alignItems: 'center',
         display: 'flex',
-    },
+    }
 })
 
 class MyPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            second : dayjs().format("YYYY-MM-DD")
+            second : dayjs().format("YYYY-MM-DD"),
+            renameSwitch : true,
+            realUpdateTime : this.props.authStore.loginUser.updatedDatetime,
+            useName: this.props.authStore.loginUser.enabled ? "활성화" : "휴면",
         }
+    }
+
+    CanChangeInfo = () => {
+        this.setState({
+            renameSwitch : false
+        })
+    }
+
+    EndChangeInfo = () => {
+        let nowTime = Date();
+        this.setState({
+            renameSwitch : true,
+            realUpdateTime: nowTime,
+        })
+    }
+
+    handleEnabled = (e) => {
+        this.setState({
+            useName : e.target.value
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            realEnabled : this.props.authStore.loginUser.enabled
+        })
     }
 
     render() {
         const { classes, authStore } = this.props;
-        console.log(authStore.loginUser)
 
         return (
             <div className={classes.mainContainer}>
@@ -87,12 +116,13 @@ class MyPage extends React.Component {
                                             {shrink: true}
                                         }
                                         inputProps={
-                                            {readOnly: true}
+                                            {readOnly: this.state.renameSwitch}
                                         }
                                         sx={
                                             {m:2}
                                         }
                                     />
+                                    {this.state.renameSwitch ? "" : <span style={{color : "green"}}>ID 변경 가능합니다.</span>}
                                     <TextField
                                         id="name"
                                         label="이름"
@@ -101,12 +131,13 @@ class MyPage extends React.Component {
                                             {shrink: true}
                                         }
                                         inputProps={
-                                            {readOnly: true}
+                                            {readOnly: this.state.renameSwitch}
                                         }
                                         sx={
                                             {m:2}
                                         }
                                     />
+                                    {this.state.renameSwitch ? "" : <span style={{color : "green"}}>이름 변경 가능합니다.</span>}
                                     <TextField
                                         id="type"
                                         label="가입 유형"
@@ -138,7 +169,7 @@ class MyPage extends React.Component {
                                     <TextField
                                         id="renewal-info"
                                         label="정보 갱신 날짜"
-                                        defaultValue={dayjs(authStore.loginUser.updatedDatetime).format("YYYY.MM.DD")}
+                                        defaultValue={dayjs(this.state.realUpdateTime).format("YYYY.MM.DD")}
                                         InputLabelProps={
                                             {shrink: true}
                                         }
@@ -149,20 +180,36 @@ class MyPage extends React.Component {
                                             {m:2}
                                         }
                                     />
-                                    <TextField
-                                        id="status"
-                                        label="계정 상태"
-                                        defaultValue={authStore.loginUser.enabled ? "활성화" : "휴면"}
-                                        InputLabelProps={
-                                            {shrink: true}
-                                        }
-                                        inputProps={
-                                            {readOnly: true}
-                                        }
-                                        sx={
-                                            {m:2}
-                                        }
-                                    />
+                                    {this.state.renameSwitch
+                                        ? <TextField
+                                            id="status"
+                                            label="계정 상태"
+                                            value={this.state.useName}
+                                            InputLabelProps={
+                                                {shrink: true}
+                                            }
+                                            inputProps={
+                                                {readOnly: true}
+                                            }
+                                            sx={
+                                                {m:2}
+                                            }
+                                        />
+                                        : <FormControl>
+                                            <FormLabel>계정 상태</FormLabel>
+                                            <RadioGroup
+                                                row
+                                                value={this.state.useName}
+                                                onChange={(e)=>this.handleEnabled(e)}
+                                            >
+                                                <FormControlLabel control={<Radio/>} label={"활성화"} value={"활성화"} />
+                                                <FormControlLabel control={<Radio/>} label={"휴면"} value={"휴면"} />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    }
+                                    {this.state.renameSwitch
+                                        ? <button onClick={this.CanChangeInfo}>정보 수정</button>
+                                        : <button onClick={this.EndChangeInfo}>수정 완료</button>}
                                 </Stack>
                             </Box>
                         </Box>
