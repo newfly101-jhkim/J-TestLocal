@@ -63,3 +63,19 @@ CREATE TABLE lotto_data (
 
     CONSTRAINT lotto_pk                     PRIMARY KEY (draw_id)
 ) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+CREATE TABLE lotto_statistic_data (
+    id                      INT AUTO_INCREMENT  NOT NULL        COMMENT '로또 랜덤 생성 데이터 순서' ,
+    user_id                 NVARCHAR(64)        NOT NULL        COMMENT '랜덤 생성한 유저',
+    exp_draw_id             NVARCHAR(64)        NOT NULL        COMMENT '랜덤 회차',
+    exp_count               NVARCHAR(32)        NOT NULL        COMMENT '랜덤 회차의 수',
+    exp_no1                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호1',
+    exp_no2                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호2',
+    exp_no3                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호3',
+    exp_no4                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호4',
+    exp_no5                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호5',
+    exp_no6                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호6',
+    created_datetime        DATETIME            NOT NULL        COMMENT '랜덤 생성 시간',
+
+     CONSTRAINT lotto_statistic_pk          PRIMARY KEY (id)
+) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;

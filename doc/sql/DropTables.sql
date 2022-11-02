@@ -5,3 +5,4 @@ DROP TABLE SPRING_SESSION;
 
 DROP TABLE base_users;
 DROP TABLE lotto_data;
+DROP TABLE lotto_statistic_data;
