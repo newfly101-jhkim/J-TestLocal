@@ -1,6 +1,7 @@
 package io.aetherit.project.base.service;
 
 import io.aetherit.project.base.model.LottoData;
+import io.aetherit.project.base.model.LottoRandom;
 import io.aetherit.project.base.repository.LottoRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,12 @@ public class LottoService {
         return repository.selectLottoList();
     }
 
+    public LottoRandom createNewRandomLotto(LottoRandom lottoRandom) {
+        lottoRandom.setCreatedDatetime(LocalDateTime.now());
+        logger.debug("[LottoService] Random Lotto Data ={}",lottoRandom);
+        repository.insertLottoRandom(lottoRandom);
+
+        return lottoRandom;
+    }
 
 }

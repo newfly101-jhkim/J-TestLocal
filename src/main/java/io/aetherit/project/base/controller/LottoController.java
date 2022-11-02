@@ -3,6 +3,7 @@ package io.aetherit.project.base.controller;
 import io.aetherit.project.base.exception.BaseException;
 import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.LottoData;
+import io.aetherit.project.base.model.LottoRandom;
 import io.aetherit.project.base.service.LottoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,16 @@ public class LottoController {
 
         return lotto;
     }
+
+    @PutMapping("/create/random")
+    public LottoRandom insertRandomLotto(HttpServletRequest httpRequest, @RequestBody LottoRandom lottoRandom) {
+        log.debug("[LottoController] get User's Random Lotto Data List ={}",lottoRandom);
+        if (lottoRandom == null) {
+            log.warn("[LottoController] User's Random Lotto Data is null");
+            throw new BaseException(ErrorCode.NullData, "@RequestBody is NULL");
+        } else {
+            return lottoService.createNewRandomLotto(lottoRandom);
+        }
+    }
+
 }
