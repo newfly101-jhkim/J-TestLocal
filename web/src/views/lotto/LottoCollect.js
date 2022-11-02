@@ -25,6 +25,7 @@ import {
 import TablePaginationActions from "../../common/TablePaginationActions";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import MyLotto from "./MyLotto";
+import dayjs from "dayjs";
 
 
 const styles = theme => ({
@@ -111,15 +112,13 @@ class LottoCollect extends React.Component {
         }
     }
 
-    handleFindLotto = () => {
+    handleFindLotto = () => { // 125
         const { lottoStore } = this.props;
         lottoStore.setLottoPage(0);
-        if (lottoStore.searchLottoValue !== undefined && lottoStore.searchLottoValue !== null && lottoStore.searchLottoValue > 0){
-            // 특정 검색한 로또만 화면에 표출
+        // console.log("view길이 : ",lottoStore.lottoViewList.length,"view : ",lottoStore.lottoViewList);
+        if (lottoStore.lottoViewList.length === 0){
+            // 특정 검색한 로또만 화면에 표출 => api호출
             lottoStore.checkSingleLotto(lottoStore.searchLottoValue);
-        } else {
-            // 아니면 전체 List를 불러온다.
-            lottoStore.getLottoList();
         }
         // 검색하면 다음거 입력하기 좋게 searchBox를 삭제해준다.
         lottoStore.handleChangeLottoValue('');

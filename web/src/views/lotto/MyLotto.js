@@ -3,8 +3,9 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
 import React from 'react';
-import {Box, Button} from "@material-ui/core";
+import {Box, Button, Typography} from "@material-ui/core";
 import {Table, TableHead, TableRow, TableCell, TableBody} from "@mui/material";
+import dayjs from "dayjs";
 
 
 const styles = theme => ({
@@ -18,8 +19,13 @@ const styles = theme => ({
         paddingLeft:5,
         backgroundColor:'#005ba9',
         color:'#ffffff',
-        height:30
-    }
+        height:30,
+        '&:hover': {
+            color:'#ffffff',
+            backgroundColor:'#005ba9',
+        }
+    },
+
 })
 
 class MyLotto extends React.Component {
@@ -30,8 +36,11 @@ class MyLotto extends React.Component {
         return (
             <Box className={classes.mainContent}>
                 <Box>
-                    <Button className={classes.lottoButton} onClick={() => lottoStore.setUserRandomLottoList()}>
-                        로또번호 추출
+                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.setUserRandomLottoList()}>
+                        로또번호 추첨
+                    </Button>
+                    <Button>
+
                     </Button>
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?
