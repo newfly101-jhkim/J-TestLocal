@@ -1,22 +1,17 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-dom";
 import {inject, observer} from "mobx-react";
-
 import {withStyles} from "@material-ui/core/styles";
 import {Box, CssBaseline} from "@material-ui/core";
-
-// import axios from "axios";
 
 import TopBar from "./components/TopBar";
 import SideMenu from "./components/SideMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
-import LottoCreate from "./views/LottoCreate";
 import * as stores from "./stores/AuthStore";
 import MyPage from "./views/setting/MyPage";
 import LottoCollect from "./views/lotto/LottoCollect";
-
 
 const styles = () => ({
     root: {
@@ -74,7 +69,6 @@ class App extends React.Component {
                               <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/home" component={Home} />
-                                <Route exact path="/lottoCreate" component={LottoCreate} />
                                 <Route exact path="/myPage" component={MyPage} />
                                 <Route exact path="/lotto" component={LottoCollect} />
                               </Switch>
