@@ -141,7 +141,7 @@ class MyPage extends React.Component {
                                     <TextField
                                         id="type"
                                         label="가입 유형"
-                                        defaultValue={authStore.loginUser.type === "Admin" ? "관리자" : "일반회원"}
+                                        value={authStore.loginUser.type === "Admin" ? "관리자" : "일반회원"}
                                         InputLabelProps={
                                             {shrink: true}
                                         }
@@ -155,7 +155,7 @@ class MyPage extends React.Component {
                                     <TextField
                                         id="first-signIn"
                                         label="계정 생성일"
-                                        defaultValue={dayjs(authStore.loginUser.createdDatetime).format("YYYY.MM.DD")}
+                                        value={dayjs(authStore.loginUser.createdDatetime).format("YYYY.MM.DD")}
                                         InputLabelProps={
                                             {shrink: true}
                                         }
@@ -169,7 +169,7 @@ class MyPage extends React.Component {
                                     <TextField
                                         id="renewal-info"
                                         label="정보 갱신 날짜"
-                                        defaultValue={dayjs(this.state.realUpdateTime).format("YYYY.MM.DD")}
+                                        value={dayjs(this.state.realUpdateTime).format("YYYY.MM.DD")}
                                         InputLabelProps={
                                             {shrink: true}
                                         }
