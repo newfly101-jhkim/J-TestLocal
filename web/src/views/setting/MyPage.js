@@ -195,7 +195,8 @@ class MyPage extends React.Component {
                                                 {m:2}
                                             }
                                         />
-                                        : <FormControl>
+                                        :
+                                        <FormControl>
                                             <FormLabel>계정 상태</FormLabel>
                                             <RadioGroup
                                                 row
