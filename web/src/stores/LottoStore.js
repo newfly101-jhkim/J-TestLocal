@@ -1,4 +1,5 @@
 import {makeAutoObservable, toJS} from "mobx";
+import dayjs from "dayjs";
 
 // const Lotto = {
 //     lottoNo7Bonus: '',
@@ -55,6 +56,7 @@ export default class LottoStore {
     lottoSearch = '';
     // search = false;
     userLottoList = [];
+    startLottoDate = dayjs(new Date).week();
 
 
 
@@ -106,6 +108,29 @@ export default class LottoStore {
         list = list.sort(function compare(a,b){ return a - b});
         this.userLottoList.push(list);
         // console.log("@@@@@@user list : ",this.userLottoList);
+        return list;
+    }
+    *createUserRandomLotto(userId) {
+        try {
+            console.log("이번주 : ",this.startLottoDate);
+            let list = this.setUserRandomLottoList();
+            const param = {
+                userId : userId,
+                expCount : this.userLottoList.length,
+                expNo1 : list[0],
+                expNo2 : list[1],
+                expNo3 : list[2],
+                expNo4 : list[3],
+                expNo5 : list[4],
+                expNo6 : list[5],
+                createdDatetime : dayjs(new Date).format("YYYY-MM-DD HH:mm:ss")
+            }
+            // yield  this.lottoRepository.createRandomLottoData();
+            console.log(param);
+        } catch (e) {
+            console.log(e.response.errorCode);
+        }
+
     }
 
 

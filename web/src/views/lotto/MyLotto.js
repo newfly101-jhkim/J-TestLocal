@@ -32,11 +32,11 @@ class MyLotto extends React.Component {
 
 
     render () {
-        const {classes, lottoStore} = this.props;
+        const {classes, lottoStore, authStore} = this.props;
         return (
             <Box className={classes.mainContent}>
                 <Box>
-                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.setUserRandomLottoList()}>
+                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}>
                         로또번호 추첨
                     </Button>
                     <Button>
@@ -82,7 +82,7 @@ class MyLotto extends React.Component {
 }
 
 export default withSnackbar(withRouter(withStyles(styles) (
-    inject('lottoStore')(
+    inject('lottoStore', 'authStore')(
         observer(MyLotto)
     )
 )));
