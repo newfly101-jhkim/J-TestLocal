@@ -17,6 +17,20 @@
         <result property="createdDatetime"              column="created_datetime" />
     </resultMap>
 
+    <resultMap id="LottoRandomResultMap" type="LottoRandom">
+        <id property="id"                               column="id" />
+        <result property="userId"                       column="user_id" />
+        <result property="expDrawId"                    column="exp_draw_id" />
+        <result property="expCount"                     column="exp_count" />
+        <result property="expNo1"                       column="exp_no1" />
+        <result property="expNo2"                       column="exp_no2" />
+        <result property="expNo3"                       column="exp_no3" />
+        <result property="expNo4"                       column="exp_no4" />
+        <result property="expNo5"                       column="exp_no5" />
+        <result property="expNo6"                       column="exp_no6" />
+        <result property="createdDatetime"              column="created_datetime" />
+    </resultMap>
+
     <select id="selectId" parameterType="String" resultMap="LottoDataResultMap">
         SELECT draw_id,
                draw_datetime,
@@ -54,6 +68,23 @@
         FROM lotto_data
     </select>
 
+    <select id="selectRandomId" parameterType="String" resultMap="LottoRandomResultMap">
+        SELECT id,
+               user_id,
+               exp_draw_id,
+               exp_count,
+               exp_no1,
+               exp_no2,
+               exp_no3,
+               exp_no4,
+               exp_no5,
+               exp_no6,
+               created_datetime
+        FROM lotto_statistic_data
+        WHERE exp_draw_id = #{id}
+    </select>
+
+
     <insert id="insertLotto" parameterType="LottoData">
         INSERT INTO lotto_data (
             draw_id,
@@ -84,6 +115,34 @@
                      #{lottoNo6},
                      #{lottoNo7Bonus},
                      #{totalSellAmount},
+                     NOW()
+                 )
+    </insert>
+
+    <insert id="insertLottoRandom" parameterType="LottoRandom">
+        INSERT INTO lotto_statistic_data (
+            id,
+            user_id,
+            exp_draw_id,
+            exp_count,
+            exp_no1,
+            exp_no2,
+            exp_no3,
+            exp_no4,
+            exp_no5,
+            exp_no6,
+            created_datetime
+        ) values (
+                     #{id},
+                     #{userId},
+                     #{expDrawId},
+                     #{expCount},
+                     #{expNo1},
+                     #{expNo2},
+                     #{expNo3},
+                     #{expNo4},
+                     #{expNo5},
+                     #{expNo6},
                      NOW()
                  )
     </insert>
