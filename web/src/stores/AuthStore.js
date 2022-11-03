@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, toJS} from "mobx";
 import {AuthTokenStorageKey} from "../repositories/Repository";
 
 export const State = {
@@ -42,12 +42,15 @@ const LoginState = {
 export default class AuthStore {
     constructor(props) {
         this.authRepository = props.authRepository;
+        this.userRepository = props.userRepository; // 추가 - repository 이름 조심히 만들 것 / 철자 주의.
 
         this.authState = AuthState.None;
 
         makeAutoObservable(this);
     }
 
+    userArrayList = [];
+    userInfo = {}; // 객체 값인데 list 명칭은 이상함
     login = Object.assign({}, EmptyLogin);
     loginState = State.NotAuthenticated;
     loginToken = '';
@@ -85,6 +88,7 @@ export default class AuthStore {
         let nowTime = Date();
         this.renameSwitch = true;
         this.loginUser.updatedDatetime = nowTime;
+        this.getUserList(this.loginUser); // 데이터 값을 db로 던지기 위한 스위치
     }
 
     changeLoginId = (id) => {
@@ -105,6 +109,55 @@ export default class AuthStore {
     handleIsCheckedUserId = (check) => {
         this.isCheckedUserId = check;
     };
+    handleChangeUpdateDatetime = (time) => {  // 추가된 부분
+        this.loginUser.updatedDatetime = time;
+    }
+
+    *getUserList() {  //modifyUserInfo
+        // console.log("변경할 유저 정보 : ",loginUser); //this.loginUser
+        // this.isLoading = true;
+        try{
+            this.userInfo = {
+                id: this.loginUser.id,
+                name: this.loginUser.name,
+                // type: this.loginUser.type,
+                isEnabled: this.loginUser.enabled,
+                // updatedDatetime: this.loginUser.updatedDatetime
+            }
+            // const response = yield this.UserRepository.getUserList(loginUser);
+            // this.userArrayList = yield this.UserRepository.getUserDataList(loginUser);
+
+
+            const response = yield this.userRepository.getUserDataList(this.userInfo);
+            console.log(response);
+
+            // this.userArrayList.push(toJS(this.userInfo));
+            //
+            // this.isLoading = false;
+        } catch (e) {
+            console.log("get UserList Failed",e)
+
+            // this.isLoading = false;
+        }
+    }
+
+    // *getAxiosUser(loginUser) {
+    //     try {
+    //         const response = yield this.UserRepository.getUserList(loginUser);
+    //         console.log("getSingleUser : =>>", response.data);
+    //
+    //         this.userInfo = {
+    //              id: response.data.id,
+    //              name: response.data.name,
+    //              type: response.data.type,
+    //              enabled: response.data.enabled,
+    //              updatedDatetime: response.data.updatedDatetime,
+    //              createdDatetime: response.data.createdDatetime,
+    //         }
+    //     } catch(e) {
+    //         console.log("axios Error: ", e);
+    //     }
+    // } // 추가된 부분 종료
 
     *doLogin(callbacks) {
         this.loginState = State.Pending;

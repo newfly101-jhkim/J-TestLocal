@@ -67,6 +67,15 @@ class MyPage extends React.Component {
         this.props.authStore.convertStatus()
     }
 
+    handleModifyUserInfo = () => { // 시간변경 함수 추가
+        const {authStore} = this.props;
+        // let nowTime = Date();
+        // this.loginUser.updatedDatetime = nowTime;
+        this.renameSwitch = true;
+        authStore.handleChangeUpdateDatetime(new Date());
+        authStore.getUserList();
+    }
+
     render() {
         const { classes, authStore } = this.props;
 
@@ -189,7 +198,8 @@ class MyPage extends React.Component {
                                     }
                                     {authStore.renameSwitch
                                         ? <button onClick={authStore.CanChangeInfo}>정보 수정</button>
-                                        : <button onClick={authStore.EndChangeInfo}>수정 완료</button>}
+                                        : <button onClick={() => this.handleModifyUserInfo()}>수정 완료</button>}
+                                        {/*: <button onClick={() => authStore.EndChangeInfo()}>수정 완료</button>}*/}
                                 </Stack>
                             </Box>
                         </Box>
