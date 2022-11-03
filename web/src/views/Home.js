@@ -2,7 +2,7 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Box, Toolbar, Typography} from "@material-ui/core";
+import {Toolbar, Typography} from "@material-ui/core";
 import {inject, observer} from "mobx-react";
 
 
@@ -37,19 +37,6 @@ class Home extends React.Component {
                             Home
                         </Typography>
                     </Toolbar>
-                    <Box display='flex' alignItems='center' style={{width:'100%', justifyContent:'flex'}}>
-                        <Typography> Jkim의 이것 저것</Typography>
-                        <Typography> 뭐가 있지</Typography>
-                    </Box>
-                    <Box>
-                        <Button onClick={() => this.handleClickLotto()} disabled={this.props.lottoStore.lottoState === LottoState.Pending}>
-                            { this.props.lottoStore.lottoState === LottoState.Pending ?
-                                <CircularProgress size={22}/>
-                            :
-                                '유저 만들기'
-                            }
-                        </Button>
-                    </Box>
                 </div>
             </div>
         );
