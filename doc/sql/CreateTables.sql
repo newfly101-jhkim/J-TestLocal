@@ -67,8 +67,8 @@ CREATE TABLE lotto_data (
 CREATE TABLE lotto_statistic_data (
     id                      INT AUTO_INCREMENT  NOT NULL        COMMENT '로또 랜덤 생성 데이터 순서' ,
     user_id                 NVARCHAR(64)        NOT NULL        COMMENT '랜덤 생성한 유저',
-    exp_draw_id             NVARCHAR(64)        NOT NULL        COMMENT '랜덤 회차',
-    exp_count               NVARCHAR(32)        NOT NULL        COMMENT '랜덤 회차의 수',
+    exp_draw_id             INT                 NOT NULL        COMMENT '랜덤 회차',
+    exp_count               INT                 NOT NULL        COMMENT '랜덤 회차의 수',
     exp_no1                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호1',
     exp_no2                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호2',
     exp_no3                 NVARCHAR(2)         NOT NULL        COMMENT '랜덤 생성 번호3',

@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class LottoRandom {
     private int id;
     private String userId;
-    private String expDrawId;
-    private String expCount;
+    private int expDrawId;
+    private int expCount;
     private String expNo1;
     private String expNo2;
     private String expNo3;

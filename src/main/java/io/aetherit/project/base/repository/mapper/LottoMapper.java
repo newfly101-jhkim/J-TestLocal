@@ -12,7 +12,7 @@ public interface LottoMapper {
 
     List<LottoData> selectLottoList();
 
-    List<LottoRandom> selectLottoRandomList();
+    List<LottoRandom> selectLottoRandomList(String id, String userId);
 
     int insertRandomLotto(LottoRandom lottoRandom);
 }
