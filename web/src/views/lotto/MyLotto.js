@@ -3,10 +3,9 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
 import React from 'react';
-import {Box, Button, Typography} from "@material-ui/core";
+import {Box, Button} from "@material-ui/core";
 import {Table, TableHead, TableRow, TableCell, TableBody} from "@mui/material";
 import dayjs from "dayjs";
-
 
 const styles = theme => ({
     mainContent: {
@@ -25,7 +24,6 @@ const styles = theme => ({
             backgroundColor:'#005ba9',
         }
     },
-
 })
 
 class MyLotto extends React.Component {
@@ -40,7 +38,6 @@ class MyLotto extends React.Component {
 
         // this.props.lottoStore.startLottoDate = false;
     }
-
 
     render () {
         const {classes, lottoStore, authStore} = this.props;
@@ -89,7 +86,6 @@ class MyLotto extends React.Component {
             </Box>
         )
     }
-
 }
 
 export default withSnackbar(withRouter(withStyles(styles) (
