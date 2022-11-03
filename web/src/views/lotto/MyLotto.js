@@ -14,7 +14,7 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'left',
     },
     lottoButton: {
         paddingLeft:5,
@@ -25,6 +25,13 @@ const styles = theme => ({
             color:'#ffffff',
             backgroundColor:'#005ba9',
         }
+    },
+    lineText: {
+        justifyContent: 'flex',
+        paddingTop: 3,
+        alignItems: 'center',
+        display: 'flex',
+        paddingLeft: 20,
     },
 
 })
@@ -55,17 +62,18 @@ class MyLotto extends React.Component {
         const {classes, lottoStore, authStore} = this.props;
         return (
             <Box className={classes.mainContent}>
-                <Box>
-                    <Typography>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
+                <Box className={classes.lineText}>
+                    <Typography style={{paddingRight:10, font: '1.028rem solid black'}}>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
                     {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
-                    {lottoStore.lottoState === LottoState.Pending ?
-                            <CircularProgress color="inherit"/>
-                        :
-                            <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
-                                    disabled={lottoStore.lottoState === LottoState.Pending}>
-                                로또번호 추첨
-                            </Button>
+                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
+                            disabled={lottoStore.lottoState === LottoState.Pending}>
+                        {lottoStore.lottoState === LottoState.Pending ?
+                            <CircularProgress style={{color: '#ffffff'}} size={22}/>
+                            :
+                            '번호 추첨'
                         }
+                    </Button>
+
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?
                 <Table>
