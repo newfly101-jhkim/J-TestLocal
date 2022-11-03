@@ -18,6 +18,13 @@ export default class LottoRepository extends Repository {
         return this.getRequestPromise('put', this.requestPrefix +'/create', lotto);
     }
 
+    createRandomLottoData = (lottoRandom) => {
+        return this.getRequestPromise('put', this.requestPrefix+'/create/random', lottoRandom);
+    }
+    getRandomLottoDataList = (expDrawId, userId) => {
+        return this.getRequestPromise('get', this.requestPrefix+`/mylotto?expDrawId=${expDrawId}&userId=${userId}`);
+    }
+
     getLottoList = (week) => {
         return new Promise((resolve, reject) => {
             axios.get('dhlottery/https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+week)

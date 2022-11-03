@@ -54,7 +54,10 @@ export default class LottoStore {
     lottoPage = 0;
     lottoRowsPerPage = 5;
     lottoSearch = '';
-    // search = false;
+
+    defaultLottoDate = dayjs('2002-12-07').day(6);
+    lottoToday = '';
+
     userLottoList = [];
     startLottoDate = true;
 
@@ -106,29 +109,65 @@ export default class LottoStore {
             }
         }
         list = list.sort(function compare(a,b){ return a - b});
-        this.userLottoList.push(list);
+        // this.userLottoList.push(list);  // 구조 변경되어서 [1, 2, 3, 4, 5 ,6] 의 구조로 찍히는 부분을 제거
+        // db insert 할때 성공 시 집어넣는 것으로 변경
         // console.log("@@@@@@user list : ",this.userLottoList);
         return list;
     }
+
+    setTodayLotto = (todayDrawId) => {
+        this.lottoToday = todayDrawId;
+    }
+
+    *getUserRandomLotto(userId) {
+        try {
+            this.lottoState = LottoState.Pending;
+            this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
+
+            // createdDatetime: "2022-11-03T17:17:08"
+            // expCount: "1"
+            // expDrawId: "1040"
+            // expNo1: "3"
+            // expNo2: "9"
+            // expNo3: "15"
+            // expNo4: "16"
+            // expNo5: "21"
+            // expNo6: "37"
+            // id: 1
+            // userId: "jhkim"
+
+            this.lottoState = LottoState.Success;
+        } catch (e) {
+            console.log("getUser's Random Data list",e);
+            this.lottoState = LottoState.Failed;
+        }
+    }
+
+
     *createUserRandomLotto(userId) {
         try {
-            console.log("이번주 : ",this.startLottoDate);
+            this.lottoState = LottoState.Pending;
+            // console.log("이번주 : ",this.startLottoDate);
             let list = this.setUserRandomLottoList();
             const param = {
                 userId : userId,
+                expDrawId : this.lottoToday,
                 expCount : this.userLottoList.length,
                 expNo1 : list[0],
                 expNo2 : list[1],
                 expNo3 : list[2],
                 expNo4 : list[3],
                 expNo5 : list[4],
-                expNo6 : list[5],
-                createdDatetime : dayjs(new Date).format("YYYY-MM-DD HH:mm:ss")
+                expNo6 : list[5]
             }
-            // yield  this.lottoRepository.createRandomLottoData();
-            console.log(param);
+            const response = yield this.lottoRepository.createRandomLottoData(param);
+            // console.log("input random lottoData in DB : ",response);
+
+            this.userLottoList.push(response);
+            this.lottoState = LottoState.Success;
         } catch (e) {
             console.log(e.response.errorCode);
+            this.lottoState = LottoState.Failed;
         }
 
     }
