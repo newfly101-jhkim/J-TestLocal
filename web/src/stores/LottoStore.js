@@ -54,7 +54,10 @@ export default class LottoStore {
     lottoPage = 0;
     lottoRowsPerPage = 5;
     lottoSearch = '';
-    // search = false;
+
+    defaultLottoDate = dayjs('2002-12-07').day(6);
+    lottoToday = '';
+
     userLottoList = [];
     startLottoDate = true;
 
@@ -110,20 +113,25 @@ export default class LottoStore {
         // console.log("@@@@@@user list : ",this.userLottoList);
         return list;
     }
+
+    setTodayLotto = (todayDrawId) => {
+        this.lottoToday = todayDrawId;
+    }
+
     *createUserRandomLotto(userId) {
         try {
-            console.log("이번주 : ",this.startLottoDate);
+            // console.log("이번주 : ",this.startLottoDate);
             let list = this.setUserRandomLottoList();
             const param = {
                 userId : userId,
+                expDrawId : this.lottoToday,
                 expCount : this.userLottoList.length,
                 expNo1 : list[0],
                 expNo2 : list[1],
                 expNo3 : list[2],
                 expNo4 : list[3],
                 expNo5 : list[4],
-                expNo6 : list[5],
-                createdDatetime : dayjs(new Date).format("YYYY-MM-DD HH:mm:ss")
+                expNo6 : list[5]
             }
             // yield  this.lottoRepository.createRandomLottoData();
             console.log(param);

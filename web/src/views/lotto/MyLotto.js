@@ -29,30 +29,34 @@ const styles = theme => ({
 })
 
 class MyLotto extends React.Component {
+    
+    // *** 추가 조건
 
-    constructor(props) {
-        super();
+    // 매일 6시부터 24시까지 1년 365일 연중무휴 판매합니다.
+    // 추첨일(토요일)에는 오후 8시에 판매 마감합니다.
+    // 추첨일 오후 8시부터 다음날(일요일) 오전 6시까지는 판매가 정지됩니다.
+
+    componentDidMount() {
+        const {lottoStore} = this.props;
+        const LottoSatDay = dayjs(dayjs().day(6));
+        // console.log(LottoSatDay.format("YYYY-MM-DD HH:mm:ss"));
+        if (dayjs(dayjs()).isBefore(LottoSatDay)) {// 오늘이 토요일보다 전인가?
+            lottoStore.setTodayLotto(LottoSatDay.diff(this.props.lottoStore.defaultLottoDate, "week")+1);
+        } else {
+            lottoStore.setTodayLotto(LottoSatDay.diff(this.props.lottoStore.defaultLottoDate, "week")+2);
+        }
+        // console.log("이번주 예상 회차 번호 : ",lottoStore.lottoToday);
     }
-
-    handleOnClickToday = () => {
-        const newDate = dayjs(dayjs().day(0)).format("YYYY-MM-DD");
-        console.log(newDate);
-
-        // this.props.lottoStore.startLottoDate = false;
-    }
-
 
     render () {
         const {classes, lottoStore, authStore} = this.props;
         return (
             <Box className={classes.mainContent}>
                 <Box>
+                    <Typography>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
                     <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}>
                         로또번호 추첨
-                    </Button>
-                    <Button onClick={this.handleOnClickToday}>
-                        {lottoStore.startLottoDate === true ? '어어어ㅓ어어ㅓ' : '눌러'}
-                    </Button>
+                    </Button> {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?
                 <Table>
