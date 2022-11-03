@@ -10,6 +10,7 @@
     <typeAliases>
         <typeAlias type="io.aetherit.project.base.model.BaseUser" alias="BaseUser" />
         <typeAlias type="io.aetherit.project.base.model.LottoData" alias="LottoData" />
+        <typeAlias type="io.aetherit.project.base.model.LottoRandom" alias="LottoRandom" />
 
         <typeAlias type="io.aetherit.project.base.model.support.BaseUserType" alias="BaseUserType" />
     </typeAliases>
