@@ -224,7 +224,7 @@ class MyPage extends React.Component {
 }
 
 export default withSnackbar(withRouter((withStyles(styles) (
-    inject('userStore', 'authStore')(
+    inject('authStore')(
         observer(MyPage)
     )
 ))));

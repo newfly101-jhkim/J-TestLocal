@@ -11,4 +11,5 @@ public interface UserMapper {
     BaseUser selectUser(String id);
     List<BaseUser> selectUsersWhereType(BaseUserType type);
     int insertUser(BaseUser account);
+    BaseUser updateUser(BaseUser user);
 }
