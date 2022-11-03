@@ -59,36 +59,12 @@ class MyPage extends React.Component {
         super(props);
         this.state = {
             second : dayjs().format("YYYY-MM-DD"),
-            renameSwitch : true,
-            realUpdateTime : this.props.authStore.loginUser.updatedDatetime,
-            useName: this.props.authStore.loginUser.enabled ? "활성화" : "휴면",
+            useName: this.props.authStore.loginUser.enabled ? "활성화" : "비활성화",
         }
     }
 
-    CanChangeInfo = () => {
-        this.setState({
-            renameSwitch : false
-        })
-    }
-
-    EndChangeInfo = () => {
-        let nowTime = Date();
-        this.setState({
-            renameSwitch : true,
-            realUpdateTime: nowTime,
-        })
-    }
-
-    handleEnabled = (e) => {
-        this.setState({
-            useName : e.target.value
-        })
-    }
-
-    componentWillUnmount() {
-        this.setState({
-            realEnabled : this.props.authStore.loginUser.enabled
-        })
+    componentDidMount() {
+        this.props.authStore.convertStatus()
     }
 
     render() {
@@ -116,13 +92,14 @@ class MyPage extends React.Component {
                                             {shrink: true}
                                         }
                                         inputProps={
-                                            {readOnly: this.state.renameSwitch}
+                                            {readOnly: authStore.renameSwitch}
                                         }
                                         sx={
                                             {m:2}
                                         }
+                                        onChange={(e)=>authStore.handleOnChangeId(e.target.value)}
                                     />
-                                    {this.state.renameSwitch ? "" : <span style={{color : "green"}}>ID 변경 가능합니다.</span>}
+                                    {authStore.renameSwitch ? "" : <span style={{color : "green"}}>ID 변경 가능합니다.</span>}
                                     <TextField
                                         id="name"
                                         label="이름"
@@ -131,16 +108,17 @@ class MyPage extends React.Component {
                                             {shrink: true}
                                         }
                                         inputProps={
-                                            {readOnly: this.state.renameSwitch}
+                                            {readOnly: authStore.renameSwitch}
                                         }
                                         sx={
                                             {m:2}
                                         }
+                                        onChange={(e)=>authStore.handleOnChangeName(e.target.value)}
                                     />
-                                    {this.state.renameSwitch ? "" : <span style={{color : "green"}}>이름 변경 가능합니다.</span>}
+                                    {authStore.renameSwitch ? "" : <span style={{color : "green"}}>이름 변경 가능합니다.</span>}
                                     <TextField
                                         id="type"
-                                        label="가입 유형"
+                                        label="권한"
                                         value={authStore.loginUser.type === "Admin" ? "관리자" : "일반회원"}
                                         InputLabelProps={
                                             {shrink: true}
@@ -169,7 +147,7 @@ class MyPage extends React.Component {
                                     <TextField
                                         id="renewal-info"
                                         label="정보 갱신 날짜"
-                                        value={dayjs(this.state.realUpdateTime).format("YYYY.MM.DD")}
+                                        value={dayjs(authStore.loginUser.updatedDatetime).format("YYYY.MM.DD")}
                                         InputLabelProps={
                                             {shrink: true}
                                         }
@@ -180,11 +158,12 @@ class MyPage extends React.Component {
                                             {m:2}
                                         }
                                     />
-                                    {this.state.renameSwitch
+                                    {authStore.renameSwitch
                                         ? <TextField
                                             id="status"
                                             label="계정 상태"
-                                            value={this.state.useName}
+                                            value={authStore.realStatus}
+                                            // value={this.state.useName}
                                             InputLabelProps={
                                                 {shrink: true}
                                             }
@@ -200,17 +179,17 @@ class MyPage extends React.Component {
                                             <FormLabel>계정 상태</FormLabel>
                                             <RadioGroup
                                                 row
-                                                value={this.state.useName}
-                                                onChange={(e)=>this.handleEnabled(e)}
+                                                value={authStore.realStatus}
+                                                onChange={(e)=>authStore.handleOnChangeStatus(e)}
                                             >
                                                 <FormControlLabel control={<Radio/>} label={"활성화"} value={"활성화"} />
-                                                <FormControlLabel control={<Radio/>} label={"휴면"} value={"휴면"} />
+                                                <FormControlLabel control={<Radio/>} label={"비활성화"} value={"비활성화"} />
                                             </RadioGroup>
                                         </FormControl>
                                     }
-                                    {this.state.renameSwitch
-                                        ? <button onClick={this.CanChangeInfo}>정보 수정</button>
-                                        : <button onClick={this.EndChangeInfo}>수정 완료</button>}
+                                    {authStore.renameSwitch
+                                        ? <button onClick={authStore.CanChangeInfo}>정보 수정</button>
+                                        : <button onClick={authStore.EndChangeInfo}>수정 완료</button>}
                                 </Stack>
                             </Box>
                         </Box>

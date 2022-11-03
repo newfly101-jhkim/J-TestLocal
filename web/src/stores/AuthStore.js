@@ -48,14 +48,44 @@ export default class AuthStore {
         makeAutoObservable(this);
     }
 
-
     login = Object.assign({}, EmptyLogin);
     loginState = State.NotAuthenticated;
     loginToken = '';
     loginUser = Object.assign({}, EmptyUser);
     loginUserState = null;
     isCheckedUserId = false;
+    realUpdateTime = 0;
+    renameSwitch = true;
+    realStatus = '';
+    realBoolean = '';
 
+    convertStatus = () => {
+        this.realBoolean = this.loginUser.enabled ? "활성화" : "비활성화";
+        this.realStatus = this.realBoolean
+    }
+
+    handleOnChangeId = (changeId) => {
+        this.loginUser.id = changeId;
+    }
+
+    handleOnChangeName = (changeName) => {
+        this.loginUser.name = changeName;
+    }
+
+    handleOnChangeStatus = (changeStatus) => {
+        this.realStatus = changeStatus.target.value;
+        this.loginUser.enabled = this.realStatus === "활성화" ? true : false;
+    }
+
+    CanChangeInfo = () => {
+        this.renameSwitch = false
+    }
+
+    EndChangeInfo = () => {
+        let nowTime = Date();
+        this.renameSwitch = true;
+        this.loginUser.updatedDatetime = nowTime;
+    }
 
     changeLoginId = (id) => {
         this.login.id = id;
@@ -75,13 +105,6 @@ export default class AuthStore {
     handleIsCheckedUserId = (check) => {
         this.isCheckedUserId = check;
     };
-
-    handleChangeUserName = (name) => {
-        this.loginUser.name = name;
-    }
-    handleChangeUserIsEnabled = (enable) => {
-        this.loginUser.isEnabled = enable;
-    }
 
     *doLogin(callbacks) {
         this.loginState = State.Pending;
