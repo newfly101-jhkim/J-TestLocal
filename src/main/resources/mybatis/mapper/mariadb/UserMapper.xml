@@ -5,7 +5,7 @@
         <result property="password"             column="password" />
         <result property="name"                 column="name" />
         <result property="type"                 column="type" />
-        <result property="isEnabled"            column="is_enabled" />
+        <result property="isEnabled"            column="is_enabled"         typeHandler="BooleanYnTypeHandler"/>
         <result property="createdDatetime"      column="created_datetime" />
         <result property="updatedDatetime"      column="updated_datetime" />
     </resultMap>
