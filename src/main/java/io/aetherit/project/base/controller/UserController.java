@@ -23,6 +23,7 @@ public class UserController {
 
     @PostMapping("")
     public BaseUser modifyUser(HttpServletRequest httpRequest, @RequestBody BaseUser userInfo) {
+        log.debug("ftyiftyifyigvuy={}",userInfo);
         return userService.ModifyUser(userInfo);
     }
 }
