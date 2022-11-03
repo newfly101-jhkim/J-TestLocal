@@ -78,12 +78,12 @@ class MyLotto extends React.Component {
                             return (
                                 <TableRow key={`user-random-${index}`}>
                                     <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{index+1}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[0]}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[1]}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[2]}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[3]}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[4]}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user[5]}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo1}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo2}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo3}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo4}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo5}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo6}</TableCell>
                                 </TableRow>
                             )}
                         )}
