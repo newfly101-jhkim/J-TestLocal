@@ -3,9 +3,10 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {inject, observer} from "mobx-react";
 import React from 'react';
-import {Box, Button, Typography} from "@material-ui/core";
+import {Box, Button, CircularProgress, Typography} from "@material-ui/core";
 import {Table, TableHead, TableRow, TableCell, TableBody} from "@mui/material";
 import dayjs from "dayjs";
+import {LottoState} from "../../stores/LottoStore";
 
 
 const styles = theme => ({
@@ -56,9 +57,15 @@ class MyLotto extends React.Component {
             <Box className={classes.mainContent}>
                 <Box>
                     <Typography>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
-                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}>
-                        로또번호 추첨
-                    </Button> {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
+                    {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
+                    {lottoStore.lottoState === LottoState.Pending ?
+                            <CircularProgress color="inherit"/>
+                        :
+                            <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
+                                    disabled={lottoStore.lottoState === LottoState.Pending}>
+                                로또번호 추첨
+                            </Button>
+                        }
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?
                 <Table>

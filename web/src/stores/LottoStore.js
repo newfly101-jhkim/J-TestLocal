@@ -146,6 +146,7 @@ export default class LottoStore {
 
     *createUserRandomLotto(userId) {
         try {
+            this.lottoState = LottoState.Pending;
             // console.log("이번주 : ",this.startLottoDate);
             let list = this.setUserRandomLottoList();
             const param = {
@@ -163,9 +164,10 @@ export default class LottoStore {
             // console.log("input random lottoData in DB : ",response);
 
             this.userLottoList.push(response);
-
+            this.lottoState = LottoState.Success;
         } catch (e) {
             console.log(e.response.errorCode);
+            this.lottoState = LottoState.Failed;
         }
 
     }

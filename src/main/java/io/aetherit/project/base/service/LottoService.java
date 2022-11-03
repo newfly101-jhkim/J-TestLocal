@@ -37,6 +37,7 @@ public class LottoService {
 
     public LottoRandom createNewRandomLotto(LottoRandom lottoRandom) {
         lottoRandom.setCreatedDatetime(LocalDateTime.now());
+        lottoRandom.setExpCount(lottoRandom.getExpCount()+1);
         logger.debug("[LottoService] Random Lotto Data ={}",lottoRandom);
         repository.insertLottoRandom(lottoRandom);
 
