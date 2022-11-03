@@ -95,4 +95,10 @@ public class UserService {
 
         return isNotAcceptable;
     }
+
+    public BaseUser ModifyUser(BaseUser baseUser) {
+        repository.updateUser(baseUser);
+
+        return baseUser;
+    }
 }

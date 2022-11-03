@@ -28,4 +28,6 @@ public class UserRepository {
     public int insertUser(BaseUser user) {
         return mapper.insertUser(user);
     }
+
+    public BaseUser updateUser(BaseUser user) { return mapper.updateUser(user); }
 }
