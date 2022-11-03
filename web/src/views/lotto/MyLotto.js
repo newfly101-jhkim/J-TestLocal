@@ -30,6 +30,17 @@ const styles = theme => ({
 
 class MyLotto extends React.Component {
 
+    constructor(props) {
+        super();
+    }
+
+    handleOnClickToday = () => {
+        const newDate = dayjs(dayjs().day(0)).format("YYYY-MM-DD");
+        console.log(newDate);
+
+        // this.props.lottoStore.startLottoDate = false;
+    }
+
 
     render () {
         const {classes, lottoStore, authStore} = this.props;
@@ -39,8 +50,8 @@ class MyLotto extends React.Component {
                     <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}>
                         로또번호 추첨
                     </Button>
-                    <Button>
-
+                    <Button onClick={this.handleOnClickToday}>
+                        {lottoStore.startLottoDate === true ? '어어어ㅓ어어ㅓ' : '눌러'}
                     </Button>
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?

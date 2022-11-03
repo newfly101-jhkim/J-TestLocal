@@ -56,7 +56,7 @@ export default class LottoStore {
     lottoSearch = '';
     // search = false;
     userLottoList = [];
-    startLottoDate = dayjs(new Date).week();
+    startLottoDate = true;
 
 
 
