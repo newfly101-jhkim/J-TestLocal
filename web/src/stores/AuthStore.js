@@ -127,7 +127,7 @@ export default class AuthStore {
             // const response = yield this.UserRepository.getUserList(loginUser);
             // this.userArrayList = yield this.UserRepository.getUserDataList(loginUser);
 
-
+            console.log(this.userInfo)
             const response = yield this.userRepository.getUserDataList(this.userInfo);
             console.log(response);
 
