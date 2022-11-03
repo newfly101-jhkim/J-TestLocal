@@ -37,7 +37,7 @@ class MyLotto extends React.Component {
     // 추첨일 오후 8시부터 다음날(일요일) 오전 6시까지는 판매가 정지됩니다.
 
     componentDidMount() {
-        const {lottoStore} = this.props;
+        const {lottoStore, authStore} = this.props;
         const LottoSatDay = dayjs(dayjs().day(6));
         // console.log(LottoSatDay.format("YYYY-MM-DD HH:mm:ss"));
         if (dayjs(dayjs()).isBefore(LottoSatDay)) {// 오늘이 토요일보다 전인가?
@@ -46,6 +46,8 @@ class MyLotto extends React.Component {
             lottoStore.setTodayLotto(LottoSatDay.diff(this.props.lottoStore.defaultLottoDate, "week")+2);
         }
         // console.log("이번주 예상 회차 번호 : ",lottoStore.lottoToday);
+
+        lottoStore.getUserRandomLotto(authStore.login.id);
     }
 
     render () {

@@ -21,7 +21,7 @@ public class LottoRepository {
 
     public List<LottoData> selectLottoList() {return mapper.selectLottoList();}
 
-    public List<LottoRandom> selectLottoRandomList() {return mapper.selectLottoRandomList();}
+    public List<LottoRandom> selectLottoRandomList(String id, String userId) {return mapper.selectLottoRandomList(id,userId);}
 
     public int insertLottoRandom(LottoRandom lottoRandom) {return mapper.insertRandomLotto(lottoRandom);}
 

@@ -43,4 +43,12 @@ public class LottoService {
         return lottoRandom;
     }
 
+    public List<LottoRandom> getUserRandomLotto(String expDrawId, String userId) {
+        List<LottoRandom> lottoRandom = repository.selectLottoRandomList(expDrawId, userId);
+        logger.debug("[LottoService] Random Lotto Data ={}",lottoRandom);
+
+        return lottoRandom;
+
+    }
+
 }

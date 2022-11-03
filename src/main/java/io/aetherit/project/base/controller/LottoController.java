@@ -54,6 +54,15 @@ public class LottoController {
         return lotto;
     }
 
+    @GetMapping("/mylotto")
+    public List<LottoRandom> getMyRandomLotto(HttpServletRequest httpRequest,
+                                              @RequestParam(value = "expDrawId") String expDrawId,
+                                              @RequestParam(value = "userId") String userId) {
+        log.debug("[LottoController] userId ={}, expDrawId={}",userId,expDrawId);
+
+        return lottoService.getUserRandomLotto(expDrawId, userId);
+    }
+
     @PutMapping("/create/random")
     public LottoRandom insertRandomLotto(HttpServletRequest httpRequest, @RequestBody LottoRandom lottoRandom) {
         log.debug("[LottoController] get User's Random Lotto Data List ={}",lottoRandom);

@@ -118,6 +118,18 @@ export default class LottoStore {
         this.lottoToday = todayDrawId;
     }
 
+    *getUserRandomLotto(userId) {
+        try {
+            const response = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
+            console.log(response);
+
+            // this.userLottoList = response;
+        } catch (e) {
+            console.log("getUser's Random Data list",e);
+        }
+    }
+
+
     *createUserRandomLotto(userId) {
         try {
             // console.log("이번주 : ",this.startLottoDate);
@@ -133,8 +145,9 @@ export default class LottoStore {
                 expNo5 : list[4],
                 expNo6 : list[5]
             }
-            // yield  this.lottoRepository.createRandomLottoData();
-            console.log(param);
+            const response = yield this.lottoRepository.createRandomLottoData(param);
+            console.log("input random lottoData in DB : ",response);
+
         } catch (e) {
             console.log(e.response.errorCode);
         }
