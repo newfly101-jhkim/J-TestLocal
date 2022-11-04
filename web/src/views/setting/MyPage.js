@@ -26,7 +26,7 @@ const styles = theme => ({
     },
     contentBox:{
         width: '100%',
-        background: 'white',
+        background: '#ffffff',
         marginTop: 20,
         paddingTop: 10,
         paddingBottom: 40,
@@ -37,7 +37,7 @@ const styles = theme => ({
         width: '100%',
         padding: '0 30px',
         boxSizing: 'border-box',
-        backgroundColor: 'white',
+        backgroundColor: '#ffffff',
     },
     labelText: {
         fontSize: '0.938rem',
@@ -199,7 +199,7 @@ class MyPage extends React.Component {
                                     {authStore.renameSwitch
                                         ? <button onClick={authStore.CanChangeInfo}>정보 수정</button>
                                         : <button onClick={() => this.handleModifyUserInfo()}>수정 완료</button>}
-                                        {/*: <button onClick={() => authStore.EndChangeInfo()}>수정 완료</button>}*/}
+                                    {/*: <button onClick={() => authStore.EndChangeInfo()}>수정 완료</button>}*/}
                                 </Stack>
                             </Box>
                         </Box>

@@ -58,7 +58,7 @@
     <update id="updateUser" parameterType="BaseUser" >
         UPDATE base_users
         SET name = #{name},
-            enabled =#{enabled,typeHandler=BooleanYnTypeHandler},
+            is_enabled =#{isEnabled,typeHandler=BooleanYnTypeHandler},
             updated_datetime = NOW()
         WHERE id = #{id}
     </update>

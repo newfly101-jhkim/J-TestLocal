@@ -96,9 +96,12 @@ public class UserService {
         return isNotAcceptable;
     }
 
-    public BaseUser ModifyUser(BaseUser baseUser) {
-        repository.updateUser(baseUser);
+    public int ModifyUser(BaseUser baseUser) {
+        baseUser.setPassword(baseUser.getPassword());
+        baseUser.setType(baseUser.getType());
+        baseUser.setCreatedDatetime(baseUser.getCreatedDatetime());
+        baseUser.setUpdatedDatetime(LocalDateTime.now());
 
-        return baseUser;
+        return repository.updateUser(baseUser);
     }
 }

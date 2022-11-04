@@ -77,7 +77,7 @@ export default class AuthStore {
 
     handleOnChangeStatus = (changeStatus) => {
         this.realStatus = changeStatus.target.value;
-        this.loginUser.enabled = this.realStatus === "활성화" ? true : false;
+        this.loginUser.enabled = this.realStatus === "활성화";
     }
 
     CanChangeInfo = () => {
