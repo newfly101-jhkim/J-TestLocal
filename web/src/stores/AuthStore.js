@@ -42,7 +42,7 @@ const LoginState = {
 export default class AuthStore {
     constructor(props) {
         this.authRepository = props.authRepository;
-        this.userRepoditory = props.userRepoditory;
+        this.userRepository = props.userRepository;
 
         this.authState = AuthState.None;
 
