@@ -7,6 +7,8 @@ export default class UserRepository extends Repository {
 
         this.requestPrefix = props.serverContextPath + "/api/v1/user";
     }
-
+    getUserDataList = (userInfo) => {
+        return this.getRequestPromise('post', this.requestPrefix, userInfo);
+    }
 
 }

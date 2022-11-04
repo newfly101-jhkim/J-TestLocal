@@ -19,7 +19,7 @@ const storeProps = {
 };
 
 export const stores = {
-    authStore: new AuthStore({authRepository, ...storeProps}),
+    authStore: new AuthStore({authRepository, userRepository, ...storeProps}),
     userStore: new UserStore({userRepository, ...storeProps}),
     lottoStore: new LottoStore({lottoRepository, ...storeProps}),
 };

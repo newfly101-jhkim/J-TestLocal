@@ -42,6 +42,7 @@ const LoginState = {
 export default class AuthStore {
     constructor(props) {
         this.authRepository = props.authRepository;
+        this.userRepoditory = props.userRepoditory;
 
         this.authState = AuthState.None;
 
@@ -55,6 +56,41 @@ export default class AuthStore {
     loginUser = Object.assign({}, EmptyUser);
     loginUserState = null;
     isCheckedUserId = false;
+    realUpdateTime = 0;
+    renameSwitch = true;
+    realStatus = '';
+    realBoolean = '';
+    userArrayList = [];
+    userInfo = {}; // 객체 값인데 list 명칭은 이상함
+
+    convertStatus = () => {
+        this.realBoolean = this.loginUser.enabled ? "활성화" : "비활성화";
+        this.realStatus = this.realBoolean
+    }
+
+    handleOnChangeId = (changeId) => {
+        this.loginUser.id = changeId;
+    }
+
+    handleOnChangeName = (changeName) => {
+        this.loginUser.name = changeName;
+    }
+
+    handleOnChangeStatus = (changeStatus) => {
+        this.realStatus = changeStatus.target.value;
+        this.loginUser.enabled = this.realStatus === "활성화";
+    }
+
+    CanChangeInfo = () => {
+        this.renameSwitch = false
+    }
+
+    EndChangeInfo = () => {
+        let nowTime = Date();
+        this.renameSwitch = true;
+        this.loginUser.updatedDatetime = nowTime;
+        this.getUserList(this.loginUser); // 데이터 값을 db로 던지기 위한 스위치
+    }
 
 
     changeLoginId = (id) => {
@@ -81,6 +117,25 @@ export default class AuthStore {
     }
     handleChangeUserIsEnabled = (enable) => {
         this.loginUser.isEnabled = enable;
+    }
+
+
+    handleChangeUpdateDatetime = (time) => {  // 추가된 부분
+        this.loginUser.updatedDatetime = time;
+    }
+
+    *getUserList() {
+        try{
+            this.userInfo = {
+                id: this.loginUser.id,
+                name: this.loginUser.name,
+                isEnabled: this.loginUser.enabled,
+            }
+            const response = yield this.userRepository.getUserDataList(this.userInfo);
+            console.log(response);
+        } catch (e) {
+            console.log("get UserList Failed",e)
+        }
     }
 
     *doLogin(callbacks) {
