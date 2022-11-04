@@ -29,5 +29,5 @@ public class UserRepository {
         return mapper.insertUser(user);
     }
 
-    public BaseUser updateUser(BaseUser user) { return mapper.updateUser(user); }
+    public int updateUser(BaseUser user) { return mapper.updateUser(user); }
 }

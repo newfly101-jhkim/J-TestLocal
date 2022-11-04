@@ -1,6 +1,8 @@
 package io.aetherit.project.base.controller;
 
 
+import io.aetherit.project.base.exception.BaseException;
+import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.BaseUser;
 import io.aetherit.project.base.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,15 @@ public class UserController {
     public UserController(UserService userService) {this.userService = userService;}
 
     @PostMapping("")
-    public BaseUser modifyUser(HttpServletRequest httpRequest, @RequestBody BaseUser userInfo) {
-        return userService.ModifyUser(userInfo);
+    public void modifyUser(HttpServletRequest httpRequest, @RequestBody BaseUser userInfo) {
+        log.debug("userInfo ={}", userInfo);
+        if (userInfo == null) {
+            log.warn("[LottoController] User's Random Lotto Data is null");
+            throw new BaseException(ErrorCode.NotAcceptableId, "@RequestBody is notAcceptable, check body");
+        }else {
+            userService.ModifyUser(userInfo);
+        }
+
+
     }
 }
