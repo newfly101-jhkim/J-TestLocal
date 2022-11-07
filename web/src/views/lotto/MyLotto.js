@@ -33,6 +33,33 @@ const styles = theme => ({
         display: 'flex',
         paddingLeft: 20,
     },
+    lottoFalse: {
+        width: '8%',
+        align:"center",
+    },
+    lottoTrue: {
+        width: '8%',
+        align:"center",
+        color:'#ff0000'
+    },
+    lottoBasicTrue: {
+        borderRadius: '70%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '2em',
+        color: 'rgb(218,30,30)',
+        border: '2px solid rgb(218,30,30)',
+    },
+    lottoBonusTrue: {
+        borderRadius: '70%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '2em',
+        color: 'rgb(7,50,225)',
+        border: '2px solid rgb(7,50,225)',
+    },
 
 })
 
@@ -84,14 +111,16 @@ class MyLotto extends React.Component {
                 <Box className={classes.lineText}>
                     <Typography style={{paddingRight:10, font: '1.028rem solid black'}}>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
                     {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
-                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
-                            disabled={lottoStore.lottoState === LottoState.Pending || this.state.toggleWeekButton}>
-                        {lottoStore.lottoState === LottoState.Pending ?
-                            <CircularProgress style={{color: '#ffffff'}} size={22}/>
-                            :
-                            '번호 추첨'
-                        }
-                    </Button>
+                    {!this.state.toggleWeekButton &&
+                        <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
+                                disabled={lottoStore.lottoState === LottoState.Pending}>
+                            {lottoStore.lottoState === LottoState.Pending ?
+                                <CircularProgress style={{color: '#ffffff'}} size={22}/>
+                                :
+                                '번호 추첨'
+                            }
+                        </Button>
+                    }
                     <Button disableRipple className={classes.lottoButton} onClick={() => this.handleToggleWeekButton(authStore.login.id)}
                             disabled={lottoStore.lottoState === LottoState.Pending}>
                         {this.state.toggleWeekButton ? '이번 주' : '저번 주'}
@@ -129,13 +158,31 @@ class MyLotto extends React.Component {
                             return (
                                 <TableRow key={`user-random-${index}`}>
                                     <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{index+1}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo1}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo2}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo3}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo4}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo5}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo6}</TableCell>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center" />
+                                    <TableCell align="center" className={classes.lottoFalse}>
+                                        {lottoStore.findLottoNumberInResult(user.expNo1) === 1 ?
+                                            <div className={classes.lottoBasicTrue}>{user.expNo1}</div>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo1) === -1 ?
+                                                <div className={classes.lottoBonusTrue}>{user.expNo1}</div>
+                                                :
+                                                <div className={classes.lottoFalse}>{user.expNo1}</div>
+                                        }
+                                    </TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} >
+                                        {lottoStore.findLottoNumberInResult(user.expNo2) === 1 ?
+                                            <div className={classes.lottoBasicTrue}>{user.expNo2}</div>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo2) === -1 ?
+                                                <div className={classes.lottoBonusTrue}>{user.expNo2}</div>
+                                                :
+                                                <div className={classes.lottoFalse}>{user.expNo2}</div>
+                                        }
+                                    </TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo3) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo3) === -1 ? {color:'#309400'} : {}}>{user.expNo3}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo4) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo4) === -1 ? {color:'#309400'} : {}}>{user.expNo4}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo5) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo5) === -1 ? {color:'#309400'} : {}}>{user.expNo5}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo6) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo6) === -1 ? {color:'#309400'} : {}}>{user.expNo6}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} />
                                 </TableRow>
                             )}
                         )}

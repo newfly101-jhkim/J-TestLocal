@@ -59,6 +59,8 @@ export default class LottoStore {
     lottoToday = '';
 
     userLottoList = [];
+    matchLottoList = [];
+    matchLottoBonus = '';
     startLottoDate = null;
 
 
@@ -118,6 +120,20 @@ export default class LottoStore {
     setTodayLotto = (todayDrawId) => {
         this.lottoToday = todayDrawId;
     }
+    findLottoNumberInResult = (userLottoNumber) => {
+        const result = this.matchLottoList.filter(lottoNum => {
+            return lottoNum === userLottoNumber
+        });
+
+        if (result.length !== 0) {
+            return 1;
+        } else {
+            if (userLottoNumber === this.matchLottoBonus) {
+                return -1;
+            }
+            return 0;
+        }
+    }
 
     *getUserRandomLotto(userId) {
         try {
@@ -152,6 +168,13 @@ export default class LottoStore {
 
             this.lottoState = LottoState.Success;
             this.startLottoDate = yield this.lottoRepository.getCheckLotto(this.lottoToday);
+            this.matchLottoList.push(this.startLottoDate.lottoNo1);
+            this.matchLottoList.push(this.startLottoDate.lottoNo2);
+            this.matchLottoList.push(this.startLottoDate.lottoNo3);
+            this.matchLottoList.push(this.startLottoDate.lottoNo4);
+            this.matchLottoList.push(this.startLottoDate.lottoNo5);
+            this.matchLottoList.push(this.startLottoDate.lottoNo6);
+            this.matchLottoBonus = this.startLottoDate.lottoNo7Bonus;
         } catch (e) {
             console.log("getUser's Random Data list",e);
             this.startLottoDate = null;
