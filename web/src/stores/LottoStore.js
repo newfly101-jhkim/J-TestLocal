@@ -143,9 +143,9 @@ export default class LottoStore {
         }
     }
 
-    *getUserLastWeekRandomLotto(userId) {
+    *getUserLastWeekRandomLotto(userId, num) {
         this.userLottoList = [];
-        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week"));
+        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week")+num);
         try {
             this.lottoState = LottoState.Pending;
             this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
@@ -154,6 +154,7 @@ export default class LottoStore {
             this.startLottoDate = yield this.lottoRepository.getCheckLotto(this.lottoToday);
         } catch (e) {
             console.log("getUser's Random Data list",e);
+            this.startLottoDate = null;
             this.lottoState = LottoState.Failed;
         }
     }

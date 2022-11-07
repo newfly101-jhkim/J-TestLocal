@@ -67,7 +67,11 @@ class MyLotto extends React.Component {
 
     handleToggleWeekButton = (userId) => {
         const {lottoStore} = this.props;
-        lottoStore.getUserLastWeekRandomLotto(userId);
+        if(this.state.toggleWeekButton) {
+            lottoStore.getUserLastWeekRandomLotto(userId, 1);
+        } else {
+            lottoStore.getUserLastWeekRandomLotto(userId, 0);
+        }
         this.setState({
             toggleWeekButton: !this.state.toggleWeekButton
         })
@@ -118,7 +122,7 @@ class MyLotto extends React.Component {
                             <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo4}</TableCell>
                             <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo5}</TableCell>
                             <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo6}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo7Bonus}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#309400' }} align="center">{lottoStore.startLottoDate.lottoNo7Bonus}</TableCell>
                         </TableRow>
                         }
                         {lottoStore.userLottoList && lottoStore.userLottoList.map((user, index) => {
