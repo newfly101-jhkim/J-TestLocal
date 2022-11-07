@@ -143,6 +143,20 @@ export default class LottoStore {
         }
     }
 
+    *getUserLastWeekRandomLotto(userId) {
+        this.userLottoList = [];
+        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week"));
+        try {
+            this.lottoState = LottoState.Pending;
+            this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
+
+            this.lottoState = LottoState.Success;
+        } catch (e) {
+            console.log("getUser's Random Data list",e);
+            this.lottoState = LottoState.Failed;
+        }
+    }
+
 
     *createUserRandomLotto(userId) {
         try {

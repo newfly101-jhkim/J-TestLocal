@@ -73,6 +73,10 @@ class MyLotto extends React.Component {
                             '번호 추첨'
                         }
                     </Button>
+                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.getUserLastWeekRandomLotto(authStore.login.id)}
+                            disabled={lottoStore.lottoState === LottoState.Pending}>
+                        저번 주
+                    </Button>
 
                 </Box>
                 {lottoStore.userLottoList.length !== 0 ?
