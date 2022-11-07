@@ -59,7 +59,7 @@ export default class LottoStore {
     lottoToday = '';
 
     userLottoList = [];
-    startLottoDate = true;
+    startLottoDate = null;
 
 
 
@@ -151,6 +151,7 @@ export default class LottoStore {
             this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
 
             this.lottoState = LottoState.Success;
+            this.startLottoDate = yield this.lottoRepository.getCheckLotto(this.lottoToday);
         } catch (e) {
             console.log("getUser's Random Data list",e);
             this.lottoState = LottoState.Failed;

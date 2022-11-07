@@ -37,6 +37,13 @@ const styles = theme => ({
 })
 
 class MyLotto extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+           toggleWeekButton: false,
+        };
+    }
     
     // *** 추가 조건
 
@@ -58,6 +65,14 @@ class MyLotto extends React.Component {
         lottoStore.getUserRandomLotto(authStore.login.id);
     }
 
+    handleToggleWeekButton = (userId) => {
+        const {lottoStore} = this.props;
+        lottoStore.getUserLastWeekRandomLotto(userId);
+        this.setState({
+            toggleWeekButton: !this.state.toggleWeekButton
+        })
+    }
+
     render () {
         const {classes, lottoStore, authStore} = this.props;
         return (
@@ -66,16 +81,16 @@ class MyLotto extends React.Component {
                     <Typography style={{paddingRight:10, font: '1.028rem solid black'}}>이번주 예상 추첨 회차 : {lottoStore.lottoToday} 회</Typography>
                     {/*onClick 시간 추가 조건인 경우에 버튼 비활성화, 아닌 경우 번호 추첨 누르기*/}
                     <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.createUserRandomLotto(authStore.login.id)}
-                            disabled={lottoStore.lottoState === LottoState.Pending}>
+                            disabled={lottoStore.lottoState === LottoState.Pending || this.state.toggleWeekButton}>
                         {lottoStore.lottoState === LottoState.Pending ?
                             <CircularProgress style={{color: '#ffffff'}} size={22}/>
                             :
                             '번호 추첨'
                         }
                     </Button>
-                    <Button disableRipple className={classes.lottoButton} onClick={() => lottoStore.getUserLastWeekRandomLotto(authStore.login.id)}
+                    <Button disableRipple className={classes.lottoButton} onClick={() => this.handleToggleWeekButton(authStore.login.id)}
                             disabled={lottoStore.lottoState === LottoState.Pending}>
-                        저번 주
+                        {this.state.toggleWeekButton ? '이번 주' : '저번 주'}
                     </Button>
 
                 </Box>
@@ -90,9 +105,22 @@ class MyLotto extends React.Component {
                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">선택4</TableCell>
                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">선택5</TableCell>
                             <TableCell style={{ width: '8%', alignItems:'center' }} align="center">선택6</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center' }} align="center">보너스</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        {lottoStore.startLottoDate !== null &&
+                        <TableRow key={`user-random-last-week`}>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.drawId}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo1}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo2}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo3}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo4}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo5}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo6}</TableCell>
+                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo7Bonus}</TableCell>
+                        </TableRow>
+                        }
                         {lottoStore.userLottoList && lottoStore.userLottoList.map((user, index) => {
                             return (
                                 <TableRow key={`user-random-${index}`}>
@@ -103,6 +131,7 @@ class MyLotto extends React.Component {
                                     <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo4}</TableCell>
                                     <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo5}</TableCell>
                                     <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{user.expNo6}</TableCell>
+                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center" />
                                 </TableRow>
                             )}
                         )}
