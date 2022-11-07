@@ -145,13 +145,13 @@ class MyLotto extends React.Component {
                         {lottoStore.startLottoDate !== null &&
                         <TableRow key={`user-random-last-week`}>
                             <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.drawId}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo1}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo2}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo3}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo4}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo5}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#ff0000' }} align="center">{lottoStore.startLottoDate.lottoNo6}</TableCell>
-                            <TableCell style={{ width: '8%', alignItems:'center', color:'#309400' }} align="center">{lottoStore.startLottoDate.lottoNo7Bonus}</TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo1}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo2}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo3}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo4}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo5}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBasicTrue}>{lottoStore.startLottoDate.lottoNo6}</Box></Box></TableCell>
+                            <TableCell  align="center"><Box align="center"><Box align="center" className={classes.lottoBonusTrue}>{lottoStore.startLottoDate.lottoNo7Bonus}</Box></Box></TableCell>
                         </TableRow>
                         }
                         {lottoStore.userLottoList && lottoStore.userLottoList.map((user, index) => {
@@ -159,6 +159,7 @@ class MyLotto extends React.Component {
                                 <TableRow key={`user-random-${index}`}>
                                     <TableCell align="center" className={classes.lottoFalse}>{index+1}</TableCell>
                                     <TableCell align="center" className={classes.lottoFalse}>
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo1) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo1}</Box>
                                             :
@@ -167,8 +168,10 @@ class MyLotto extends React.Component {
                                                 :
                                                 user.expNo1
                                         }
+                                        </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo2) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo2}</Box>
                                             :
@@ -177,8 +180,10 @@ class MyLotto extends React.Component {
                                                 :
                                                user.expNo2
                                         }
+                                        </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo3) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo3}</Box>
                                             :
@@ -187,8 +192,10 @@ class MyLotto extends React.Component {
                                                 :
                                                user.expNo3
                                         }
+                                        </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo4) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo4}</Box>
                                             :
@@ -197,8 +204,10 @@ class MyLotto extends React.Component {
                                                 :
                                                user.expNo4
                                         }
+                                        </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo5) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo5}</Box>
                                             :
@@ -207,8 +216,10 @@ class MyLotto extends React.Component {
                                                 :
                                                user.expNo5
                                         }
+                                    </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
+                                        <Box align="center">
                                         {lottoStore.findLottoNumberInResult(user.expNo6) === 1 ?
                                             <Box className={classes.lottoBasicTrue}>{user.expNo6}</Box>
                                             :
@@ -217,6 +228,7 @@ class MyLotto extends React.Component {
                                                 :
                                                user.expNo6
                                         }
+                                    </Box>
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} />
                                 </TableRow>
