@@ -36,14 +36,12 @@ const styles = theme => ({
     lottoFalse: {
         width: '8%',
         align:"center",
-    },
-    lottoTrue: {
-        width: '8%',
-        align:"center",
-        color:'#ff0000'
+        alignItems: 'center',
     },
     lottoBasicTrue: {
-        borderRadius: '70%',
+        width: 'calc(1em / 0.7)',
+        height: 'calc(1em / 0.7)',
+        borderRadius: '50%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -52,7 +50,9 @@ const styles = theme => ({
         border: '2px solid rgb(218,30,30)',
     },
     lottoBonusTrue: {
-        borderRadius: '70%',
+        width: 'calc(1em / 0.7)',
+        height: 'calc(1em / 0.7)',
+        borderRadius: '50%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -157,31 +157,67 @@ class MyLotto extends React.Component {
                         {lottoStore.userLottoList && lottoStore.userLottoList.map((user, index) => {
                             return (
                                 <TableRow key={`user-random-${index}`}>
-                                    <TableCell style={{ width: '8%', alignItems:'center' }} align="center">{index+1}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse}>{index+1}</TableCell>
                                     <TableCell align="center" className={classes.lottoFalse}>
                                         {lottoStore.findLottoNumberInResult(user.expNo1) === 1 ?
-                                            <div className={classes.lottoBasicTrue}>{user.expNo1}</div>
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo1}</Box>
                                             :
                                             lottoStore.findLottoNumberInResult(user.expNo1) === -1 ?
-                                                <div className={classes.lottoBonusTrue}>{user.expNo1}</div>
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo1}</Box>
                                                 :
-                                                <div className={classes.lottoFalse}>{user.expNo1}</div>
+                                                user.expNo1
                                         }
                                     </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} >
                                         {lottoStore.findLottoNumberInResult(user.expNo2) === 1 ?
-                                            <div className={classes.lottoBasicTrue}>{user.expNo2}</div>
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo2}</Box>
                                             :
                                             lottoStore.findLottoNumberInResult(user.expNo2) === -1 ?
-                                                <div className={classes.lottoBonusTrue}>{user.expNo2}</div>
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo2}</Box>
                                                 :
-                                                <div className={classes.lottoFalse}>{user.expNo2}</div>
+                                               user.expNo2
                                         }
                                     </TableCell>
-                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo3) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo3) === -1 ? {color:'#309400'} : {}}>{user.expNo3}</TableCell>
-                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo4) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo4) === -1 ? {color:'#309400'} : {}}>{user.expNo4}</TableCell>
-                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo5) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo5) === -1 ? {color:'#309400'} : {}}>{user.expNo5}</TableCell>
-                                    <TableCell align="center" className={classes.lottoFalse} style={lottoStore.findLottoNumberInResult(user.expNo6) === 1 ? {color:'#ff0000'} : lottoStore.findLottoNumberInResult(user.expNo6) === -1 ? {color:'#309400'} : {}}>{user.expNo6}</TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} >
+                                        {lottoStore.findLottoNumberInResult(user.expNo3) === 1 ?
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo3}</Box>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo3) === -1 ?
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo3}</Box>
+                                                :
+                                               user.expNo3
+                                        }
+                                    </TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} >
+                                        {lottoStore.findLottoNumberInResult(user.expNo4) === 1 ?
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo4}</Box>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo4) === -1 ?
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo4}</Box>
+                                                :
+                                               user.expNo4
+                                        }
+                                    </TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} >
+                                        {lottoStore.findLottoNumberInResult(user.expNo5) === 1 ?
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo5}</Box>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo5) === -1 ?
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo5}</Box>
+                                                :
+                                               user.expNo5
+                                        }
+                                    </TableCell>
+                                    <TableCell align="center" className={classes.lottoFalse} >
+                                        {lottoStore.findLottoNumberInResult(user.expNo6) === 1 ?
+                                            <Box className={classes.lottoBasicTrue}>{user.expNo6}</Box>
+                                            :
+                                            lottoStore.findLottoNumberInResult(user.expNo6) === -1 ?
+                                                <Box className={classes.lottoBonusTrue}>{user.expNo6}</Box>
+                                                :
+                                               user.expNo6
+                                        }
+                                    </TableCell>
                                     <TableCell align="center" className={classes.lottoFalse} />
                                 </TableRow>
                             )}
