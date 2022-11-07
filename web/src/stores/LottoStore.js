@@ -135,10 +135,27 @@ export default class LottoStore {
         }
     }
 
+    *getAlterLottoUserData(userId) {
+        // 변경된 구조로 호출
+        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week"));
+        try {
+            this.lottoState = LottoState.Pending;
+            const response = yield this.lottoRepository.getLottoDataLists(this.lottoToday, userId);
+            console.log("변경된 구조로 값 불러오기 => ",response);
+            this.lottoState = LottoState.Success;
+        } catch (e) {
+            console.log("getUser's Random Data list",e);
+            this.lottoState = LottoState.Failed;
+        }
+    }
+
+
+
     *getUserRandomLotto(userId) {
         try {
             this.lottoState = LottoState.Pending;
             this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
+
 
             // createdDatetime: "2022-11-03T17:17:08"
             // expCount: "1"
@@ -161,10 +178,15 @@ export default class LottoStore {
 
     *getUserLastWeekRandomLotto(userId, num) {
         this.userLottoList = [];
+        this.matchLottoList = [];
+        this.matchLottoBonus = '';
         this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week")+num);
         try {
             this.lottoState = LottoState.Pending;
             this.userLottoList = yield this.lottoRepository.getRandomLottoDataList(this.lottoToday, userId);
+
+            const response = yield this.lottoRepository.getLottoDataLists(this.lottoToday, userId);
+            console.log("response@@@@@@@@@@@@@@@@@@@",response);
 
             this.lottoState = LottoState.Success;
             this.startLottoDate = yield this.lottoRepository.getCheckLotto(this.lottoToday);

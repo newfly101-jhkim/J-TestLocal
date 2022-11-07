@@ -4,6 +4,7 @@ import io.aetherit.project.base.exception.BaseException;
 import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.model.LottoData;
 import io.aetherit.project.base.model.LottoRandom;
+import io.aetherit.project.base.model.LottoUserData;
 import io.aetherit.project.base.service.LottoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,16 @@ public class LottoController {
         log.debug("[LottoController] userId ={}, expDrawId={}",userId,expDrawId);
 
         return lottoService.getUserRandomLotto(expDrawId, userId);
+    }
+
+    // 변경된 구조
+    @GetMapping("/mylotto/number")
+    public List<LottoUserData> getTestRandomLotto(HttpServletRequest httpRequest,
+                                                  @RequestParam(value = "expDrawId") String expDrawId,
+                                                  @RequestParam(value = "userId") String userId) {
+        log.debug("[LottoController] userId ={}, expDrawId={}",userId,expDrawId);
+
+        return lottoService.getTestRandomLotto(expDrawId, userId);
     }
 
     @PutMapping("/create/random")

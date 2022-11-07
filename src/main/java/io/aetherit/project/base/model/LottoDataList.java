@@ -12,6 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LottoDataList {
-
-    private List<LottoData> lottoDataList;
+    private String expNo1;
+    private String expNo2;
+    private String expNo3;
+    private String expNo4;
+    private String expNo5;
+    private String expNo6;
 }

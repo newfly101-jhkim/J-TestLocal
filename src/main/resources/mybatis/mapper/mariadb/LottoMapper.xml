@@ -31,6 +31,25 @@
         <result property="createdDatetime"              column="created_datetime" />
     </resultMap>
 
+    <resultMap id="LottoTestResultMap" type="LottoUserData">
+        <id property="id"                               column="id" />
+        <result property="userId"                       column="user_id" />
+        <result property="expDrawId"                    column="exp_draw_id" />
+        <result property="expCount"                     column="exp_count" />
+        <result property="createdDatetime"              column="created_datetime" />
+
+        <collection property="data"                       column="id=exp_draw_id, userId=user_id"                 select="selectTestLottoList" />
+    </resultMap>
+
+    <resultMap id="LottoTestDataMap" type="LottoDataList">
+        <result property="expNo1"                       column="exp_no1" />
+        <result property="expNo2"                       column="exp_no2" />
+        <result property="expNo3"                       column="exp_no3" />
+        <result property="expNo4"                       column="exp_no4" />
+        <result property="expNo5"                       column="exp_no5" />
+        <result property="expNo6"                       column="exp_no6" />
+    </resultMap>
+
     <select id="selectId" parameterType="String" resultMap="LottoDataResultMap">
         SELECT draw_id,
                draw_datetime,
@@ -79,6 +98,27 @@
                exp_no4,
                exp_no5,
                exp_no6,
+               created_datetime
+        FROM lotto_statistic_data
+        WHERE exp_draw_id = #{id} and user_id = #{userId}
+    </select>
+
+    <select id="selectTestLottoList" resultMap="LottoTestDataMap">
+        SELECT exp_no1,
+               exp_no2,
+               exp_no3,
+               exp_no4,
+               exp_no5,
+               exp_no6
+        FROM lotto_statistic_data
+        WHERE exp_draw_id = #{id} and user_id = #{userId}
+    </select>
+
+    <select id="selectTest" parameterType="String" resultMap="LottoTestResultMap">
+        SELECT id,
+               user_id,
+               exp_draw_id,
+               exp_count,
                created_datetime
         FROM lotto_statistic_data
         WHERE exp_draw_id = #{id} and user_id = #{userId}

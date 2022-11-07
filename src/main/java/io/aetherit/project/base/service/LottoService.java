@@ -2,6 +2,7 @@ package io.aetherit.project.base.service;
 
 import io.aetherit.project.base.model.LottoData;
 import io.aetherit.project.base.model.LottoRandom;
+import io.aetherit.project.base.model.LottoUserData;
 import io.aetherit.project.base.repository.LottoRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,15 @@ public class LottoService {
 
     public List<LottoRandom> getUserRandomLotto(String expDrawId, String userId) {
         List<LottoRandom> lottoRandom = repository.selectLottoRandomList(expDrawId, userId);
+        logger.debug("[LottoService] Random Lotto Data ={}",lottoRandom);
+
+        return lottoRandom;
+
+    }
+
+    public List<LottoUserData> getTestRandomLotto(String expDrawId, String userId) {
+        List<LottoUserData> lottoRandom = repository.selectTestList(expDrawId, userId);
+
         logger.debug("[LottoService] Random Lotto Data ={}",lottoRandom);
 
         return lottoRandom;

@@ -4,6 +4,7 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {Box, Toolbar, Typography} from "@material-ui/core";
 import {inject, observer} from "mobx-react";
+import {Button} from "@mui/material";
 
 
 const styles = theme => ({
@@ -26,7 +27,7 @@ const styles = theme => ({
 class Home extends React.Component {
 
     render() {
-        const { classes } = this.props;
+        const { classes, authStore, lottoStore } = this.props;
 
         return (
             <div className={classes.mainContainer}>
@@ -41,6 +42,7 @@ class Home extends React.Component {
                         <Typography> Jkim의 이것 저것</Typography>
                         <Typography> 뭐가 있지</Typography>
                     </Box>
+                    <Button onClick={() => lottoStore.getAlterLottoUserData(authStore.loginUser.id)}>로또 구조 변경</Button>
                 </div>
             </div>
         );

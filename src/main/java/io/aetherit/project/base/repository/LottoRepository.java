@@ -2,6 +2,7 @@ package io.aetherit.project.base.repository;
 
 import io.aetherit.project.base.model.LottoData;
 import io.aetherit.project.base.model.LottoRandom;
+import io.aetherit.project.base.model.LottoUserData;
 import io.aetherit.project.base.repository.mapper.LottoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,8 @@ public class LottoRepository {
     public List<LottoData> selectLottoList() {return mapper.selectLottoList();}
 
     public List<LottoRandom> selectLottoRandomList(String id, String userId) {return mapper.selectLottoRandomList(id,userId);}
+
+    public List<LottoUserData> selectTestList(String id, String userId) {return mapper.selectTest(id,userId);}
 
     public int insertLottoRandom(LottoRandom lottoRandom) {return mapper.insertRandomLotto(lottoRandom);}
 
