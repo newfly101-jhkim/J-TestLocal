@@ -8,18 +8,18 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="io.aetherit.project.base.model.BaseUser" alias="BaseUser" />
-        <typeAlias type="io.aetherit.project.base.model.LottoData" alias="LottoData" />
-        <typeAlias type="io.aetherit.project.base.model.LottoRandom" alias="LottoRandom" />
-        <typeAlias type="io.aetherit.project.base.model.LottoUserData" alias="LottoUserData" />
-        <typeAlias type="io.aetherit.project.base.model.LottoDataList" alias="LottoDataList" />
+        <typeAlias type="com.jhkim.lotto.maker.model.BaseUser" alias="BaseUser" />
+        <typeAlias type="com.jhkim.lotto.maker.model.LottoData" alias="LottoData" />
+        <typeAlias type="com.jhkim.lotto.maker.model.LottoRandom" alias="LottoRandom" />
+        <typeAlias type="com.jhkim.lotto.maker.model.LottoUserData" alias="LottoUserData" />
+        <typeAlias type="com.jhkim.lotto.maker.model.LottoDataList" alias="LottoDataList" />
 
-        <typeAlias type="io.aetherit.project.base.model.support.BaseUserType" alias="BaseUserType" />
-        <typeAlias type="io.aetherit.project.base.repository.typehandler.BooleanYnTypeHandler" alias="BooleanYnTypeHandler" />
+        <typeAlias type="com.jhkim.lotto.maker.model.support.BaseUserType" alias="BaseUserType" />
+        <typeAlias type="com.jhkim.lotto.maker.repository.typehandler.BooleanYnTypeHandler" alias="BooleanYnTypeHandler" />
     </typeAliases>
 
     <typeHandlers>
-        <typeHandler handler="io.aetherit.project.base.repository.typehandler.BooleanYnTypeHandler" javaType="Boolean" />
+        <typeHandler handler="com.jhkim.lotto.maker.repository.typehandler.BooleanYnTypeHandler" javaType="Boolean" />
     </typeHandlers>
 
     <mappers>

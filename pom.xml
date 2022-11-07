@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.aetherit</groupId>
-    <artifactId>project.base</artifactId>
+    <groupId>com.jhkim</groupId>
+    <artifactId>lotto.maker</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
@@ -33,7 +33,7 @@
             <properties>
                 <build.number>0</build.number>
                 <docker.file>Dockerfile</docker.file>
-                <docker.userRepository>aetherit/${project.name}</docker.userRepository>
+                <docker.userRepository>jhkim/${project.name}</docker.userRepository>
                 <docker.tag>${project.version}</docker.tag>
             </properties>
         </profile>
@@ -47,7 +47,7 @@
             <properties>
                 <build.number>0</build.number>
                 <docker.file>Dockerfile</docker.file>
-                <docker.userRepository>aetherit/${project.name}</docker.userRepository>
+                <docker.userRepository>jhkim/${project.name}</docker.userRepository>
                 <docker.tag>development</docker.tag>
             </properties>
         </profile>
@@ -220,20 +220,20 @@
                                     Updating sources
                                 -->
                                 <echo message="Updating InformationController.java" />
-                                <replaceregexp byline="true" file="${basedir}/src/main/java/io/aetherit/project/base/controller/InformationController.java">
+                                <replaceregexp byline="true" file="${basedir}/src/main/java/com/jhkim/lotto/maker/controller/InformationController.java">
                                     <regexp pattern="public static final String NAME = &quot;[0-9A-Za-z\(\)\#\-\{\}$:_. ]*&quot;;" />
                                     <substitution expression="public static final String NAME = &quot;${project.groupId}.${project.artifactId}&quot;;" />
                                 </replaceregexp>
-                                <replaceregexp byline="true" file="${basedir}/src/main/java/io/aetherit/project/base/controller/InformationController.java">
+                                <replaceregexp byline="true" file="${basedir}/src/main/java/com/jhkim/lotto/maker/controller/InformationController.java">
                                     <regexp pattern="public static final String VERSION = &quot;[0-9A-Za-z\(\)\#\-\{\}$:_. ]*&quot;;" />
                                     <substitution expression="public static final String VERSION = &quot;${project.version}&quot;;" />
                                 </replaceregexp>
-                                <replaceregexp byline="true" file="${basedir}/src/main/java/io/aetherit/project/base/controller/InformationController.java">
+                                <replaceregexp byline="true" file="${basedir}/src/main/java/com/jhkim/lotto/maker/controller/InformationController.java">
                                     <regexp pattern="public static final String BUILD_ID = &quot;[0-9A-Za-z\(\)\#\-\{\}$:_. ]*&quot;;" />
                                     <!--suppress MavenModelInspection -->
                                     <substitution expression="public static final String BUILD_ID = &quot;${build.time}&quot;;" />
                                 </replaceregexp>
-                                <replaceregexp byline="true" file="${basedir}/src/main/java/io/aetherit/project/base/controller/InformationController.java">
+                                <replaceregexp byline="true" file="${basedir}/src/main/java/com/jhkim/lotto/maker/controller/InformationController.java">
                                     <regexp pattern="public static final String BUILD_NUMBER = &quot;[0-9A-Za-z\(\)\#\-\{\}$:_. ]*&quot;;" />
                                     <substitution expression="public static final String BUILD_NUMBER = &quot;${build.number}&quot;;" />
                                 </replaceregexp>

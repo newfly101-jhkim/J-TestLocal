@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.aetherit.project.base.repository.mapper.LottoMapper">
+<mapper namespace="com.jhkim.lotto.maker.repository.mapper.LottoMapper">
     <resultMap id="LottoDataResultMap" type="LottoData">
         <id property="drawId"                           column="draw_id" />
         <result property="drawDatetime"                 column="draw_datetime" />

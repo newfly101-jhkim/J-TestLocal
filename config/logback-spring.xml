@@ -1,5 +1,5 @@
 <configuration debug="false" scan="false">
-    <contextName>io.aetherit.tobeking.admin</contextName>
+    <contextName>com.jhkim.tobeking.admin</contextName>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender" >
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -34,7 +34,7 @@
     <logger name="org.springframework" level="info" />
 
     <!-- Log for Application -->
-    <logger name="io.aetherit.project.base" level="trace" />
+    <logger name="com.jhkim.lotto.maker" level="trace" />
 
     <!-- Log for ROOT -->
     <root level="error">
