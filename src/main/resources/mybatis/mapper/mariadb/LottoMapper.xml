@@ -38,7 +38,7 @@
         <result property="expCount"                     column="exp_count" />
         <result property="createdDatetime"              column="created_datetime" />
 
-        <collection property="data"                       column="id=exp_draw_id, userId=user_id"                 select="selectTestLottoList" />
+        <collection property="data"                       column="expDrawId=exp_draw_id, userId=user_id, id=id"                 select="selectTestLottoList" />
     </resultMap>
 
     <resultMap id="LottoTestDataMap" type="LottoDataList">
@@ -111,7 +111,7 @@
                exp_no5,
                exp_no6
         FROM lotto_statistic_data
-        WHERE exp_draw_id = #{id} and user_id = #{userId}
+        WHERE exp_draw_id = #{expDrawId} and user_id = #{userId} and id = #{id}
     </select>
 
     <select id="selectTest" parameterType="String" resultMap="LottoTestResultMap">
