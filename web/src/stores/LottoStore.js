@@ -58,6 +58,10 @@ export default class LottoStore {
     defaultLottoDate = dayjs('2002-12-07').day(6);
     lottoToday = '';
 
+    myLottoLastWeek='';
+
+
+
     userLottoList = [];
     matchLottoList = [];
     matchLottoBonus = '';
@@ -121,7 +125,7 @@ export default class LottoStore {
         this.lottoToday = todayDrawId;
     }
     findLottoNumberInResult = (userLottoNumber) => {
-        const result = this.matchLottoList.filter(lottoNum => {
+        const result = this.myLottoLastWeek.filter(lottoNum => {
             return lottoNum === userLottoNumber
         });
 
@@ -135,16 +139,37 @@ export default class LottoStore {
         }
     }
 
-    *getAlterLottoUserData(userId) {
-        // 변경된 구조로 호출
-        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week"));
+
+    // myLotto Data List => 유저 별로 random 데이터를 불러옴
+    *getMyLottoDataList(userId, num) {
+        // 회차 setting
+        this.setTodayLotto(dayjs(dayjs().day(6)).diff(this.defaultLottoDate, "week")+num);
+        // 초기화
+        this.userLottoList = [];
+        this.myLottoLastWeek = [];
+        this.matchLottoBonus = '';
         try {
             this.lottoState = LottoState.Pending;
             const response = yield this.lottoRepository.getLottoDataLists(this.lottoToday, userId);
-            console.log("변경된 구조로 값 불러오기 => ",response);
+
+            this.startLottoDate = yield this.lottoRepository.getCheckLotto(this.lottoToday);
+
+            this.myLottoLastWeek = response;
+            // console.log("변경된 구조로 값 불러오기 => ",response);
+            console.log("변경된 data 구조 불러오기 => ",this.myLottoLastWeek);
+
+            this.matchLottoList.push(this.startLottoDate.lottoNo1);
+            this.matchLottoList.push(this.startLottoDate.lottoNo2);
+            this.matchLottoList.push(this.startLottoDate.lottoNo3);
+            this.matchLottoList.push(this.startLottoDate.lottoNo4);
+            this.matchLottoList.push(this.startLottoDate.lottoNo5);
+            this.matchLottoList.push(this.startLottoDate.lottoNo6);
+            this.matchLottoBonus = this.startLottoDate.lottoNo7Bonus;
+
             this.lottoState = LottoState.Success;
         } catch (e) {
             console.log("getUser's Random Data list",e);
+            this.startLottoDate = null;
             this.lottoState = LottoState.Failed;
         }
     }
