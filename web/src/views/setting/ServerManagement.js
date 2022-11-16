@@ -9,7 +9,7 @@ const styles = theme => ({
 
 });
 
-class UserManagement extends React.Component {
+class ServerManagement extends React.Component {
 
     render() {
         return (
@@ -21,6 +21,6 @@ class UserManagement extends React.Component {
 
 export default withSnackbar(withRouter((withStyles(styles) (
     inject('userStore')(
-        observer(UserManagement)
+        observer(ServerManagement)
     )
 ))));

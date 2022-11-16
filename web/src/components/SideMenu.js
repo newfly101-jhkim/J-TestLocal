@@ -88,10 +88,10 @@ export default function SideMenu(props) {
                     </ListItem>
                 </Link>
 
-                <Link to="/userSetting" className={classes.link}>
+                <Link to="/serverManage" className={classes.link}>
                     <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="사용자 관리" />
+                        <ListItemText primary="서버 관리" />
                     </ListItem>
                 </Link>
             </List>
