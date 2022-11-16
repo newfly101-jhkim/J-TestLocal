@@ -1,5 +1,7 @@
 package com.jhkim.lotto.maker.repository.mapper;
 
-public interface ServerManagementMapper {
+import com.jhkim.lotto.maker.model.BaseUser;
 
+public interface ServerManagementMapper {
+    BaseUser selectUser(String id);
 }

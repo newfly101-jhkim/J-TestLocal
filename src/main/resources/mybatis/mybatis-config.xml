@@ -25,6 +25,6 @@
     <mappers>
         <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />
         <mapper resource="mybatis/mapper/mariadb/LottoMapper.xml" />
-        <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />
+        <mapper resource="mybatis/mapper/mariadb/ServerManagementMapper.xml" />
     </mappers>
 </configuration>
