@@ -13,6 +13,7 @@
         <typeAlias type="com.jhkim.lotto.maker.model.LottoRandom" alias="LottoRandom" />
         <typeAlias type="com.jhkim.lotto.maker.model.LottoUserData" alias="LottoUserData" />
         <typeAlias type="com.jhkim.lotto.maker.model.LottoDataList" alias="LottoDataList" />
+        <typeAlias type="com.jhkim.lotto.maker.model.PocketmonDogam" alias="PocketmonDogam" />
 
         <typeAlias type="com.jhkim.lotto.maker.model.support.BaseUserType" alias="BaseUserType" />
         <typeAlias type="com.jhkim.lotto.maker.repository.typehandler.BooleanYnTypeHandler" alias="BooleanYnTypeHandler" />
@@ -26,5 +27,6 @@
         <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />
         <mapper resource="mybatis/mapper/mariadb/LottoMapper.xml" />
         <mapper resource="mybatis/mapper/mariadb/ServerManagementMapper.xml" />
+        <mapper resource="mybatis/mapper/mariadb/PocketmonMapper.xml" />
     </mappers>
 </configuration>

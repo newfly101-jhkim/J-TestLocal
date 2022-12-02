@@ -1,0 +1,51 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhkim.lotto.maker.repository.mapper.PocketmonMapper">
+
+    <resultMap id="PoketmonDataMap" type="PocketmonDogam">
+        <result property="id"                         column="id" />
+        <result property="dogamId"                    column="dogam_id" />
+        <result property="name"                       column="name" />
+        <result property="dogamDefault"               column="dogam_default"        typeHandler="BooleanYnTypeHandler"/>
+        <result property="dogamStar3"                 column="dogam_star_3"         typeHandler="BooleanYnTypeHandler"/>
+        <result property="dogamDiffColor"             column="dogam_diff_color"     typeHandler="BooleanYnTypeHandler"/>
+        <result property="dogamShadow"                column="dogam_shadow"         typeHandler="BooleanYnTypeHandler"/>
+        <result property="dogamPurify"                column="dogam_purify"         typeHandler="BooleanYnTypeHandler"/>
+        <result property="dogamEvolution"             column="dogam_evolution"      typeHandler="BooleanYnTypeHandler"/>
+        <result property="createdDatetime"            column="created_datetime" />
+        <result property="updatedDatetime"            column="updated_datetime" />
+    </resultMap>
+
+    <select id="selectList" resultMap="PoketmonDataMap">
+        SELECT id,
+               dogam_id,
+               name,
+               dogam_default,
+               dogam_star_3,
+               dogam_diff_color,
+               dogam_shadow,
+               dogam_purify,
+               dogam_evolution,
+               created_datetime,
+               updated_datetime
+        FROM poketmon_go_data
+    </select>
+
+    <select id="selectName" parameterType="String" resultMap="PoketmonDataMap">
+        SELECT dogam_id,
+               name,
+               dogam_default,
+               dogam_star_3,
+               dogam_diff_color,
+               dogam_shadow,
+               dogam_purify,
+               dogam_evolution,
+               created_datetime,
+               updated_datetime,
+        FROM poketmon_go_data
+        WHERE name = #{name}
+    </select>
+
+
+
+
+</mapper>

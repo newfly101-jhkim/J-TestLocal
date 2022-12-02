@@ -79,3 +79,19 @@ CREATE TABLE lotto_statistic_data (
 
      CONSTRAINT lotto_statistic_pk          PRIMARY KEY (id)
 ) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+CREATE TABLE poketmon_go_data (
+    id                      INT AUTO_INCREMENT  NOT NULL        COMMENT '등록 번호' ,
+    dogam_id                INT                 NOT NULL        COMMENT '도감 번호' ,
+    name                    NVARCHAR(64)        NOT NULL        COMMENT '도감 이름' ,
+    dogam_default           CHAR(1)             NOT NULL        COMMENT '기본 도감 여부',
+    dogam_star_3            CHAR(1)             NOT NULL        COMMENT '3* 도감 여부',
+    dogam_diff_color        CHAR(1)             NOT NULL        COMMENT '색이다른 도감 여부',
+    dogam_shadow            CHAR(1)             NOT NULL        COMMENT '그림자 도감 여부',
+    dogam_purify            CHAR(1)             NOT NULL        COMMENT '정화 도감 여부',
+    dogam_evolution         CHAR(1)             NOT NULL        COMMENT '진화 가능 여부',
+    created_datetime        DATETIME            NOT NULL        COMMENT '생성 시간',
+    updated_datetime        DATETIME            NOT NULL        COMMENT '업데이트 시간',
+
+    CONSTRAINT poketmon_go_pk                     PRIMARY KEY (id)
+) ENGINE InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;

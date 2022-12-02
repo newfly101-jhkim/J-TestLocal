@@ -46,6 +46,8 @@ const styles = theme => ({
 class PokemonGoMain extends React.Component {
     constructor(props) {
         super(props);
+
+        this.props.pokemongoStore.getPokeMonDataList();
     }
 
     componentDidMount() {

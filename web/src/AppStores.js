@@ -3,6 +3,7 @@ import AuthRepository from "./repositories/AuthRepository";
 import UserRepository from "./repositories/UserRepository";
 import LottoRepository from "./repositories/LottoRepository";
 import ServerManagementRepository from "./repositories/ServerManagementRepository";
+import PokemonRepository from "./repositories/PokemonRepository";
 
 import AuthStore from "./stores/AuthStore";
 import UserStore from "./stores/UserStore";
@@ -18,6 +19,7 @@ const authRepository = new AuthRepository(repositoryProps);
 const lottoRepository = new LottoRepository(repositoryProps);
 const userRepository = new UserRepository(repositoryProps);
 const serverManagementRepository = new ServerManagementRepository(repositoryProps);
+const pokemonRepository = new PokemonRepository(repositoryProps);
 
 const storeProps = {
 };
@@ -27,5 +29,5 @@ export const stores = {
     userStore: new UserStore({userRepository, ...storeProps}),
     lottoStore: new LottoStore({lottoRepository, ...storeProps}),
     serverManagementStore: new ServerManagementStore({serverManagementRepository, ...storeProps}),
-    pokemongoStore: new PokemongoStore({...storeProps}),
+    pokemongoStore: new PokemongoStore({pokemonRepository, ...storeProps}),
 };
