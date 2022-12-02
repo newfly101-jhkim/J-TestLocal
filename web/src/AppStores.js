@@ -8,6 +8,7 @@ import AuthStore from "./stores/AuthStore";
 import UserStore from "./stores/UserStore";
 import LottoStore from "./stores/LottoStore";
 import ServerManagementStore from "./stores/ServerManagementStore";
+import PokemongoStore from "./stores/PokemongoStore";
 
 const repositoryProps = {
     serverContextPath: serverContextPath,
@@ -26,4 +27,5 @@ export const stores = {
     userStore: new UserStore({userRepository, ...storeProps}),
     lottoStore: new LottoStore({lottoRepository, ...storeProps}),
     serverManagementStore: new ServerManagementStore({serverManagementRepository, ...storeProps}),
+    pokemongoStore: new PokemongoStore({...storeProps}),
 };

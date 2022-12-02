@@ -88,6 +88,13 @@ export default function SideMenu(props) {
                     </ListItem>
                 </Link>
 
+                <Link to="/pokemonGo" className={classes.link}>
+                    <ListItem button disableRipple onClick={() => handleListItemClick()}>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="포켓몬고" />
+                    </ListItem>
+                </Link>
+
                 <Link to="/serverManage" className={classes.link}>
                     <ListItem button disableRipple onClick={() => handleListItemClick()}>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>

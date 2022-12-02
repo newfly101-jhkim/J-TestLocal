@@ -16,6 +16,7 @@ import * as stores from "./stores/AuthStore";
 import MyPage from "./views/setting/MyPage";
 import LottoCollect from "./views/lotto/LottoCollect";
 import UserManagement from "./views/setting/ServerManagement";
+import PokemonGoMain from "./views/pokemonGo/PokemonGoMain";
 
 
 const styles = () => ({
@@ -77,6 +78,7 @@ class App extends React.Component {
                                 <Route exact path="/myPage" component={MyPage} />
                                 <Route exact path="/lotto" component={LottoCollect} />
                                 <Route exact path="/serverManage" component={UserManagement} />
+                                <Route exact path="/pokemonGo" component={PokemonGoMain} />
                               </Switch>
                             </React.Fragment>
                         ) : (
